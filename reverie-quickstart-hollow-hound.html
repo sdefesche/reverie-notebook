@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie Quickstart — The Hollow Hound</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733; --fog-deep:#161f29;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12); --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.1rem;line-height:1.62;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.4rem 4rem;}
+  header{text-align:center;padding:3.4rem 1rem 1rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.2rem,8vw,3.4rem);letter-spacing:.05em;line-height:1.08;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--lantern);margin-top:.5rem;font-size:1.2rem;
+  }
+  section{padding-top:2.6rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;margin-bottom:.8rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.6rem,5.5vw,2.1rem);margin-bottom:.9rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+    font-size:1.3rem;color:var(--lantern);margin:1.7rem 0 .5rem;
+  }
+  p{margin-bottom:.95rem;}
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.1rem 1.2rem;margin:1.1rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.5rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child,.card ul:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.84rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;margin:.9rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;font-size:.64rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--seaglass);
+    padding:.4rem .5rem;border-bottom:1px solid var(--hairline);
+  }
+  td{padding:.42rem .5rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  ul{list-style:none;margin-bottom:.95rem;}
+  li{padding-left:1.2rem;position:relative;margin-bottom:.35rem;}
+  li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  .read{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.18rem;color:var(--bone);
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1rem;margin:1.2rem 0;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reverie Quickstart · A First Hunt · 60–120 min</div>
+  <h1>THE HOLLOW HOUND</h1>
+  <div class="sub">something in Marrowford is eating sounds</div>
+</header>
+<div class="wrap">
+
+<section>
+  <div class="marker">Overview</div>
+  <h2>The hunt in one paragraph</h2>
+  <p>Marrowford's dogs went silent three nights ago. Then the church bells stopped making noise — rung, swinging, silent. Now people are starting to lose their <em>names</em>: they open their mouths to introduce themselves and nothing comes out. Something hunts the village every night, eating sounds from smallest to biggest, and tonight, villagers whisper (while they still can), it will come for the biggest sound of all. The hunters have one day to learn what it is — and one night to stop it.</p>
+  <div class="card">
+    <h4>The tracks — draw both where everyone can see</h4>
+    <p class="mech">
+      <b>FACT TALLY</b> ☐☐☐☐☐☐☐ — 7 facts unlock the Telling<br>
+      <b>THE HOUND</b> ☐☐☐ — at 3 marks it attacks tonight, on its terms<br>
+      Mark the Hound when: a Crossing against it fails · time is wasted ·
+      a Toll feeds it · the Oracle rolls "No, and…" about safety
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="marker">Start Here</div>
+  <h2>The hook — read aloud</h2>
+  <div class="read">"You reach Marrowford at dusk. Every house has its windows open — strange, in this cold. On every doorstep sits a dog, and every dog is barking at you: jaws working, chests heaving, furious. And not one of them makes a single sound. A man runs up the road toward you, waving both arms. When he reaches you, he mouths three words, carefully, so you can read his lips: HELP. US. PLEASE."</div>
+  <p>The man is <strong>Aldo the miller</strong> — his voice is gone entirely (he lost his name two nights ago; now the rest is following). He communicates by writing on a slate, badly and urgently. His want: <em>to be believed</em> — the village council thinks he caused it. His off-note, for sharp eyes: <strong>he never once looks at the millpond.</strong></p>
+</section>
+
+<section>
+  <div class="marker">Investigation</div>
+  <h2>Three places, one day</h2>
+  <p>Facts live everywhere — reward smart questions anywhere with tally marks. These three locations carry the spine. Each has a risky moment worth a Crossing.</p>
+
+  <h3>1 · The church tower</h3>
+  <ul>
+    <li>The bells swing and strike and make no sound — but touch one mid-swing and you <em>feel</em> the ring in your bones. <strong>Fact: the sounds aren't destroyed. They're taken somewhere.</strong></li>
+    <li>Scratches on the belfry floor: huge paw prints, entering. None leaving. <strong>Fact: it climbs, and it doesn't leave the way it comes.</strong></li>
+    <li><em>Risky moment:</em> the ladder's rotten — Bone to climb; the bell swings unannounced — Breath to dodge. A fall is 1 weathering.</li>
+  </ul>
+
+  <h3>2 · The village square, after dark falls early</h3>
+  <ul>
+    <li>Interview anyone: the sounds went in order — dogs, then bells, next names. <strong>Fact: it eats small sounds first, working up to something.</strong> Ask the obvious follow-up and let them find it: <em>what's the biggest sound in Marrowford?</em> (The answer, from any villager, written trembling on a slate: <strong>the flood siren on the mill roof.</strong> If the siren goes silent, the next flood takes the village unwarned.)</li>
+    <li>A little girl, <strong>Pip</strong>, tugging sleeves. She can still speak — the only one losing nothing. Her off-note: she <em>whistles constantly</em>, an odd five-note tune, and the silent dogs all sit when she does. If asked where the tune's from: "The miller's old dog taught me. Bramble. Before he drowned." <strong>Fact: the Hound doesn't take sounds from Pip.</strong></li>
+    <li><em>Risky moment:</em> the council tries to arrest Aldo at dusk. Talking them down is Breath; noticing Pip slipping away toward the millpond during the argument is Dream.</li>
+  </ul>
+
+  <h3>3 · The millpond</h3>
+  <ul>
+    <li>The pond is silent even for a pond — thrown stones splash without sound. In the reeds: a dog collar, old, with a small brass <strong>bell that rings underwater and only underwater</strong>. The name-tag is scratched out. <strong>Fact: something drowned here wearing a bell.</strong></li>
+    <li>Aldo, confronted here (or his slate, snatched): he drowned his dog Bramble in the pond last winter — old, sick, howling all night; the village complained about the noise; he did it to stop the sound, and he's been unable to say the dog's name since long before the Hound came. <strong>Fact: the Hound is Bramble — or wears what's left of him.</strong> <strong>Fact: it started the night someone stopped a sound on purpose.</strong></li>
+    <li><em>Risky moment:</em> wading for the collar is Bone in freezing black water; something big passes your legs — holding your nerve is Breath. Panic: 1 weathering.</li>
+  </ul>
+
+  <div class="card sea">
+    <h4>If the tally stalls</h4>
+    <p>You hold two direct answers — spend one here. Or Pip volunteers, for a price ("carry me on your shoulders the whole way"): <em>"He's not eating the sounds. He's collecting them. He's trying to make one back."</em> That's a fact, and it's the door to the truth.</p>
+  </div>
+</section>
+
+<section>
+  <div class="marker">The Truth</div>
+  <h2>Default truth — theirs wins if it coheres</h2>
+  <div class="card">
+    <h4>What the Hollow Hound is</h4>
+    <p>Bramble came back wrong: a hound-shaped hole where a dog used to be. Drowned to silence him, he's hollow of the one sound that made him <em>him</em> — his name, called in Aldo's voice, which Aldo can no longer produce. So he takes every sound he can catch, trying to rebuild it, and none of them fit. Tonight he takes the flood siren, the biggest voice left, and it won't fit either — and Marrowford will have no warning voice ever again.</p>
+    <p><strong>The weakness:</strong> he can't take what is freely given. His name, called out loud, given willingly — by Aldo, whose voice must somehow be returned or carried (the underwater bell rung in the pond releases every sound the Hound has swallowed… including Aldo's), or by Pip, who learned the name inside her five-note tune, or by a hunter who's earned it. A given sound fills the hollow. The Hound lies down. The rest is a burial that should have happened last winter.</p>
+  </div>
+</section>
+
+<section>
+  <div class="marker">The Showdown</div>
+  <h2>Tonight, at the mill</h2>
+  <p>Run it wherever their plan puts it — the mill roof by the siren is the default. Read when it arrives:</p>
+  <div class="read">"It comes up the mill wall without a sound — of course without a sound — a dog the size of a door, and where its fur should catch the moonlight there's nothing, a dog-shaped darkness, and inside the darkness, faint and swirling: every bark, every bell, every stolen name in Marrowford, none of them fitting."</div>
+  <ul>
+    <li><strong>With the Telling done:</strong> plans using the weakness work or roll two extra dice. The bell rung underwater, Pip's tune whistled from a shoulder, Aldo's returned voice cracking on one word — "BRAMBLE" — any of it lands. Give the killing blow to whoever gives, not whoever swings.</li>
+    <li><strong>Without the Telling:</strong> it can't be hurt, only delayed — Crossings buy escape, weathering piles up, and it takes the siren into the dark. The village survives; the hunt is failed; the Hound is out there still. That's a legal ending and a fierce hook.</li>
+    <li><strong>The Hound's attacks:</strong> it doesn't bite first — it <em>takes</em>. A failed Crossing near it costs the usual weathering <strong>and</strong> one sound of the hunter's: their laugh, their whistle, the sound of their own name in their ears. Written on the sheet. Returned when the Hound is filled — or not.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">Afterwards</div>
+  <h2>Loot &amp; residue</h2>
+  <p><strong>The loot:</strong> Bramble's collar-bell — <em>the Undrowned Bell</em>, a Vessel. Roll its Charge in front of everyone (Charge table, or default: <em>it rings, softly, whenever someone nearby is about to lie</em>). It occupies a satchel slot. It is definitely going to cause problems. Good ones.</p>
+  <p><strong>The residue, read as the lights come up:</strong> the scratched-out name tag from the collar, cleaned in the pond water — and under Bramble's name, older, half-worn, <em>another name nobody in Marrowford recognizes.</em> Write it down as next hunt's open question. Don't answer any questions about it. Session over.</p>
+</section>
+
+<section>
+  <div class="marker">Pregens</div>
+  <h2>Four hunters — pick or fight over them</h2>
+  <table>
+    <tr><th>Hunter</th><th>B·B·D</th><th>Carries</th><th>Fears becoming</th></tr>
+    <tr><td>Brack</td><td>3·2·1</td><td>fifty feet of good rope</td><td>the one who runs</td></tr>
+    <tr><td>Swift</td><td>1·3·2</td><td>a deck of marked cards</td><td>unable to talk their way out</td></tr>
+    <tr><td>Moss</td><td>2·1·3</td><td>a jar of graveyard soil</td><td>wrong about something big</td></tr>
+    <tr><td>Ferren</td><td>2·2·2</td><td>a hunting horn, dented</td><td>ordinary</td></tr>
+  </table>
+  <p>Each also gets: 3 weathering boxes under each stat, a 7-slot satchel (fear goes in slot 7 — it travels with you), and five empty facts' worth of curiosity.</p>
+</section>
+
+</div>
+</body>
+</html>

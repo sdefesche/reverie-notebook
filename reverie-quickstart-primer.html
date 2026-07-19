@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie Quickstart — The Hunter's Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733; --fog-deep:#161f29;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12); --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.1rem;line-height:1.62;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.4rem 4rem;}
+  header{text-align:center;padding:3.4rem 1rem 1rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.2rem,8vw,3.4rem);letter-spacing:.05em;line-height:1.08;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--lantern);margin-top:.5rem;font-size:1.2rem;
+  }
+  section{padding-top:2.6rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;margin-bottom:.8rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.6rem,5.5vw,2.1rem);margin-bottom:.9rem;line-height:1.15;
+  }
+  p{margin-bottom:.95rem;}
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.1rem 1.2rem;margin:1.1rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.5rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.84rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;margin:.9rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;font-size:.64rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--seaglass);
+    padding:.4rem .5rem;border-bottom:1px solid var(--hairline);
+  }
+  td{padding:.42rem .5rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  ul{list-style:none;margin-bottom:.95rem;}
+  li{padding-left:1.2rem;position:relative;margin-bottom:.35rem;}
+  li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  .big{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.25rem;color:var(--lantern);text-align:center;margin:1.4rem 0;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reverie Quickstart</div>
+  <h1>THE HUNTER'S PRIMER</h1>
+  <div class="sub">for players who know their way around a d20</div>
+</header>
+<div class="wrap">
+
+<section>
+  <div class="marker">The Pitch</div>
+  <h2>What kind of game is this?</h2>
+  <p>You're monster hunters. But in Reverie, <strong>you can't kill what you don't understand.</strong> Every monster, curse, and haunting has a weakness — and the weakness is hidden behind facts you have to hunt down first. Ask questions, search places, chase leads, take risks. When you've learned enough, you get to name the monster's weakness yourselves — and then use it in the showdown.</p>
+  <p>Think Witcher contracts: research first, fight smart, win because you <em>figured it out</em>. Swinging a sword at something you don't understand mostly gets you hurt.</p>
+  <div class="big">Clever beats strong. Every time.</div>
+</section>
+
+<section>
+  <div class="marker">Your Hunter</div>
+  <h2>Three stats. That's all.</h2>
+  <table>
+    <tr><th>Stat</th><th>Covers</th><th>In D&amp;D terms</th></tr>
+    <tr><td>BONE</td><td>strength, toughness, climbing, holding on, breaking through</td><td>STR + CON</td></tr>
+    <tr><td>BREATH</td><td>talking, bluffing, sneaking, quick reactions, nerve</td><td>DEX + CHA</td></tr>
+    <tr><td>DREAM</td><td>noticing, gut feelings, weird senses, spotting what's off</td><td>WIS + all your perception checks</td></tr>
+  </table>
+  <p>You get <strong>6 points</strong> across the three, minimum 1, maximum 3. A 3 means you're great at it. A 1 means that's where trouble finds you — and trouble <em>will</em> find it.</p>
+  <p>You also carry a <strong>satchel with 7 slots</strong>. What you carry is what you have — no shopping mid-hunt, so pack smart and improvise hard. Rope is always better than you think.</p>
+</section>
+
+<section>
+  <div class="marker">Rolling</div>
+  <h2>The Crossing — one roll, everything</h2>
+  <p>No attack rolls, no AC, no skill list. When you try something risky, it's a <strong>Crossing</strong>:</p>
+  <div class="card">
+    <h4>How to roll</h4>
+    <p class="mech">
+      Say what you do and which stat it uses.<br>
+      Roll <b>d6s equal to that stat</b> — keep the highest.<br>
+      The GM rolls <b>one World die</b> (d6).<br><br>
+      <b>You're higher</b> → you did it. Clean.<br>
+      <b>You're lower</b> → the world moves instead — and if it was
+      dangerous, you take a hit.<br>
+      <b>TIE</b> → the best result in the game. Read on.
+    </p>
+  </div>
+  <div class="card sea">
+    <h4>The tie — the Threshold Moment</h4>
+    <p>On a tie, three things happen at once: <strong>you succeed</strong>, <strong>you owe something</strong> (the GM rolls what — maybe you drop gear, maybe something learns your name), and <strong>the world leans in</strong>: everyone looks up from the table for ten seconds, and the first real thing anyone notices — a sound in the house, headlights through the window — enters the game <em>right now</em>. The room you're playing in is part of the game. Yes, really.</p>
+  </div>
+</section>
+
+<section>
+  <div class="marker">Damage</div>
+  <h2>Getting hurt — Weathering</h2>
+  <p>No hit points. Each stat has <strong>3 damage boxes</strong>. Fail a dangerous Crossing and you mark one on the stat you used — <strong>two</strong> if the World die beat you by 3 or more (that's a critical against you). Every mark shows: a limp, shaking hands, missing the obvious clue.</p>
+  <ul>
+    <li>Three marks on one stat = it's <strong>closed</strong>. You can't lead with it until you heal.</li>
+    <li>All three stats closed = you're <strong>out of the hunt</strong> — carried to safety, back next adventure. Nobody dies. But your friends finish this one without you, so don't get reckless.</li>
+    <li>A real rest in the fiction (safe place, food, night) heals <strong>one box, your choice</strong>. Healing is slow. Plan around it.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">Investigation</div>
+  <h2>Hunting the monster — the Fact Tally</h2>
+  <p>Here's the engine of every hunt. The monster is a mystery with a hidden weakness. You crack it by asking <strong>yes/no questions</strong> — of villagers, of clues, of the <strong>Oracle</strong> (a d6 the whole table gets to interpret):</p>
+  <table>
+    <tr><td>1</td><td>No — and it gets worse</td></tr>
+    <tr><td>2</td><td>No</td></tr>
+    <tr><td>3</td><td>No — but you find another way in</td></tr>
+    <tr><td>4</td><td>Yes — but there's a catch</td></tr>
+    <tr><td>5</td><td>Yes</td></tr>
+    <tr><td>6</td><td>Yes — and there's more</td></tr>
+  </table>
+  <p>Every clear answer becomes a <strong>fact</strong>, written on the hunt page. A "No, and…" is the mystery fighting back — cross out one fact you thought you had. When <strong>7 facts</strong> stand, anyone at the table can attempt <strong>the Telling</strong>: explain what the monster really is and how to beat it, using at least 5 of the facts. If the table buys it — <em>that becomes true</em>. You didn't find the weakness. You built it. Now go use it.</p>
+</section>
+
+<section>
+  <div class="marker">The Enemy</div>
+  <h2>Monsters are Perils</h2>
+  <p>A monster doesn't have HP either. It has a name and <strong>3 threat boxes</strong>. Every time you fail against it, waste time, or push your luck, it gets a mark — and at three marks <strong>it comes for you</strong>, on its terms, showdown time, ready or not. So the whole hunt is a race: <em>your 7 facts against its 3 marks.</em></p>
+  <p>In the showdown, fighting works like everything else — Crossings — but if you've done the Telling, you know its weakness, and clever plans that use it just <em>work</em>, or roll with serious advantage. Hunters who skipped the homework fight something they don't understand. Good luck with that.</p>
+</section>
+
+<section>
+  <div class="marker">Loot</div>
+  <h2>Treasure — Vessels</h2>
+  <p>Magic items exist, and they're strange: a bell that rings underwater, a key without a lock, a compass that points at something lost. Each has one hidden <strong>Charge</strong> — a power that fires when the <em>world</em> decides, never when you want it to. Half the fun is figuring out what your loot actually does. Real objects from the real table can become Vessels too: the GM will show you how.</p>
+</section>
+
+<section>
+  <div class="marker">One Last Thing</div>
+  <h2>How to be good at this game</h2>
+  <ul>
+    <li><strong>Ask questions.</strong> Questions are ammunition. The player who asks "why are all the dogs silent?" is doing more damage than any sword.</li>
+    <li><strong>Say what you do, not what you roll.</strong> "I wedge the door with my boot and listen" beats "I roll perception." The GM tells you if dice are even needed — most clever things just work.</li>
+    <li><strong>Running away is a power move.</strong> The monster gets stronger every time you fail. Retreat, heal, come back with facts.</li>
+    <li><strong>Use your 1.</strong> Your weak stat is where your best scenes happen. The tough guy facing the ghost is the story.</li>
+  </ul>
+  <div class="big">Learn it. Name it. Beat it.</div>
+</section>
+
+</div>
+</body>
+</html>

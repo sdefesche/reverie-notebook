@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie Quickstart — Running the Hunt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733; --fog-deep:#161f29;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12); --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.1rem;line-height:1.62;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.4rem 4rem;}
+  header{text-align:center;padding:3.4rem 1rem 1rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.2rem,8vw,3.4rem);letter-spacing:.05em;line-height:1.08;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--lantern);margin-top:.5rem;font-size:1.2rem;
+  }
+  section{padding-top:2.6rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;margin-bottom:.8rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.6rem,5.5vw,2.1rem);margin-bottom:.9rem;line-height:1.15;
+  }
+  p{margin-bottom:.95rem;}
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.1rem 1.2rem;margin:1.1rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.5rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child,.card ul:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.84rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;margin:.9rem 0;
+  }
+  td{padding:.42rem .5rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  ul{list-style:none;margin-bottom:.95rem;}
+  li{padding-left:1.2rem;position:relative;margin-bottom:.35rem;}
+  li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reverie Quickstart</div>
+  <h1>RUNNING THE HUNT</h1>
+  <div class="sub">a GM guide for a table raised on D&amp;D · 60–120 minutes</div>
+</header>
+<div class="wrap">
+
+<section>
+  <div class="marker">The Reframe</div>
+  <h2>What you're actually running</h2>
+  <p>Same rules as full Reverie, different emphasis. You're running a <strong>monster hunt with a puzzle core</strong>: the mystery's fact tally is the dungeon, the Telling is the boss key, the showdown is the boss fight. Park the dreamy stuff — no dream passages, no journal rituals, no talk about what places feel like unless it lands as <em>creepy</em>. Creepy always lands.</p>
+  <p>The pitch to say out loud before you start: <em>"This monster can't be beaten by rolling damage. It can be beaten by anyone who figures it out. Every question you ask is an attack."</em></p>
+</section>
+
+<section>
+  <div class="marker">Structure</div>
+  <h2>The 90-minute clock</h2>
+  <table>
+    <tr><td>0–15</td><td><strong>Setup.</strong> Hand out pregens (in the adventure) or build hunters — 6 points, name, one thing you carry, one thing you fear. Read the pitch. Open on the hook scene.</td></tr>
+    <tr><td>15–60</td><td><strong>The investigation.</strong> Three locations, each holding clues and one risky moment. Facts accumulate on a visible tally — write it where they can see it. The monster's threat track ticks in parallel, also visible. The race IS the tension.</td></tr>
+    <tr><td>60–65</td><td><strong>The Telling.</strong> Seven facts (or when time demands — use the valve: "you know enough, tell me what it is"). Let them build the weakness. Say yes to the coolest coherent version.</td></tr>
+    <tr><td>65–85</td><td><strong>The showdown.</strong> Their plan, its terms. Plans that use the weakness work or roll two extra dice. Plans that ignore it hurt.</td></tr>
+    <tr><td>85–90</td><td><strong>Loot and residue.</strong> The Vessel, one open question for next time, done.</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="marker">The Dials</div>
+  <h2>Tuning for this table</h2>
+  <ul>
+    <li><strong>Roll loud and often.</strong> D&amp;D kids like dice in hands. Call Crossings freely for physical stuff — chases, climbs, grabs. Let them roll the Oracle themselves; interpreting a "yes, but…" out loud is the game teaching itself.</li>
+    <li><strong>Both tracks stay visible.</strong> Facts and threat marks on paper in the middle of the table. When the monster gains a mark, mark it slowly, while looking at them. Dread is a resource.</li>
+    <li><strong>Feed the tally generously.</strong> Any smart question, searched location, or interrogated villager can yield a fact. Aim for a fact every 5–6 minutes. If they stall, a Figure volunteers something — attached to a price.</li>
+    <li><strong>Tolls are mischief, not homework.</strong> On a tie, pick fun trouble: the lantern goes out, something learns their name, the rope stays behind. And run the look-up: ten seconds, real room, first thing noticed enters the game. Kids treat this as a superpower. It is.</li>
+    <li><strong>Damage is real, death isn't.</strong> Mark weathering without mercy — but "out of the hunt" means dramatically carried off, cheering from the bench, guaranteed back next time. Stakes without tears.</li>
+    <li><strong>The two-answer secret.</strong> You get two direct answers per mystery (you posed it). Spend them like potions — one to rescue a stalled tally, one held for the end. Everything else: the Oracle decides, in front of everyone. Kids trust a die they watched land.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">The Net</div>
+  <h2>The default truth</h2>
+  <p>Full Reverie assembles the monster's truth at the table with no answer fixed in advance. Keep that goal — the Telling is theirs — but for a first hunt, carry a <strong>default truth</strong> in your pocket (the adventure provides one): a solution that fits most facts they're likely to gather. If their Telling coheres, <em>theirs wins, always</em> — even if it's not yours. The default is only for rescue: a stalled table, a bedtime deadline. A table that beats the monster with a weakness they invented will talk about it for weeks. That's the product.</p>
+</section>
+
+<section>
+  <div class="marker">Table Voice</div>
+  <h2>Say it like this</h2>
+  <div class="card">
+    <h4>Phrases that do work</h4>
+    <p class="mech">
+      "That's a fact. Write it down." <b>(reward)</b><br>
+      "The Hound just gained a mark." <b>(clock)</b><br>
+      "What do you do — not what do you roll?" <b>(agency)</b><br>
+      "Tie! Everybody look up. Ten seconds." <b>(the room joins)</b><br>
+      "You COULD fight it now. You don't know what it is yet. Your call." <b>(the lesson)</b>
+    </p>
+  </div>
+  <p>One safety line, said once, lightly: anyone can pause or steer away from anything, no reason needed — the fear on the sheet belongs to the hunter, not the kid holding the pencil. Then go.</p>
+</section>
+
+<section>
+  <div class="marker">Afterwards</div>
+  <h2>The door back to full Reverie</h2>
+  <p>End every hunt with one unanswered question written down — "the coin in the Hound's collar: whose was it?" That's a residue, and it's your bridge: next hunt opens from it, and without announcing anything you're now playing with echoes. The dreamier machinery can arrive the same way, one piece at a time, whenever this table starts asking the questions that need it. They will.</p>
+</section>
+
+</div>
+</body>
+</html>
