@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — The Wayfarer's Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.14rem;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;
+    overflow-x:auto;
+    padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+
+  /* ---------- hero ---------- */
+  header{
+    position:relative;
+    min-height:88vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes breathe{
+    0%,100%{opacity:.55;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.06);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .glow{animation:none;opacity:.8;}
+    html{scroll-behavior:auto;}
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(3rem,10vw,5.6rem);
+    letter-spacing:.06em;
+    color:var(--bone);
+    line-height:1.05;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.15rem,3.4vw,1.55rem);
+    color:var(--lantern);
+    margin-top:1.1rem;
+  }
+  .strapline{
+    max-width:34rem;
+    color:var(--faded);
+    margin-top:2rem;
+    font-size:1.05rem;
+  }
+  .strapline em{color:var(--bone);font-style:italic;}
+
+  /* ---------- layout ---------- */
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);
+    display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-size:clamp(1.9rem,6vw,2.6rem);
+    margin:.7rem 0 1.4rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-style:italic;
+    font-size:1.45rem;color:var(--lantern);
+    margin:2.4rem 0 .7rem;
+  }
+  p{margin-bottom:1.05rem;}
+  p em{font-style:italic;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.22rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;
+    margin:1.8rem 0;
+  }
+
+  /* ---------- cards & tables ---------- */
+  .card{
+    background:var(--fog);
+    border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);
+    border-radius:var(--radius);
+    padding:1.3rem 1.4rem;
+    margin:1.4rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child{margin-bottom:0;}
+  .mech{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.86rem;line-height:1.8;
+    color:var(--bone);
+  }
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.84rem;
+    margin:1.2rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;
+    font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--seaglass);
+    padding:.5rem .7rem;border-bottom:1px solid var(--hairline);
+  }
+  td{
+    padding:.55rem .7rem;
+    border-bottom:1px solid rgba(232,226,212,.06);
+    vertical-align:top;
+  }
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  .facets{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1.4rem 0;}
+  @media(max-width:600px){.facets{grid-template-columns:1fr;}}
+  .facet{
+    background:var(--fog-deep);
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    padding:1.1rem 1rem;text-align:center;
+  }
+  .facet .name{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.5rem;letter-spacing:.08em;color:var(--bone);
+  }
+  .facet .gloss{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--faded);margin-top:.35rem;line-height:1.6;
+  }
+  .arc{list-style:none;counter-reset:arc;margin:1.4rem 0;}
+  .arc li{
+    counter-increment:arc;
+    padding:.85rem 0 .85rem 3rem;
+    position:relative;
+    border-bottom:1px solid rgba(232,226,212,.06);
+  }
+  .arc li::before{
+    content:counter(arc,lower-roman);
+    position:absolute;left:.4rem;top:.9rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;color:var(--seaglass);letter-spacing:.1em;
+    width:2rem;
+  }
+  .arc b{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.18rem;color:var(--lantern);
+  }
+  .tiers .card{margin:.9rem 0;}
+  ul.plain{list-style:none;margin:0 0 1.05rem;}
+  ul.plain li{
+    padding-left:1.3rem;position:relative;margin-bottom:.4rem;
+  }
+  ul.plain li::before{
+    content:"◦";position:absolute;left:0;color:var(--seaglass);
+  }
+  .roadmap td:first-child{color:var(--seaglass);}
+  footer{
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);
+    color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.25rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.6rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+<div style="background:#1c2733;border-bottom:1px solid rgba(224,164,88,.4);color:#8a97a3;font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;text-align:center;padding:.7rem 1rem;">Design history — superseded by <a href="../notebook-game.html" style="color:#e0a458;">the Notebook Game</a> and its guides</div>
+
+<nav aria-label="Sections">
+  <a href="#thesis">Thesis</a>
+  <a href="#vows">Vows</a>
+  <a href="#traveler">Traveler</a>
+  <a href="#crossing">Crossing</a>
+  <a href="#undertow">Undertow</a>
+  <a href="#echoes">Echoes</a>
+  <a href="#vessels">Vessels</a>
+  <a href="#passages">Passages</a>
+  <a href="#archive">Archive</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">A game · a journal · a companion</div>
+  <h1>REVERIE</h1>
+  <div class="subtitle">The Wayfarer's Archive</div>
+  <p class="strapline">One traveler to four. Any road, any table, any bench on any platform. <em>No signal required — but the oracle deepens where signal is found.</em></p>
+</header>
+
+<main>
+
+<!-- ================= THESIS ================= -->
+<section id="thesis">
+  <div class="marker">The Thesis</div>
+  <h2>What this is now</h2>
+  <p>Reverie began as a manual: a contemplative travel RPG played at a table. This document defines its second life — a <em>portable practice</em> carried in the pocket, played by one wanderer or a small band, where the journal is the game and the world outside the window is a legitimate rulebook.</p>
+  <p>Three things distinguish it from everything it grew out of:</p>
+  <ul class="plain">
+    <li><strong>The Archive is the engine.</strong> There is no character sheet separate from the journal. Every entry — object, place, dream, stranger — is a living card, and the system plays those cards back to you, transformed, across sessions, journeys, and years.</li>
+    <li><strong>The world is a component.</strong> Real weather, real objects, real photographs, and real coincidence are mechanically invited into play — not as flavor, but through explicit procedures.</li>
+    <li><strong>The oracle is layered, never gated.</strong> Dice always work. The camera oracle works offline. The Archivist — the narrating intelligence — awakens when connectivity allows, and its absence is part of the fiction: <em>the oracle grows stranger near the towers, quieter in the hills.</em></li>
+  </ul>
+  <div class="whisper">This is not a lighter fantasy game. It is a walking meditation wearing the clothes of one.</div>
+</section>
+
+<!-- ================= VOWS ================= -->
+<section id="vows">
+  <div class="marker">Design Law</div>
+  <h2>The Three Vows</h2>
+  <p>Every rule, screen, and line of code answers to these. If a feature breaks a vow, the feature goes.</p>
+
+  <div class="card">
+    <h4>I · The World Is Porous</h4>
+    <p>Reality may enter the fiction at any moment, by procedure. A receipt, a downpour, an overheard phrase — the system provides doors, not walls. Digital tools must amplify this porousness, never replace it with a screen.</p>
+  </div>
+  <div class="card">
+    <h4>II · The Archive Is the Game</h4>
+    <p>Play produces memory; memory produces play. Nothing written is ever wasted — the system owes every card a second life. Losing the archive is the only true character death.</p>
+  </div>
+  <div class="card">
+    <h4>III · The Oracle Deepens, Never Gates</h4>
+    <p>Every question answerable online must be answerable offline, more plainly. Connectivity adds voice and depth; it never unlocks the door. A traveler with one die and a notebook has the full game.</p>
+  </div>
+</section>
+
+<!-- ================= TRAVELER ================= -->
+<section id="traveler">
+  <div class="marker">Character</div>
+  <h2>The Traveler</h2>
+  <p>A traveler is made in ten minutes, from five answers and six dots. There are no classes, no builds, no advancement ladder — travelers change by <em>accumulating history</em>, not power.</p>
+
+  <h3>Five Answers</h3>
+  <ul class="plain">
+    <li>What are you called on the road?</li>
+    <li>Why did you begin wandering? <span style="color:var(--faded)">(your first Thread — an open mystery)</span></li>
+    <li>What do you always carry? <span style="color:var(--faded)">(your first Vessel — photograph it into the Archive)</span></li>
+    <li>What do you fear becoming? <span style="color:var(--faded)">(your Burden — it occupies a satchel slot, always)</span></li>
+    <li>What place still appears in your dreams? <span style="color:var(--faded)">(your first Motif — the Echo engine's first seed)</span></li>
+  </ul>
+  <p>Notice: character creation <em>is</em> archive creation. The five answers become five cards, and the engine begins working on them immediately.</p>
+
+  <h3>Three Facets</h3>
+  <p>Distribute six dots, no facet above three, none at zero.</p>
+  <div class="facets">
+    <div class="facet">
+      <div class="name">Bone</div>
+      <div class="gloss">endurance · force · the body's memory</div>
+    </div>
+    <div class="facet">
+      <div class="name">Breath</div>
+      <div class="gloss">presence · nerve · meeting the world</div>
+    </div>
+    <div class="facet">
+      <div class="name">Dream</div>
+      <div class="gloss">symbol-sight · intuition · the undertow</div>
+    </div>
+  </div>
+
+  <h3>The Satchel</h3>
+  <p>Seven slots. Objects fill slots — but so do heavy memories, unkept promises, and fears. To take on something new and weighty, you may have to <em>set something down</em>, and say aloud where you left it. What is set down becomes a card. The Echo engine remembers where you left it.</p>
+</section>
+
+<!-- ================= CROSSING ================= -->
+<section id="crossing">
+  <div class="marker">Resolution</div>
+  <h2>The Crossing</h2>
+  <p>Most of play is conversation: describe, ask, notice, decide. Dice appear only at a <strong>Crossing</strong> — when the outcome is uncertain <em>and</em> something would be lost by failing. Everything else simply happens.</p>
+
+  <div class="card">
+    <h4>The Roll</h4>
+    <p class="mech">
+      Roll <b>Traveler dice</b> (d6s equal to your leading facet, keep highest)<br>
+      against one <b>World die</b> (d6).<br><br>
+      <b>Traveler higher</b> — passage. It goes as you intended.<br>
+      <b>Tie</b> — the Toll. You pass, but the world asks a question of you (draw from the Undertow) and something small is owed.<br>
+      <b>World higher</b> — turned aside. The world moves instead; if there was danger, mark Weathering on the leading facet.
+    </p>
+  </div>
+
+  <div class="card sea">
+    <h4>Turn of Weather</h4>
+    <p>If the Traveler and World dice show <strong>doubles</strong>, the real world is invited in: everyone looks up from the table. The first thing anyone notices — a sound, a passerby, the light changing — enters the fiction immediately, interpreted together. This is the porous boundary, mechanized.</p>
+  </div>
+
+  <h3>Weathering</h3>
+  <p>There is no hit-point track. Each facet has three weathering boxes. A fully weathered facet <em>closes</em>: it cannot lead a Crossing, and the traveler shows it — a limp, a silence, a distance in the eyes.</p>
+  <p>When all three facets close, the traveler must take the <strong>Long Rest</strong>: they leave the story until a full real-world day has passed. No death — travelers are not spent like ammunition. But absence has weight, and the story moves without them.</p>
+  <p>Weathering clears one box per facet at each genuine rest: a night's sleep, a shared meal, a real pause in the real journey.</p>
+</section>
+
+<!-- ================= UNDERTOW ================= -->
+<section id="undertow">
+  <div class="marker">Oracle</div>
+  <h2>The Undertow</h2>
+  <p>When no one at the table knows the answer — including whoever is keeping the lantern — ask the Undertow. It has three layers, and the deeper layers are luxuries, never requirements.</p>
+
+  <div class="tiers">
+    <div class="card">
+      <h4>Layer 0 · The Die — always</h4>
+      <p>Ask a yes/no question, roll a d6, interpret together:</p>
+      <table>
+        <tr><th>Roll</th><th>The water says</th></tr>
+        <tr><td>1</td><td>No — and it worsens</td></tr>
+        <tr><td>2</td><td>No</td></tr>
+        <tr><td>3</td><td>No — but a door opens</td></tr>
+        <tr><td>4</td><td>Yes — but a price shows</td></tr>
+        <tr><td>5</td><td>Yes</td></tr>
+        <tr><td>6</td><td>Yes — and it deepens</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4>Layer 1 · The Lens — offline, on-device</h4>
+      <p>Point the camera at anything: a found object, a doorway, a stain on a wall. The device reads what it can without any network — dominant colors, brightness, texture, time of day, weather if cached — and folds those readings through seeded prompt tables into an omen. The same object photographed at dusk and at noon yields different omens. Nothing leaves the device.</p>
+    </div>
+    <div class="card">
+      <h4>Layer 2 · The Archivist — when signal is found</h4>
+      <p>The narrating intelligence. It has read the whole Archive. It answers in the voice of the journal itself — never as a chatbot, always as the book speaking back. It proposes Fragments, notices Motifs the table has missed, gives found objects histories, and can carry a full solo session. When the signal dies mid-sentence, the sentence stays unfinished. That, too, is an omen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ECHOES ================= -->
+<section id="echoes">
+  <div class="marker">Memory</div>
+  <h2>Fragments, Motifs, Echoes</h2>
+
+  <h3>Fragments</h3>
+  <p>A Fragment is an unexplained detail, presented without its solution — every clock showing a different hour, warm tea in an abandoned chapel. Fragments open Threads. Threads do not have hidden answers waiting to be found; the truth is discovered <em>through</em> play, and the most resonant interpretation at the table becomes canon.</p>
+
+  <h3>Motifs</h3>
+  <p>A Motif is a recurring symbol the Archive tracks as a first-class object: rosemary, drowned bells, the number nine, a woman in grey. Any card may be tagged with motifs. Motifs are how the Archive dreams.</p>
+
+  <h3>The Echo Engine</h3>
+  <p>The signature system. Old cards resurface, transformed — and the schedule is borrowed from how human memory actually works:</p>
+  <div class="card sea">
+    <h4>Narrative Spaced Repetition</h4>
+    <p class="mech">
+      A card becomes eligible to echo after:<br>
+      <b>1 passage</b> → then <b>3 passages</b> → then <b>1 journey</b> → then <b>1 year</b>.<br><br>
+      When eligible, the engine offers it back <b>changed</b>: same motif,
+      different vessel. The scent from the inn returns at a ruined shrine.
+      The stranger's phrase returns as graffiti in another country.
+    </p>
+    <p>Offline, echoes are chosen by motif co-occurrence and the schedule. Online, the Archivist chooses with more cunning — but the traveler never knows which mind chose. That uncertainty is deliberate.</p>
+  </div>
+  <div class="whisper">Across years of travel, the Archive becomes a fictional shadow of a real life — a second country you have been walking through all along.</div>
+</section>
+
+<!-- ================= VESSELS ================= -->
+<section id="vessels">
+  <div class="marker">Found Objects</div>
+  <h2>Vessels</h2>
+  <p>A Vessel is a real object admitted into the fiction: a shell, a ticket stub, a key found on a beach. The procedure:</p>
+  <ul class="plain">
+    <li><strong>Find</strong> it in the actual world.</li>
+    <li><strong>Photograph</strong> it into the Archive — the Lens reads it and offers a Charge.</li>
+    <li><strong>Name</strong> it together: what it is in the fiction, who held it, what it wants.</li>
+    <li><strong>Carry</strong> it — a Vessel occupies a satchel slot in the game <em>and</em> a pocket in reality.</li>
+  </ul>
+  <p>A Charge is a single latent property, phrased as a hedge: <em>"it grows cold near untruth,"</em> <em>"it hums where someone drowned."</em> Charges are never triggered by the carrier — only by the world, at the lantern-keeper's or the oracle's whim.</p>
+</section>
+
+<!-- ================= PASSAGES ================= -->
+<section id="passages">
+  <div class="marker">Play</div>
+  <h2>Passages &amp; Modes</h2>
+  <p>A session is a <strong>Passage</strong>. Whether it lasts twenty minutes on a delayed train or three hours at a hostel table, it moves through the same six beats:</p>
+  <ol class="arc">
+    <li><b>Threshold</b> — a single vivid image opens the passage. On the road, it may simply be described from the window.</li>
+    <li><b>Wander</b> — conversation, travel, atmosphere. Questions over answers.</li>
+    <li><b>Fragment</b> — something unexplained appears, from the deck, the oracle, or a player.</li>
+    <li><b>Crossing</b> — someone risks something that matters.</li>
+    <li><b>Echo</b> — the engine offers an old card back, transformed. The table decides how it manifests.</li>
+    <li><b>Residue</b> — the passage closes on an unresolved image, written into the Archive as the next passage's seed. Not closure. Resonance.</li>
+  </ol>
+
+  <h3>Solo — the traveler and the book</h3>
+  <p>The Archive keeps the lantern. The Undertow answers questions; the Archivist, when awake, narrates. Solo play leans journal-first: write, ask, roll, write. A passage can be played entirely on a park bench in fifteen minutes.</p>
+
+  <h3>Duo — alternating custody</h3>
+  <p>Two travelers trade the lantern each scene. Whoever holds it frames the world and voices its figures; the other acts. The oracle arbitrates what neither should decide. Ideal for a traveling pair — one narrates the town you have both just walked through.</p>
+
+  <h3>Table — three or four, rotating keeper</h3>
+  <p>No permanent GM. Each passage, the lantern passes to the next keeper, who prepares only three things: an opening image, one Fragment, one tension. The truth of every mystery is discovered at the table, so the keeper is never the one person who knows. Everyone plays a traveler; the keeper's traveler simply stands quieter that passage.</p>
+
+  <h3>Ritual brackets</h3>
+  <p>Every passage opens and closes the same way, in every mode: one breath of actual silence, then the threshold image; and at the end, each participant names one image they will remember. The Archive records the named images — they are prime Echo material.</p>
+</section>
+
+<!-- ================= ARCHIVE / PLATFORM ================= -->
+<section id="archive">
+  <div class="marker">Platform</div>
+  <h2>The Archive — Technical Shape</h2>
+  <p>An installable, offline-first progressive web app. No app store, no account wall, no dependency on any server to play. It is a journal that happens to contain a game engine.</p>
+
+  <h3>Everything is a card</h3>
+  <table>
+    <tr><th>Card</th><th>What it holds</th></tr>
+    <tr><td>Traveler</td><td>the five answers, facets, weathering, satchel</td></tr>
+    <tr><td>Vessel</td><td>photo, charge, fictional identity, real location found</td></tr>
+    <tr><td>Fragment</td><td>the unexplained detail and its open Thread</td></tr>
+    <tr><td>Motif</td><td>a symbol; links every card it touches</td></tr>
+    <tr><td>Waypoint</td><td>a place, real or fictional or both, with its atmosphere</td></tr>
+    <tr><td>Figure</td><td>a person met on the road, in either world</td></tr>
+    <tr><td>Passage</td><td>the session record: beats, rolls, residue image</td></tr>
+    <tr><td>Journey</td><td>a trip; passages belong to journeys, journeys to a life</td></tr>
+  </table>
+
+  <h3>Architecture</h3>
+  <ul class="plain">
+    <li><strong>Shell:</strong> PWA — service worker precache, installable to home screen, fully functional in airplane mode from first install onward.</li>
+    <li><strong>Store:</strong> IndexedDB as the single source of truth; the archive lives on the device, encrypted export available.</li>
+    <li><strong>Lens (L1):</strong> on-device canvas analysis of photographs — palette, luminance, texture entropy, timestamp — folded through seeded oracle tables. No image ever needs to leave the device.</li>
+    <li><strong>Archivist (L2):</strong> LLM narrator via API when online, prompted with a distilled archive digest plus the live passage. Graceful degradation is a design feature, not an apology.</li>
+    <li><strong>Echo scheduler:</strong> local — motif index, co-occurrence weights, spaced-repetition intervals; runs identically offline and on.</li>
+    <li><strong>Context seeds:</strong> optional geolocation and cached weather feed the Lens and the threshold-image generator. Every sensor is opt-in per journey.</li>
+    <li><strong>Shared table:</strong> one device passed hand to hand — the device is the lantern. Cards trade between two archives by QR when travelers part ways.</li>
+    <li><strong>Export:</strong> the entire archive renders to a Markdown vault — one file per card, motif links as wikilinks — dropping cleanly into an Obsidian vault. The Archive is never a silo.</li>
+  </ul>
+</section>
+
+<!-- ================= ROADMAP ================= -->
+<section id="roadmap">
+  <div class="marker">The Road Ahead</div>
+  <h2>Roadmap</h2>
+  <table class="roadmap">
+    <tr><th>Milestone</th><th>What exists</th></tr>
+    <tr><td>v0.1 — The Notebook</td><td>PWA shell, card archive, traveler creation, dice + Layer-0 oracle, passage log. Fully playable solo, offline, forever.</td></tr>
+    <tr><td>v0.2 — The Lens</td><td>Camera oracle with on-device analysis; Vessels with Charges; motif tagging; Markdown/Obsidian export.</td></tr>
+    <tr><td>v0.3 — The Echo</td><td>Echo scheduler with spaced narrative repetition; residue images as seeds; journey structure.</td></tr>
+    <tr><td>v0.4 — The Archivist</td><td>Online narrator layer, archive digest prompting, solo full-narration mode, mid-sentence signal loss as fiction.</td></tr>
+    <tr><td>v0.5 — The Table</td><td>Pass-and-play polish, QR card exchange, keeper rotation support, ritual brackets built into the passage flow.</td></tr>
+  </table>
+  <p style="margin-top:1.4rem;color:var(--faded)">Rule of thumb for every milestone: it must ship something playable on a bench with no bars of signal, or it is not done.</p>
+</section>
+
+</main>
+
+<footer>
+  Somewhere ahead, beyond the next road, station, ruin, or forgotten doorway —<br>
+  something waits to be discovered.
+  <div class="small">Reverie · The Wayfarer's Archive · Reference Edition</div>
+</footer>
+
+</body>
+</html>

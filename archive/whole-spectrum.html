@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — The Whole Spectrum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.14rem;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;
+    overflow-x:auto;
+    padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+
+  header{
+    position:relative;
+    min-height:88vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes breathe{
+    0%,100%{opacity:.55;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.06);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .glow{animation:none;opacity:.8;}
+    html{scroll-behavior:auto;}
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(3rem,10vw,5.6rem);
+    letter-spacing:.06em;
+    color:var(--bone);
+    line-height:1.05;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.15rem,3.4vw,1.55rem);
+    color:var(--lantern);
+    margin-top:1.1rem;
+  }
+  .strapline{
+    max-width:34rem;
+    color:var(--faded);
+    margin-top:2rem;
+    font-size:1.05rem;
+  }
+  .strapline em{color:var(--bone);font-style:italic;}
+
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);
+    display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-size:clamp(1.9rem,6vw,2.6rem);
+    margin:.7rem 0 1.4rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-style:italic;
+    font-size:1.45rem;color:var(--lantern);
+    margin:2.4rem 0 .7rem;
+  }
+  p{margin-bottom:1.05rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.22rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;
+    margin:1.8rem 0;
+  }
+
+  .card{
+    background:var(--fog);
+    border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);
+    border-radius:var(--radius);
+    padding:1.3rem 1.4rem;
+    margin:1.4rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child{margin-bottom:0;}
+  .mech{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.86rem;line-height:1.8;
+    color:var(--bone);
+  }
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.84rem;
+    margin:1.2rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;
+    font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--seaglass);
+    padding:.5rem .7rem;border-bottom:1px solid var(--hairline);
+  }
+  td{
+    padding:.55rem .7rem;
+    border-bottom:1px solid rgba(232,226,212,.06);
+    vertical-align:top;
+  }
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+
+  /* spectrum diagram */
+  .spectrum{
+    display:grid;grid-template-columns:1fr auto 1fr;
+    gap:0;align-items:stretch;
+    margin:2rem 0;
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .pole{
+    padding:1.4rem 1.2rem;background:var(--fog-deep);
+  }
+  .pole .polename{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.6rem;letter-spacing:.06em;
+  }
+  .pole.hearth .polename{color:var(--lantern);}
+  .pole.road .polename{color:var(--seaglass);}
+  .pole .gloss{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--faded);margin:.4rem 0 .9rem;line-height:1.7;
+  }
+  .pole ul{list-style:none;font-size:.98rem;color:var(--bone);}
+  .pole li{margin-bottom:.35rem;padding-left:1rem;position:relative;}
+  .pole.hearth li::before{content:"◆";position:absolute;left:0;font-size:.6rem;top:.42rem;color:var(--lantern-dim);}
+  .pole.road li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  .hub{
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    padding:1rem .9rem;
+    background:var(--fog);
+    border-left:1px solid var(--hairline);
+    border-right:1px solid var(--hairline);
+    text-align:center;
+  }
+  .hub .station{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--lantern);
+    writing-mode:vertical-rl;
+  }
+  @media(max-width:640px){
+    .spectrum{grid-template-columns:1fr;}
+    .hub{border:0;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);padding:.7rem;}
+    .hub .station{writing-mode:horizontal-tb;}
+  }
+
+  .facets{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1.4rem 0;}
+  @media(max-width:600px){.facets{grid-template-columns:1fr;}}
+  .facet{
+    background:var(--fog-deep);
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    padding:1.1rem 1rem;text-align:center;
+  }
+  .facet .name{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.5rem;letter-spacing:.08em;color:var(--bone);
+  }
+  .facet .gloss{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--faded);margin-top:.35rem;line-height:1.6;
+  }
+  .arc{list-style:none;counter-reset:arc;margin:1.4rem 0;}
+  .arc li{
+    counter-increment:arc;
+    padding:.85rem 0 .85rem 3rem;
+    position:relative;
+    border-bottom:1px solid rgba(232,226,212,.06);
+  }
+  .arc li::before{
+    content:counter(arc,lower-roman);
+    position:absolute;left:.4rem;top:.9rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;color:var(--seaglass);letter-spacing:.1em;
+    width:2rem;
+  }
+  .arc b{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.18rem;color:var(--lantern);
+  }
+  ul.plain{list-style:none;margin:0 0 1.05rem;}
+  ul.plain li{padding-left:1.3rem;position:relative;margin-bottom:.4rem;}
+  ul.plain li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  .roadmap td:first-child{color:var(--seaglass);}
+  footer{
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);
+    color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.25rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.6rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+<div style="background:#1c2733;border-bottom:1px solid rgba(224,164,88,.4);color:#8a97a3;font-family:ui-monospace,monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;text-align:center;padding:.7rem 1rem;">Design history — superseded by <a href="../notebook-game.html" style="color:#e0a458;">the Notebook Game</a> and its guides</div>
+
+<nav aria-label="Sections">
+  <a href="#spectrum">Spectrum</a>
+  <a href="#cosmology">Cosmology</a>
+  <a href="#hearth">The Hearth</a>
+  <a href="#road">The Road</a>
+  <a href="#roundtrip">Round Trip</a>
+  <a href="#bridge">Bridge</a>
+  <a href="#platform">Platform</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">One platform · Two faces · One archive</div>
+  <h1>REVERIE</h1>
+  <div class="subtitle">The Whole Spectrum</div>
+  <p class="strapline">A table at home where a keeper fires beats into the dark. A book in the pocket that plays back your travels. <em>Between them, a Station where everything you gather is filed — and nothing filed is ever lost.</em></p>
+</header>
+
+<main>
+
+<!-- ================= SPECTRUM ================= -->
+<section id="spectrum">
+  <div class="marker">The Thesis</div>
+  <h2>Two faces, one game</h2>
+  <p>Reverie already exists twice. There is the <strong>Hearth</strong> — the text-first virtual tabletop you built, where a keeper loads a prep sheet and fires beats to the players: narration, voices, visions, spheres of atmosphere, dice. And there is the <strong>Road</strong> — the offline archive designed for travel, where one to four wanderers play from a journal that remembers.</p>
+  <p>These are not two products. They are two postures of the same body: the Hearth is Reverie <em>prepared</em>; the Road is Reverie <em>emergent</em>. What unifies them is the Archive — a single deck of living cards that both faces read from and write to.</p>
+
+  <div class="spectrum">
+    <div class="pole hearth">
+      <div class="polename">The Hearth</div>
+      <div class="gloss">online · keeper-led · broadcast · composed</div>
+      <ul>
+        <li>Prep sheets fired beat by beat</li>
+        <li>Voices, visions, sound, spheres</li>
+        <li>Full table, real-time</li>
+        <li>Authored surprise</li>
+      </ul>
+    </div>
+    <div class="hub">
+      <div class="station">The Station · The Archive</div>
+    </div>
+    <div class="pole road">
+      <div class="polename">The Road</div>
+      <div class="gloss">offline · oracle-led · journal · emergent</div>
+      <ul>
+        <li>Passages played anywhere</li>
+        <li>Camera, dice, weather, found things</li>
+        <li>Solo, duo, small band</li>
+        <li>Discovered surprise</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="whisper">Travel feeds the table. The table haunts the travel. The round trip is the product.</div>
+</section>
+
+<!-- ================= COSMOLOGY ================= -->
+<section id="cosmology">
+  <div class="marker">The Hinge</div>
+  <h2>Spheres &amp; the Station</h2>
+  <p>Your own fiction already contains the join. The Hearth's atmosphere engine changes the whole mood of the table by invoking a <em>sphere</em> — the drowned moon's warm tavern light, the pale gate's cold liminality, moonside's silver unease. And your campaign world names the place between them: <strong>Placeholder Station</strong>, the hub where everything that exists must first be processed into existing.</p>
+  <p>So let it be literal, across the whole platform:</p>
+  <ul class="plain">
+    <li><strong>Spheres are places, moods, and planes at once.</strong> At the Hearth, invoking a sphere recolors the interface, the sound, the register of the storyteller's voice. On the Road, spheres are how the Archive files the atmosphere of real places.</li>
+    <li><strong>The Lens files reality into the cosmology.</strong> Photograph a rain-dark alley and the on-device oracle reads its palette and light — and tells you which sphere this place lies in. Your actual journeys become journeys between spheres. The porous boundary now has a map.</li>
+    <li><strong>The Station is the platform's own fiction.</strong> The Archive is a Station ledger. Cards are filings. Echoes are what the clerks of the Bureau send back, misdelivered on purpose. A traveler whose archive is empty is, strictly speaking, unprocessed — and character creation is the processing.</li>
+  </ul>
+  <div class="card">
+    <h4>Why this matters</h4>
+    <p>The Station gives the two faces a shared world without forcing one genre. A cozy hearth campaign and a solo passage on a night train both take place <em>somewhere among the spheres</em> — and anything filed in one can lawfully surface in the other. The bureaucracy-as-cosmos joke is also the data model.</p>
+  </div>
+</section>
+
+<!-- ================= HEARTH ================= -->
+<section id="hearth">
+  <div class="marker">Face One · exists today</div>
+  <h2>The Hearth</h2>
+  <p>The virtual tabletop as built: a keeper's private prep sheet in plain Markdown, with tagged blocks that can be fired to the table. Prose between blocks belongs to the keeper alone. This design is already right — the enrichment is what flows into it and out of it, not a rebuild.</p>
+
+  <h3>The beat vocabulary</h3>
+  <table>
+    <tr><th>Beat</th><th>What it broadcasts</th></tr>
+    <tr><td>@narration</td><td>prose into the main stream</td></tr>
+    <tr><td>@story</td><td>the world's own centered storyteller voice</td></tr>
+    <tr><td>@npc: Name</td><td>a line spoken with a face</td></tr>
+    <tr><td>@image</td><td>a vision (main pane) or panel image</td></tr>
+    <tr><td>@note</td><td>a short sensory card in the side panel</td></tr>
+    <tr><td>@atmosphere</td><td>a sphere — the whole mood turns</td></tr>
+    <tr><td>@sound</td><td>ambient loop or single cue</td></tr>
+    <tr><td>@roll · @prompt</td><td>dice at the table; one-tap rolls from sheets</td></tr>
+  </table>
+
+  <h3>What the Hearth gains from the merger</h3>
+  <ul class="plain">
+    <li><strong>Live cards.</strong> Anything that happens at the table — a named stranger, an unexplained detail, a phrase that lands — can be captured as an Archive card mid-session, motif-tagged with one tap.</li>
+    <li><strong>The Archivist as whisperer.</strong> At the Hearth the narrating intelligence never speaks to players. It sits at the keeper's shoulder: proposing the next beat, recalling that the rosemary motif last appeared four passages ago, drafting an @npc line in a voice already established.</li>
+    <li><strong>Echoes at the table.</strong> The same Echo engine that haunts the Road can offer the keeper a resurfaced card as an optional beat — the Hearth's version of the world remembering.</li>
+  </ul>
+</section>
+
+<!-- ================= ROAD ================= -->
+<section id="road">
+  <div class="marker">Face Two · the portable practice</div>
+  <h2>The Road</h2>
+  <p>The Wayfarer's Archive, in brief — the full treatment stands in its own reference. An installable, offline-first journal that contains a game engine; one to four travelers; no permanent keeper required.</p>
+
+  <h3>The Traveler</h3>
+  <p>Made in ten minutes from five answers — road-name, why you wander, what you carry, what you fear becoming, the place that appears in your dreams — each answer becoming a card the engine begins working on immediately. Six dots across three facets:</p>
+  <div class="facets">
+    <div class="facet">
+      <div class="name">Bone</div>
+      <div class="gloss">endurance · force · the body's memory</div>
+    </div>
+    <div class="facet">
+      <div class="name">Breath</div>
+      <div class="gloss">presence · nerve · meeting the world</div>
+    </div>
+    <div class="facet">
+      <div class="name">Dream</div>
+      <div class="gloss">symbol-sight · intuition · the undertow</div>
+    </div>
+  </div>
+
+  <h3>The Crossing</h3>
+  <div class="card">
+    <h4>Resolution in one breath</h4>
+    <p class="mech">
+      Traveler d6s (dice = leading facet, keep highest) vs one World d6.<br>
+      <b>Higher</b> — passage. <b>Tie</b> — the Toll: you pass, the world asks a question, something small is owed. <b>Lower</b> — turned aside; mark Weathering if danger.<br>
+      <b>Doubles</b> — Turn of Weather: everyone looks up; the first real thing noticed enters the fiction.
+    </p>
+  </div>
+  <p>No hit points: three weathering boxes per facet. All facets closed means the Long Rest — a full real-world day away from the story. Travelers retire into the world's cast; they are never spent like ammunition.</p>
+
+  <h3>The Undertow, in layers</h3>
+  <ul class="plain">
+    <li><strong>Layer 0 — the die,</strong> always: graded yes/no on a d6, interpreted together.</li>
+    <li><strong>Layer 1 — the Lens,</strong> offline: the camera reads palette, light, texture, and hour on-device and folds them through seeded tables into omens — and into sphere filings.</li>
+    <li><strong>Layer 2 — the Archivist,</strong> when signal is found: the book speaking back, having read everything. When the signal dies mid-sentence, the sentence stays unfinished.</li>
+  </ul>
+
+  <h3>Memory as mechanism</h3>
+  <p><strong>Fragments</strong> open threads without hidden answers — the resonant interpretation becomes canon. <strong>Motifs</strong> are recurring symbols tracked as first-class objects. <strong>Echoes</strong> resurface old cards transformed, on a spaced schedule — one passage, three passages, one journey, one year — so that across time the Archive becomes a fictional shadow of a real life.</p>
+
+  <h3>The Passage</h3>
+  <ol class="arc">
+    <li><b>Threshold</b> — one vivid image opens.</li>
+    <li><b>Wander</b> — conversation, travel, atmosphere.</li>
+    <li><b>Fragment</b> — something unexplained appears.</li>
+    <li><b>Crossing</b> — someone risks what matters.</li>
+    <li><b>Echo</b> — an old card returns, changed.</li>
+    <li><b>Residue</b> — an unresolved image, filed as the next seed.</li>
+  </ol>
+  <p>Modes: solo with the book keeping the lantern; duo with custody alternating each scene; a band of three or four with the lantern rotating each passage — the keeper is never the one person who knows.</p>
+</section>
+
+<!-- ================= ROUND TRIP ================= -->
+<section id="roundtrip">
+  <div class="marker">The Signature</div>
+  <h2>The Round Trip</h2>
+  <p>The single feature that makes the spectrum one product: cards and beats are convertible currency, and the exchange runs both directions through the Station.</p>
+
+  <h3>Road → Hearth: the compiler</h3>
+  <p>At the end of a journey, the Archive can <strong>compile a prep sheet</strong>. Everything you gathered wandering — solo passages on trains, vessels photographed on beaches, strangers half-invented in hostel bars — is arranged into a fireable Markdown file for your Sunday table:</p>
+  <table>
+    <tr><th>Archive card</th><th>Becomes at the Hearth</th></tr>
+    <tr><td>Waypoint</td><td>@atmosphere (its sphere) + @narration of its mood</td></tr>
+    <tr><td>Vessel photo</td><td>@image with its charge as the caption</td></tr>
+    <tr><td>Figure</td><td>@npc, voice notes carried over</td></tr>
+    <tr><td>Fragment</td><td>@note or @story, thread left open for the table</td></tr>
+    <tr><td>Residue image</td><td>@story — the threshold of a scene</td></tr>
+    <tr><td>Crossing</td><td>@roll / @prompt at the tense point</td></tr>
+  </table>
+  <p>You return from three weeks of travel with a campaign arc no one wrote at a desk. The keeper's private prose between beats stays yours to add — the compiler drafts the skeleton, never the soul.</p>
+
+  <h3>Hearth → Road: the write-back</h3>
+  <p>Every fired beat and its outcome is filed as a Passage card. Strangers voiced at the table become Figures; details that landed become Fragments; everything is motif-taggable in the moment. Then the Echo engine owns it all — and three months later, alone on a platform in another country, the Road offers you back <em>the phrase an NPC spoke at your own table</em>, transformed, as graffiti on a wall.</p>
+  <div class="whisper">The people at your Sunday table and the roads you walk alone begin, slowly, to inhabit the same dream.</div>
+</section>
+
+<!-- ================= BRIDGE ================= -->
+<section id="bridge">
+  <div class="marker">Systems</div>
+  <h2>The System Bridge</h2>
+  <p>The Hearth speaks Troika! today — 2d6, roll under skill. The Road speaks the Crossing. Rather than force a migration, the platform is system-light with the Crossing as its native tongue and Troika! as a fully supported engine, joined by a clean mapping:</p>
+  <div class="card sea">
+    <h4>The correspondence</h4>
+    <p class="mech">
+      <b>Bone</b> ↔ Stamina — the body's reserve<br>
+      <b>Breath</b> ↔ Skill — meeting the world capably<br>
+      <b>Dream</b> ↔ Luck — the current beneath events
+    </p>
+    <p>A Troika! test and a Crossing led by the corresponding facet are treated as the same fictional event. Legacy prep sheets — Form 7-Theta, the plane-hopping runs — fire unchanged. New sheets may declare either engine in their front matter; mixed tables simply agree on one per campaign.</p>
+  </div>
+  <p>Characters convert once, at the Station, and hold dual papers thereafter: a Troika! sheet for the Hearth, facets for the Road, one identity in the Archive. The Turn of Weather rule applies under both engines — doubles on any test invite the real world in.</p>
+</section>
+
+<!-- ================= PLATFORM ================= -->
+<section id="platform">
+  <div class="marker">Technical Shape</div>
+  <h2>One Archive, Two Shells</h2>
+  <p>A single card store is the source of truth. The two faces are shells around it.</p>
+  <ul class="plain">
+    <li><strong>The shared spine:</strong> every entity — traveler, vessel, fragment, motif, waypoint, figure, passage, journey, prep sheet, beat — is a card with motif links. Beats are cards with a broadcast payload; prep sheets are ordered collections of them.</li>
+    <li><strong>Road shell:</strong> offline-first PWA; IndexedDB; service worker; on-device Lens; local Echo scheduler; installable and complete without any server, forever.</li>
+    <li><strong>Hearth shell:</strong> the existing online app — rooms, real-time broadcast, spheres, sound — reading prep sheets from the same card format and writing passages back.</li>
+    <li><strong>Sync at the Station:</strong> when the Road finds signal, archives reconcile — last-write-wins per card, motifs merged, echo schedules preserved. Two travelers parting ways exchange cards by QR, no server needed.</li>
+    <li><strong>The Archivist:</strong> one narrating intelligence, two registers — the book's voice on the Road, the whisper at the keeper's shoulder at the Hearth. Prompted from a distilled archive digest either way.</li>
+    <li><strong>Common ground:</strong> the whole Archive exports as a Markdown vault, one file per card, motif links as wikilinks — at home in an Obsidian vault, and a prep sheet is just a view over it.</li>
+  </ul>
+</section>
+
+<!-- ================= ROADMAP ================= -->
+<section id="roadmap">
+  <div class="marker">The Road Ahead</div>
+  <h2>Roadmap</h2>
+  <table class="roadmap">
+    <tr><th>Milestone</th><th>What exists</th></tr>
+    <tr><td>Today — The Hearth</td><td>Prep sheets, fireable beats, spheres, sound, Troika!. Live and playtested (Form 7-Theta and onward).</td></tr>
+    <tr><td>v0.1 — The Notebook</td><td>Road shell: card archive, traveler creation, dice + Layer-0 oracle, passage log. Solo, offline, complete.</td></tr>
+    <tr><td>v0.2 — The Lens</td><td>Camera oracle on-device; vessels with charges; sphere-filing of real places; motif tagging; Markdown export.</td></tr>
+    <tr><td>v0.3 — The Echo</td><td>Spaced narrative repetition; residue seeds; journeys; echoes offered at the Hearth as optional beats.</td></tr>
+    <tr><td>v0.4 — The Archivist</td><td>Both registers: road narrator and keeper's whisperer, from one archive digest.</td></tr>
+    <tr><td>v0.5 — The Round Trip</td><td>The compiler (journey → prep sheet), the write-back (fired beats → passages), QR exchange, Station sync.</td></tr>
+    <tr><td>v1.0 — The Station</td><td>One archive, two shells, dual-papered characters, the whole spectrum under one roof.</td></tr>
+  </table>
+  <p style="margin-top:1.4rem;color:var(--faded)">Two rules govern every milestone: nothing ships that doesn't run on a bench with no signal, and nothing ships that breaks a prep sheet already written.</p>
+</section>
+
+</main>
+
+<footer>
+  What is fired at the hearth is filed at the Station;<br>
+  what is filed at the Station finds you on the road.
+  <div class="small">Reverie · The Whole Spectrum · Unified Reference Edition</div>
+</footer>
+
+</body>
+</html>

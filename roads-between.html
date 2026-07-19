@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — The Roads Between</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.14rem;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;
+    overflow-x:auto;
+    padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+
+  header{
+    position:relative;
+    min-height:70vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes breathe{
+    0%,100%{opacity:.55;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.06);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .glow{animation:none;opacity:.8;}
+    html{scroll-behavior:auto;}
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(2.6rem,9vw,4.6rem);
+    letter-spacing:.06em;line-height:1.08;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.1rem,3.2vw,1.45rem);
+    color:var(--lantern);margin-top:1rem;
+  }
+  .strapline{
+    max-width:32rem;color:var(--faded);
+    margin-top:1.8rem;font-size:1.02rem;
+  }
+
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:4.5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);
+    display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-size:clamp(1.8rem,6vw,2.4rem);
+    margin:.7rem 0 1.2rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-style:italic;
+    font-size:1.4rem;color:var(--lantern);
+    margin:2.1rem 0 .6rem;
+  }
+  p{margin-bottom:1rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.18rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;
+    margin:1.5rem 0;
+  }
+  .card{
+    background:var(--fog);
+    border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);
+    border-radius:var(--radius);
+    padding:1.2rem 1.3rem;
+    margin:1.2rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child,.card ol:last-child{margin-bottom:0;}
+  .mech{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.85rem;line-height:1.8;
+  }
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.84rem;margin:1rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;
+    font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--seaglass);
+    padding:.5rem .6rem;border-bottom:1px solid var(--hairline);
+  }
+  td{
+    padding:.5rem .6rem;
+    border-bottom:1px solid rgba(232,226,212,.06);
+    vertical-align:top;
+  }
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  ol.steps{list-style:none;counter-reset:s;margin:1.1rem 0;}
+  ol.steps li{
+    counter-increment:s;
+    padding:.65rem 0 .65rem 2.6rem;
+    position:relative;
+    border-bottom:1px solid rgba(232,226,212,.06);
+  }
+  ol.steps li::before{
+    content:counter(s);
+    position:absolute;left:.2rem;top:.68rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.78rem;color:var(--seaglass);width:1.8rem;
+  }
+  ol.steps b{color:var(--lantern);font-weight:600;font-family:'Cormorant Garamond',serif;font-size:1.1rem;}
+  ul.plain{list-style:none;margin:0 0 1rem;}
+  ul.plain li{padding-left:1.3rem;position:relative;margin-bottom:.4rem;}
+  ul.plain li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  .opening{
+    background:var(--fog-deep);
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    padding:1.1rem 1.2rem;margin:.9rem 0;
+  }
+  .opening .name{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.3rem;color:var(--bone);
+  }
+  .opening .row{
+    font-size:1rem;margin-top:.4rem;
+  }
+  .opening .k{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--seaglass);margin-right:.5rem;
+  }
+  footer{
+    text-align:center;
+    padding:4.5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);
+    color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.2rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.5rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections">
+  <a href="#road">The Road</a>
+  <a href="#figures">Figures</a>
+  <a href="#perils">Perils</a>
+  <a href="#postcards">Postcards</a>
+  <a href="#dreams">Dreams</a>
+  <a href="#openings">Openings</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">A supplement to the Notebook Game</div>
+  <h1>THE ROADS BETWEEN</h1>
+  <div class="subtitle">Travel, strangers, dangers, dreams — and play by post</div>
+  <p class="strapline">Six modules that plug into the core game. Each is optional; each uses only the notebook, the dice, and the mail.</p>
+</header>
+
+<main>
+
+<!-- ================= ROAD ================= -->
+<section id="road">
+  <div class="marker">Module One</div>
+  <h2>The Road</h2>
+  <p>Use this whenever getting there matters — a day's walk, a night train, a ferry leg. One roll per leg, so a long journey is three or four legs, not thirty.</p>
+  <div class="card">
+    <h4>Procedure — one leg of travel</h4>
+    <ol class="steps">
+      <li><b>Each traveler adds one detail.</b> What changed in the landscape? What sign of life remains? Around the table, one sentence each.</li>
+      <li><b>The lead traveler rolls the World d6</b> on the Road table below.</li>
+      <li><b>Play what comes.</b> A road event is a scene, not a paragraph — but it can be a short one.</li>
+    </ol>
+    <table>
+      <tr><th>d6</th><th>The road brings</th></tr>
+      <tr><td>1</td><td>A Peril stirs — advance one active Peril, or introduce one.</td></tr>
+      <tr><td>2</td><td>A Figure on the road — roll on the Figure tables.</td></tr>
+      <tr><td>3</td><td>A find — describe an object here; it may become a Vessel.</td></tr>
+      <tr><td>4</td><td>The weather turns — the actual weather, now, enters the fiction.</td></tr>
+      <tr><td>5</td><td>An omen — roll d66 on the Fragment table; it needn't resolve here.</td></tr>
+      <tr><td>6</td><td>Good road — arrive early; each traveler erases one weathering box <em>or</em> learns one rumor about the destination (say it aloud, write it down).</td></tr>
+    </table>
+  </div>
+  <p>Draw the journey as you go: a point-to-point line map across a notebook spread — dots for places, a line for each leg, one word of atmosphere beside each dot. This map is the campaign.</p>
+</section>
+
+<!-- ================= FIGURES ================= -->
+<section id="figures">
+  <div class="marker">Module Two</div>
+  <h2>Figures</h2>
+  <p>A Figure is anyone the road provides. Three rolls make one — face, want, and the off-note. The off-note is what makes them Reverie's: every stranger carries one small wrongness, which may mean nothing, or everything.</p>
+  <table>
+    <tr><th>d6</th><th>Face</th><th>Want</th><th>The off-note</th></tr>
+    <tr><td>1</td><td>ferryman / driver</td><td>to be believed</td><td>knows your road-name</td></tr>
+    <tr><td>2</td><td>innkeeper / host</td><td>passage out</td><td>never blinks at strange things</td></tr>
+    <tr><td>3</td><td>pilgrim / seasonal worker</td><td>to give something away</td><td>carries the same keepsake as one of you</td></tr>
+    <tr><td>4</td><td>clerk / official</td><td>a rule kept unbroken</td><td>speaks of this place in the past tense</td></tr>
+    <tr><td>5</td><td>child / apprentice</td><td>news of someone</td><td>is expected somewhere they never go</td></tr>
+    <tr><td>6</td><td>someone met before</td><td>for you to stay</td><td>appears again later, elsewhere, unchanged</td></tr>
+  </table>
+  <p>Give every named Figure a line in the notebook. If their off-note ever recurs, mark it in the margin — Figures are echo material of the first order. A retired traveler enters this cast permanently and may be rolled instead of a stranger.</p>
+</section>
+
+<!-- ================= PERILS ================= -->
+<section id="perils">
+  <div class="marker">Module Three</div>
+  <h2>Perils</h2>
+  <p>Reverie has no monster stats. A Peril is any patient danger: a flood rising, a rumor spreading, a debt collector gaining ground, something following at exactly the same distance. Perils give the game teeth without combat.</p>
+  <div class="card">
+    <h4>Procedure</h4>
+    <ol class="steps">
+      <li><b>Name it and draw three boxes</b> at the top of a notebook page. Perils are always named aloud — dangers in Reverie are personal.</li>
+      <li><b>It advances</b> — mark one box — whenever: a Crossing against it fails; the Toll table feeds it (the table's choice); or the oracle answers <em>No, and…</em> to a question about safety. An <em>urgent</em> Peril feeds on <b>every</b> Toll, and arrives in roughly four scenes instead of six — declare urgency when you name it.</li>
+      <li><b>At three marks it arrives.</b> Frame the scene where it can no longer be avoided. Now only Crossings, cost, or cleverness remain.</li>
+      <li><b>It is undone by understanding.</b> Every Peril is also a Riddle: establish seven facts about it, and the truth-telling includes how it can be ended, escaped, or appeased. You can outrun a flood; you can only riddle a curse.</li>
+    </ol>
+  </div>
+  <p>Run at most two Perils at once. A Peril that arrives and passes leaves a mark on the map — write what it changed.</p>
+</section>
+
+<!-- ================= POSTCARDS ================= -->
+<section id="postcards">
+  <div class="marker">Module Four · play by post</div>
+  <h2>Passage Postcards</h2>
+  <p>The travel game that travels. When the table is apart — one of you abroad, the campaign on pause — the game continues by mail. A real postcard, stamped and sent, is a game move.</p>
+  <div class="card sea">
+    <h4>Sending</h4>
+    <p class="mech">
+      On the back of a postcard, write exactly three things:<br>
+      <b>1.</b> one residue image from a passage you played (solo counts)<br>
+      <b>2.</b> one open question you cannot answer<br>
+      <b>3.</b> one echo-mark symbol, drawn where the stamp faces it<br><br>
+      Sign it with your road-name. Mail it.
+    </p>
+  </div>
+  <div class="card sea">
+    <h4>Receiving</h4>
+    <p class="mech">
+      A received postcard is binding, gently:<br>
+      <b>—</b> your next passage must open with its image as the Threshold<br>
+      <b>—</b> its question goes to the Oracle in that passage<br>
+      <b>—</b> its symbol enters your margin; the motif is now shared<br><br>
+      Tape the postcard into the notebook. It is a Vessel.
+    </p>
+  </div>
+  <p>Solo travelers feeding a home table, two campaigns cross-pollinating, a duo separated for a season — all the same procedure. Nothing needs to be synchronized; the mail's delay <em>is</em> the mechanic. An image sent from a night train in one country arrives transformed by three weeks into someone's opening scene in another.</p>
+  <div class="whisper">Design the postcard back as a true postal back: message left, address right — and the oracle table printed inside the stamp box.</div>
+</section>
+
+<!-- ================= DREAMS ================= -->
+<section id="dreams">
+  <div class="marker">Module Five</div>
+  <h2>Dream Passages</h2>
+  <p>At any genuine rest, one traveler may dream. A Dream Passage is ten minutes, played by different weather:</p>
+  <ul class="plain">
+    <li><strong>Dream leads everything.</strong> All Crossings use the Dream facet, whatever is attempted. Strength means nothing here.</li>
+    <li><strong>Nothing weathers.</strong> No boxes are marked in dreams — but Tolls still bind. What you owe in a dream, you owe.</li>
+    <li><strong>Everything is symbol.</strong> People appear as their off-notes. Places appear as their feelings. The Fragment table is read as imagery, never event.</li>
+    <li><strong>One thing crosses back.</strong> When the dreamer wakes, the table chooses one object, phrase, or image from the dream. Write it, mark it. It must appear in waking play before the journey ends — that is the dream's demand.</li>
+  </ul>
+  <p>Dreams are the game's echo factory and its quietest mode — a good Dream Passage is mostly questions. Solo, it is a five-minute written exercise before sleep, in the actual bed, in the actual elsewhere.</p>
+</section>
+
+<!-- ================= OPENINGS ================= -->
+<section id="openings">
+  <div class="marker">Module Six · play tonight</div>
+  <h2>Six Openings</h2>
+  <p>A ready Opening is a keeper's whole preparation: image, fragment, tension. Pick one or roll d6, read it aloud, begin. Everything else is discovered.</p>
+
+  <div class="opening">
+    <div class="name">1 · The Ferry That Waits</div>
+    <div class="row"><span class="k">Image</span>A ferry moored at dawn; the ferryman asleep standing up, hand on the rope.</div>
+    <div class="row"><span class="k">Fragment</span>He refuses payment from one of you — only one.</div>
+    <div class="row"><span class="k">Tension</span>The far shore is on nobody's map, and the queue behind you is growing.</div>
+  </div>
+
+  <div class="opening">
+    <div class="name">2 · The Counting Town</div>
+    <div class="row"><span class="k">Image</span>Chalk marks on every door, and every mark is one lower than yesterday's.</div>
+    <div class="row"><span class="k">Fragment</span>Bells at the wrong hour; nobody reacts.</div>
+    <div class="row"><span class="k">Tension</span>The count reaches zero tomorrow, and the only person who'll discuss it is packing.</div>
+  </div>
+
+  <div class="opening">
+    <div class="name">3 · The Inn of Returned Things</div>
+    <div class="row"><span class="k">Image</span>An inn whose lost-and-found shelf holds something a traveler once set down, far from here.</div>
+    <div class="row"><span class="k">Fragment</span>The innkeeper knows your order before you speak.</div>
+    <div class="row"><span class="k">Tension</span>The returned thing wants to go back to where it was left — and it has learned patience.</div>
+  </div>
+
+  <div class="opening">
+    <div class="name">4 · The Backwards River</div>
+    <div class="row"><span class="k">Image</span>The river running the wrong way, calm as ever; boats queuing at the mouth, unwilling to enter.</div>
+    <div class="row"><span class="k">Fragment</span>A tune you know, whistled back at you from underground.</div>
+    <div class="row"><span class="k">Tension</span>Something upstream is drinking, and the wells here have started tasting of elsewhere.</div>
+  </div>
+
+  <div class="opening">
+    <div class="name">5 · The Unsent Letter</div>
+    <div class="row"><span class="k">Image</span>In a stranger's shop, a letter addressed to one of your road-names — postmarked next month.</div>
+    <div class="row"><span class="k">Fragment</span>Your own handwriting, somewhere you have never been.</div>
+    <div class="row"><span class="k">Tension</span>The sender is expected in town before you plan to leave.</div>
+  </div>
+
+  <div class="opening">
+    <div class="name">6 · The Two Bridges</div>
+    <div class="row"><span class="k">Image</span>The old bridge stands new; the new bridge stands ancient. Locals use neither after dark.</div>
+    <div class="row"><span class="k">Fragment</span>Footprints leading onto one bridge; none leading off.</div>
+    <div class="row"><span class="k">Tension</span>The toll-keeper accepts only memories, and gives honest change.</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  The road between two places<br>
+  is a place.
+  <div class="small">Reverie · The Roads Between · Supplement One</div>
+</footer>
+
+</body>
+</html>

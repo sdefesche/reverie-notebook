@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — Keeper's Quick Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.06rem;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    padding:1.5rem 1rem 3.5rem;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  .wrap{max-width:44rem;margin:0 auto;}
+  header{text-align:center;padding:1.6rem 0 1.2rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:.7rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.9rem,7vw,2.6rem);letter-spacing:.05em;line-height:1.1;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--lantern);margin-top:.3rem;font-size:1.1rem;
+  }
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1.4rem;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .card{
+    background:var(--fog);
+    border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);
+    border-radius:var(--radius);
+    padding:1rem 1.1rem;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card.wide{grid-column:1/-1;}
+  .card h2{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:500;color:var(--lantern);margin-bottom:.55rem;
+  }
+  .card.sea h2{color:var(--seaglass);}
+  .card p{margin-bottom:.6rem;}
+  .card p:last-child{margin-bottom:0;}
+  .mech{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.82rem;line-height:1.75;
+  }
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.79rem;
+  }
+  th{
+    text-align:left;font-weight:500;
+    font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--seaglass);padding:.3rem .4rem;
+    border-bottom:1px solid var(--hairline);
+  }
+  td{padding:.28rem .4rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;width:2rem;}
+  ul{list-style:none;}
+  li{padding-left:1.1rem;position:relative;margin-bottom:.3rem;}
+  li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  ol.beats{list-style:none;counter-reset:b;}
+  ol.beats li{counter-increment:b;padding-left:1.6rem;margin-bottom:.35rem;}
+  ol.beats li::before{
+    content:counter(b,lower-roman);
+    position:absolute;left:0;
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--seaglass);
+  }
+  ol.beats b{color:var(--lantern);font-weight:600;font-family:'Cormorant Garamond',serif;}
+  em{font-style:italic;}
+  .d66{columns:2;column-gap:1.4rem;}
+  @media(max-width:640px){.d66{columns:1;}}
+  .d66 table{margin-bottom:.4rem;}
+  .foot{
+    text-align:center;margin-top:1.6rem;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.05rem;
+  }
+  @media print{
+    body{background:#fff;color:#1c2733;padding:0;font-size:9pt;}
+    .card{background:#fff;border-color:#bbb;border-left-color:#a1712f;}
+    .card h2{color:#a1712f;}
+    .card.sea h2, li::before, ol.beats li::before, th{color:#4f7a6c;}
+    .mech b, td:first-child, ol.beats b{color:#a1712f;}
+    .sub,.foot{color:#555;}
+    .eyebrow{color:#4f7a6c;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Quick Reference · Keeper of the Lantern</div>
+  <h1>REVERIE</h1>
+  <div class="sub">you hold the lantern, not the answers</div>
+</header>
+
+<div class="grid">
+
+  <div class="card wide">
+    <h2>Your whole preparation — three things, no more</h2>
+    <p class="mech"><b>an opening image</b> · <b>one fragment</b> · <b>one tension</b></p>
+    <p>You are facilitator and surprise-bearer, never opponent or novelist. You play a traveler too — they simply stand quieter this passage. You don't know the truth of any riddle; a riddle's <em>poser</em> (if invented, not rolled) may answer at most <em>two</em> questions directly across its life — usually you, for your prepared fragment. Rolled riddles are Oracle-only.</p>
+  </div>
+
+  <div class="card">
+    <h2>The passage — six beats</h2>
+    <ol class="beats">
+      <li><b>Threshold</b> — one breath of silence, then the image.</li>
+      <li><b>Wander</b> — travel, talk, small truths.</li>
+      <li><b>Fragment</b> — when energy dips, drop it (or roll d66).</li>
+      <li><b>Crossing</b> — ensure one risk that matters.</li>
+      <li><b>Echo</b> — the session's echo must land by now.</li>
+      <li><b>Residue</b> — each names one image; write &amp; mark them.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Session start — roll the echo</h2>
+    <p class="mech">
+      <b>1–2</b> last session's pages<br>
+      <b>3–4</b> any dog-eared page, eyes closed<br>
+      <b>5–6</b> oldest unresolved mark
+    </p>
+    <p>Pick one marked thing. It returns this session, <em>transformed</em>: same motif, different vessel. Don't force it early.</p>
+  </div>
+
+  <div class="card">
+    <h2>When to call for what</h2>
+    <ul>
+      <li><em>Uncertain + costly</em> → Crossing. Otherwise it just happens.</li>
+      <li><em>Nobody knows</em> → Oracle — including you. Ask it openly.</li>
+      <li><em>Unexplained</em> → open a riddle page, start the fact tally.</li>
+      <li>Tie → Threshold Moment: succeed + Toll (aim it at a Peril if apt) + ten seconds, eyes up, world in.</li>
+      <li>Turned aside in danger → 1 box; 2 if the World die won by 3+.</li>
+      <li>Riddle past 15 questions → valve: truth told with what stands.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Keeper's habits</h2>
+    <ul>
+      <li>Describe what places <em>feel</em> like before what's in them.</li>
+      <li>Answer questions with details, not conclusions.</li>
+      <li>Hand authorship away: "what rumor explains this?"</li>
+      <li>Let contradictions stand; some mysteries stay at six facts.</li>
+      <li>Danger is real — telegraph it, honor retreat.</li>
+      <li>End on resonance. Never wrap up.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Perils — patient dangers</h2>
+    <p class="mech">
+      name it aloud · three boxes<br>
+      advances on: failed Crossing vs it · a Toll fed to it ·
+      <b>no,and</b> about safety<br>
+      three marks → it arrives — frame the unavoidable scene
+    </p>
+    <p>Every Peril is a riddle: seven facts reveal how it ends. Two active at most. <em>Urgent</em> perils feed on every Toll — they arrive in ~4 scenes instead of ~6.</p>
+  </div>
+
+  <div class="card">
+    <h2>The road — one roll per leg</h2>
+    <table>
+      <tr><td>1</td><td>a Peril stirs</td></tr>
+      <tr><td>2</td><td>a Figure on the road</td></tr>
+      <tr><td>3</td><td>a find — maybe a Vessel</td></tr>
+      <tr><td>4</td><td>the real weather enters</td></tr>
+      <tr><td>5</td><td>an omen — roll a Fragment</td></tr>
+      <tr><td>6</td><td>good road — erase a box or learn a rumor</td></tr>
+    </table>
+    <p style="margin-top:.4rem">First: everyone adds one detail of the changing landscape.</p>
+  </div>
+
+  <div class="card">
+    <h2>Figures — roll three</h2>
+    <table>
+      <tr><th>d6</th><th>face</th><th>want</th><th>off-note</th></tr>
+      <tr><td>1</td><td>ferryman</td><td>to be believed</td><td>knows your road-name</td></tr>
+      <tr><td>2</td><td>innkeeper</td><td>passage out</td><td>unsurprised by the strange</td></tr>
+      <tr><td>3</td><td>pilgrim</td><td>to give sth away</td><td>carries your keepsake's twin</td></tr>
+      <tr><td>4</td><td>clerk</td><td>a rule unbroken</td><td>speaks in past tense of here</td></tr>
+      <tr><td>5</td><td>child</td><td>news of someone</td><td>expected where they never go</td></tr>
+      <tr><td>6</td><td>met before</td><td>for you to stay</td><td>reappears later, unchanged</td></tr>
+    </table>
+  </div>
+
+  <div class="card sea">
+    <h2>Toll (on a tie)</h2>
+    <table>
+      <tr><td>1</td><td>something small stays behind</td></tr>
+      <tr><td>2</td><td>a kept truth is spoken</td></tr>
+      <tr><td>3</td><td>a promise; the world collects</td></tr>
+      <tr><td>4</td><td>it takes too long; dusk comes</td></tr>
+      <tr><td>5</td><td>someone learns your road-name</td></tr>
+      <tr><td>6</td><td>the place remembers you passed</td></tr>
+    </table>
+    <p style="margin-top:.4rem">Dog-ear every spoken Toll — the echo roll collects the debt, transformed.</p>
+  </div>
+
+  <div class="card sea">
+    <h2>Charge · Threshold · Feel</h2>
+    <p class="mech">
+      <b>Charge</b> 1 cold near untruth · 2 hums near restless dead ·
+      3 heavier at night · 4 points toward sth lost ·
+      5 animals refuse it · 6 speaks in dreams, one word
+    </p>
+    <p class="mech">
+      <b>Threshold</b> 1 white birds, empty chair · 2 lit window, "empty" building ·
+      3 fog shows only the road behind · 4 a stranger waving — at you, or past ·
+      5 laundry where no one lives · 6 what you see now, made strange
+    </p>
+    <p class="mech">
+      <b>Feel</b> 1 watchful · 2 grieving · 3 expectant ·
+      4 forgetful · 5 too welcoming · 6 holding its breath
+    </p>
+  </div>
+
+  <div class="card wide">
+    <h2>Fragments — d66</h2>
+    <div class="d66">
+      <table>
+        <tr><td>11</td><td>every clock a different hour</td></tr>
+        <tr><td>12</td><td>warm tea, long abandoned</td></tr>
+        <tr><td>13</td><td>child's drawing of a place ahead</td></tr>
+        <tr><td>14</td><td>hoofprints where none could stand</td></tr>
+        <tr><td>15</td><td>the broken thing, mended overnight</td></tr>
+        <tr><td>16</td><td>seven locks; six stand open</td></tr>
+        <tr><td>21</td><td>same face in two crowds</td></tr>
+        <tr><td>22</td><td>fresh flowers, unmarked grave</td></tr>
+        <tr><td>23</td><td>a song no one remembers learning</td></tr>
+        <tr><td>24</td><td>the water flows the wrong way</td></tr>
+        <tr><td>25</td><td>all birds face one direction</td></tr>
+        <tr><td>26</td><td>a letter to your road-name</td></tr>
+        <tr><td>31</td><td>a street the map denies</td></tr>
+        <tr><td>32</td><td>every mirror faces the wall</td></tr>
+        <tr><td>33</td><td>apology for what hasn't happened</td></tr>
+        <tr><td>34</td><td>sea-smell, far from any coast</td></tr>
+        <tr><td>35</td><td>chalk on doors, counting down</td></tr>
+        <tr><td>36</td><td>a statue locals dispute</td></tr>
+      </table>
+      <table>
+        <tr><td>41</td><td>an animal at constant distance</td></tr>
+        <tr><td>42</td><td>tower lights out, floor by floor</td></tr>
+        <tr><td>43</td><td>meal for four; three plates used</td></tr>
+        <tr><td>44</td><td>your handwriting, never been here</td></tr>
+        <tr><td>45</td><td>bells at the wrong hour, ignored</td></tr>
+        <tr><td>46</td><td>one extra person in the photo</td></tr>
+        <tr><td>51</td><td>a stall selling your dreams</td></tr>
+        <tr><td>52</td><td>ferryman refuses one fare only</td></tr>
+        <tr><td>53</td><td>ivy grown as letters</td></tr>
+        <tr><td>54</td><td>every dog silent tonight</td></tr>
+        <tr><td>55</td><td>keys above all doors but one</td></tr>
+        <tr><td>56</td><td>rain everywhere but the square</td></tr>
+        <tr><td>61</td><td>an unexplained funeral</td></tr>
+        <tr><td>62</td><td>your order known before you speak</td></tr>
+        <tr><td>63</td><td>footprints in; none out</td></tr>
+        <tr><td>64</td><td>your tune whistled from below</td></tr>
+        <tr><td>65</td><td>old bridge new; new bridge old</td></tr>
+        <tr><td>66</td><td>your name crossed out of records</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card wide sea">
+    <h2>Modes at a glance</h2>
+    <p class="mech">
+      <b>solo</b> write→ask→roll→write; a question every three lines ·
+      <b>duo</b> lantern passes at doors + Threshold Moments; holder responds, never initiates ·
+      <b>table</b> lantern rotates each passage; keeper's traveler stands quiet
+    </p>
+  </div>
+
+</div>
+
+<div class="foot">Make the world feel alive and answering — then get out of its way.</div>
+
+</div>
+</body>
+</html>

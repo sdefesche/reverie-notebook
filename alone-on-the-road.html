@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — Alone on the Road</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --paper:#ece6d8;
+    --ink:#1c2733;
+    --graphite:#5a646e;
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.13rem;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;overflow-x:auto;
+    padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+  header{
+    position:relative;min-height:70vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:5rem 1.5rem 4rem;overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;pointer-events:none;
+  }
+  @keyframes breathe{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  @media (prefers-reduced-motion:reduce){.glow{animation:none;opacity:.8;}html{scroll-behavior:auto;}}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.6rem,9vw,4.4rem);letter-spacing:.06em;line-height:1.08;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.1rem,3.2vw,1.45rem);color:var(--lantern);margin-top:1rem;
+  }
+  .strapline{max-width:32rem;color:var(--faded);margin-top:1.8rem;font-size:1.02rem;}
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:4.5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.8rem,6vw,2.4rem);margin:.7rem 0 1.2rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+    font-size:1.4rem;color:var(--lantern);margin:2.1rem 0 .6rem;
+  }
+  p{margin-bottom:1rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.18rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;margin:1.5rem 0;
+  }
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.2rem 1.3rem;margin:1.2rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child,.card ul:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.85rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  ul.plain{list-style:none;margin:0 0 1rem;}
+  ul.plain li{padding-left:1.3rem;position:relative;margin-bottom:.4rem;}
+  ul.plain li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;margin:1rem 0;
+  }
+  td{padding:.4rem .5rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+
+  /* the notebook excerpt — daylight inverse */
+  .page{
+    background:var(--paper);color:var(--ink);
+    border-radius:var(--radius);
+    padding:1.6rem 1.6rem 1.6rem 2.2rem;
+    margin:1.6rem 0;
+    position:relative;
+    box-shadow:0 6px 26px rgba(0,0,0,.4);
+    font-weight:400;
+  }
+  .page::before{
+    content:"";position:absolute;top:0;bottom:0;left:1.35rem;
+    width:1px;background:rgba(161,113,47,.5);
+  }
+  .page .plabel{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--graphite);margin-bottom:.9rem;
+  }
+  .page .n{margin-bottom:.55rem;font-style:italic;font-weight:300;}
+  .page .q{
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+    color:var(--ink);margin:.55rem 0;
+  }
+  .page .q b{color:#a1712f;font-weight:500;}
+  .page .mk{
+    position:relative;
+  }
+  .page .mk::before{
+    content:attr(data-g);
+    position:absolute;left:-1.6rem;top:.05rem;
+    color:#4f7a6c;font-style:normal;font-size:.95rem;
+  }
+  .page .aside{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:var(--graphite);margin:.4rem 0 .8rem;
+  }
+  footer{
+    text-align:center;padding:4.5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.5rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections">
+  <a href="#shape">The Shape</a>
+  <a href="#shorthand">Shorthand</a>
+  <a href="#mechanics">Mechanics Solo</a>
+  <a href="#example">A Worked Passage</a>
+  <a href="#advice">Advice</a>
+  <a href="#bridge">Back to the Table</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">A guide to playing Reverie solo</div>
+  <h1>ALONE ON THE ROAD</h1>
+  <div class="subtitle">the notebook is the other player</div>
+  <p class="strapline">Fifteen minutes, a bench, a pencil, two dice. How the whole game runs when it's just you — with a full example passage, played out line by line.</p>
+</header>
+
+<main>
+
+<!-- ================= SHAPE ================= -->
+<section id="shape">
+  <div class="marker">First</div>
+  <h2>The Shape of Solo Play</h2>
+  <p>Solo Reverie is a written conversation between three parties: <strong>you-the-traveler</strong>, who acts and notices; <strong>the oracle</strong>, who answers what you cannot decide; and <strong>the notebook</strong>, which remembers what you'd rather forget. There is no keeper. The tables, the dice, and the world outside your actual window hold the lantern together.</p>
+  <p>The loop is four verbs: <strong>write → ask → roll → write.</strong> Narrate in short lines, not paragraphs. When anything is genuinely open — what's behind the door, whether she believes you, why the bells rang — you ask, you roll, and you write the answer down before your cleverness can improve it. That last part is the entire discipline of solo play: <em>the pencil moves before the editor wakes.</em></p>
+  <div class="whisper">You are not writing a story. You are finding out what happens. The difference is whether the dice can still surprise you.</div>
+  <p>A solo passage runs 15–40 minutes and follows the same six beats as any passage: threshold, wander, fragment, crossing, echo, residue. The one addition: play it <em>somewhere</em>. A bench, a train, a café window. The environment is your third player, and the Threshold Moment will call on it.</p>
+</section>
+
+<!-- ================= SHORTHAND ================= -->
+<section id="shorthand">
+  <div class="marker">Notation</div>
+  <h2>A Solo Shorthand</h2>
+  <p>Speed matters more than prose. A working notation, refined to five marks:</p>
+  <div class="card">
+    <h4>On the line</h4>
+    <p class="mech">
+      <b>—</b>&nbsp; narration (what happens, what you do)<br>
+      <b>?</b>&nbsp; an oracle question, then the roll in brackets<br>
+      <b>✕</b>&nbsp; a crossing: facet, dice, result<br>
+      <b>«»</b> anything the real world contributed<br>
+      <b>margin glyphs</b> echo-marks, as always
+    </p>
+  </div>
+  <p>Write questions as questions, always. "? Is the kiosk still open [4 — yes, but]" does more work than a paragraph, and six months from now it still reads as play, not diary.</p>
+</section>
+
+<!-- ================= MECHANICS ================= -->
+<section id="mechanics">
+  <div class="marker">Rules, Adjusted for One</div>
+  <h2>Every Mechanic, Solo</h2>
+
+  <h3>Crossings</h3>
+  <p>You roll both sides — traveler dice with one hand, World die with the other if you like the theater of it. Rulings about which facet leads are yours, but make them <em>before</em> rolling and write the stakes in one clause: "✕ Breath 2d — if I fail, she closes the shutter." Stakes written first can't be softened after.</p>
+  <p>On a <strong>Threshold Moment</strong> (tie): you succeed, you roll the Toll — and you look up from the notebook for ten honest seconds. The first real thing you notice enters the fiction now. Solo, this rule is at its most potent: there is no table to negotiate with, only you and whatever the world happens to be doing. Write it in «guillemets» so you can always find where reality leaked in.</p>
+
+  <h3>The Oracle</h3>
+  <p>Unchanged — except the interpretation rule. At a table, the player to your left reads the answer first; alone, you need a substitute for that outside voice. Use the <strong>margin rule</strong>: interpret every twist result (<em>and…</em> / <em>but…</em>) through your most recent echo-mark. If your last marked motif was <em>rust</em>, then "yes, but a price shows" has something to do with rust. This keeps the oracle's voice from becoming your own voice wearing a hat.</p>
+
+  <h3>Riddles</h3>
+  <p>Fully playable solo, and quietly the best solo module. Open a page, write the strange situation, and question it across the whole passage — or across several. The tally rules are identical: facts accumulate at roughly two per three questions, <em>no-and</em> crosses one out, seven facts and you must tell the truth using five — and every answer comes from the Oracle, since solo riddles have no poser and no direct answers. Solo advice: <strong>never draft the solution in your head while questioning.</strong> Ask, record, move on. Let the telling be genuinely assembled at the end from what stands on the page — you will surprise yourself, which is the point.</p>
+
+  <h3>Echoes</h3>
+  <p>Run the session-start roll exactly as written (1–2 last session, 3–4 any dog-eared page, 5–6 oldest unresolved mark). Solo, echoes carry extra weight because your notebook spans real geography — the marked page may have been written in another country. Honor the transformation rule strictly: same motif, different vessel. If it returned unchanged, it's a memory; changed, it's an omen.</p>
+
+  <h3>Figures</h3>
+  <p>Roll all three columns and let the Figure speak in written first lines: "— She says: the ferry doesn't take the morning crowd anymore." One line of dialogue per exchange is plenty. Their <em>want</em> is your compass for everything they do; their <em>off-note</em> goes straight into the margin.</p>
+
+  <h3>Perils, the Road, Dreams</h3>
+  <p>All as written. The Road's "everyone adds one detail" becomes: look out the actual window and write one detail of the actual landscape, made strange. Dream passages solo are a five-minute written exercise in the actual bed in the actual elsewhere — Dream leads, nothing weathers, Tolls bind, one thing crosses back.</p>
+</section>
+
+<!-- ================= EXAMPLE ================= -->
+<section id="example">
+  <div class="marker">In Practice</div>
+  <h2>A Worked Passage</h2>
+  <p>Below, a real-shaped solo passage: ~20 minutes, played on a station bench during an hour's delay. The traveler is <strong>Vesna</strong> — Bone 1, Breath 2, Dream 3 — whose keepsake is a broken compass, whose Burden is <em>becoming someone who no longer stops</em>, and whose margin already holds two glyphs: <strong>⌘ rust</strong> and <strong>≋ standing water</strong>.</p>
+
+  <div class="page">
+    <div class="plabel">Passage 9 · platform 2 · echo roll: 5 → oldest unresolved mark = ⌘ rust (p.14, "the rusted bell no one rings")</div>
+    <div class="n">one breath. threshold: the departures board, but every destination is somewhere I've already been.</div>
+    <div class="n">— Vesna waits for the slow train north. Third bench, the one the pigeons avoid.</div>
+    <div class="q">? Is anyone else waiting for this train &nbsp;[2 — <b>no</b>]</div>
+    <div class="n">— empty platform, then. Which is wrong for a Friday.</div>
+    <div class="q">? Do I know why it's empty &nbsp;[3 — <b>no, but</b> a door opens]</div>
+    <div class="n">— no… but the stationmaster's office door stands open. It is never open.</div>
+    <div class="n mk" data-g="⌘">— inside: keys on a board, all rusted. one hook empty. <span style="font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:#5a646e">(echo lands — rust again, new vessel)</span></div>
+    <div class="aside">fragment: rolled 43 — a meal set for four; three plates used. placing it here: on the office desk. riddle opened, p.22.</div>
+    <div class="q">? RIDDLE: Were the eaters railway staff &nbsp;[5 — <b>yes</b>] → fact 1: staff ate here.</div>
+    <div class="q">? Recently &nbsp;[6 — <b>yes, and</b>] → fact 2: recently — the tea still warm. and: the fourth plate is clean because it was never used, not because it was washed.</div>
+    <div class="q">? Did the fourth person ever arrive &nbsp;[1 — <b>no, and</b> it worsens] → cross out fact 1?? no — cross fact 2's comfort: the tea is warm because someone was here <em>seconds</em> ago.</div>
+    <div class="n">— Vesna does not sit down.</div>
+    <div class="n">✕ Dream 3d — listen for whoever just left; if I fail, they hear me first. rolled 4,2,6 vs World 6 — <b>tie. Threshold Moment.</b></div>
+    <div class="n">— toll [5]: someone learns my road-name.</div>
+    <div class="n mk" data-g="≋">«looked up: a man on the far platform wiping the same window over and over» — in the fiction: through the office window, a figure on the far platform, cleaning glass that is already clean, watching me in its reflection. standing water on the tiles at his feet.</div>
+    <div class="q">? Does he answer to the empty key-hook &nbsp;[4 — <b>yes, but</b> — read through last mark ≋: but the water answers first]</div>
+    <div class="n">— the puddle at his feet ripples toward me. against the wind. Vesna leaves the office, unhurried, the way you leave a dog you don't trust.</div>
+    <div class="n">— the slow train arrives, out of schedule and empty. she boards it.</div>
+    <div class="n">residue: <em>a clean fourth plate, and my road-name in someone's mouth I've never met.</em> marked ⌘, dog-eared p.22 — riddle stands at 2 facts.</div>
+  </div>
+
+  <p>Notice what the machinery did there: the echo roll delivered rust before anything happened; the fragment table produced the passage's mystery; a single <em>no, and</em> turned a curiosity into dread; and the Threshold Moment pulled an actual stranger on an actual platform into the fiction, where he immediately became the most frightening thing in it. Total dice rolled: eight. Total prep: none.</p>
+</section>
+
+<!-- ================= ADVICE ================= -->
+<section id="advice">
+  <div class="marker">Hard-Won</div>
+  <h2>Advice</h2>
+
+  <div class="card">
+    <h4>Keep the pencil ahead of the editor</h4>
+    <p>Write stakes before rolling, questions before answers, answers before interpretations. Every one of these is a commitment device against the solo player's one enemy: retroactive authorship. If you catch yourself re-reading a line to improve it mid-passage, put the pencil down, look out the window, come back.</p>
+  </div>
+  <div class="card">
+    <h4>A question every three lines</h4>
+    <p>The pacing rule that keeps solo play a game. Three narration lines without a roll means you are writing fiction, not discovering it. When in doubt, ask something you dread the answer to.</p>
+  </div>
+  <div class="card">
+    <h4>Notice; don't worldbuild</h4>
+    <p>The temptation alone is to invent geography. Resist. Solo Reverie feeds on the world you are actually in: the real timetable, the real weather, the real stranger's real umbrella. Make the actual place strange rather than inventing a strange place. It's faster, and it's the game.</p>
+  </div>
+  <div class="card">
+    <h4>Let losses stand</h4>
+    <p>Nobody is watching, which is exactly why the margin-damage rule matters solo. When the World die wins by 3+, mark both boxes and write what it looks like on Vesna's face. A solo campaign where nothing weathers is a daydream; the boxes are what make it a road.</p>
+  </div>
+  <div class="card">
+    <h4>Short passages, always closed</h4>
+    <p>End every sitting with a residue line, even a five-minute one — especially one cut short by your actual train arriving. An unclosed passage goes stale; a residue line is a hook your next echo roll can bite. The interruption itself often makes the best residue.</p>
+  </div>
+  <div class="card">
+    <h4>One traveler, long roads</h4>
+    <p>Solo play rewards staying with one traveler across many real journeys. Vesna in month six is a different instrument than Vesna in week one — her margin is thicker, her satchel has left things on three continents, and the echo roll has more past to weaponize. Waymarks, not dots, are her advancement.</p>
+  </div>
+</section>
+
+<!-- ================= BRIDGE ================= -->
+<section id="bridge">
+  <div class="marker">Last</div>
+  <h2>Back to the Table</h2>
+  <p>Solo play is complete in itself, but it composts beautifully. Three ways your bench passages feed the shared game:</p>
+  <ul class="plain">
+    <li><strong>Postcards.</strong> Any solo residue qualifies. One image, one question, one mark — mail it to your table, and your delayed train becomes someone's opening scene.</li>
+    <li><strong>Openings.</strong> A solo riddle left standing at four facts is a ready-made Opening: its threshold image, its fragment, and "the tally so far" as the tension. Hand the page to the group; they inherit the investigation.</li>
+    <li><strong>Figures.</strong> Travelers you retire, strangers you rolled — copy their line into the shared notebook's cast. The man who wipes the clean window can be waiting at anyone's station now.</li>
+  </ul>
+  <div class="whisper">Played long enough, the solo notebook becomes the thing the whole game was designed toward: a fictional shadow of your actual life, thick with marks, waiting to echo.</div>
+</section>
+
+</main>
+
+<footer>
+  Write the question before the answer.<br>
+  Look up when the dice tell you to.
+  <div class="small">Reverie · Alone on the Road · A Solo Guide</div>
+</footer>
+
+</body>
+</html>

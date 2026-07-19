@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — The Shared Lantern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --paper:#ece6d8;
+    --ink:#1c2733;
+    --graphite:#5a646e;
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.13rem;line-height:1.7;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;overflow-x:auto;
+    padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+  header{
+    position:relative;min-height:70vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:5rem 1.5rem 4rem;overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;pointer-events:none;
+  }
+  @keyframes breathe{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  @media (prefers-reduced-motion:reduce){.glow{animation:none;opacity:.8;}html{scroll-behavior:auto;}}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.4rem,9vw,4.2rem);letter-spacing:.06em;line-height:1.08;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.1rem,3.2vw,1.45rem);color:var(--lantern);margin-top:1rem;
+  }
+  .strapline{max-width:32rem;color:var(--faded);margin-top:1.8rem;font-size:1.02rem;}
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:4.5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.8rem,6vw,2.4rem);margin:.7rem 0 1.2rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+    font-size:1.4rem;color:var(--lantern);margin:2.1rem 0 .6rem;
+  }
+  p{margin-bottom:1rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.18rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;margin:1.5rem 0;
+  }
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.2rem 1.3rem;margin:1.2rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.85rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  ul.plain{list-style:none;margin:0 0 1rem;}
+  ul.plain li{padding-left:1.3rem;position:relative;margin-bottom:.4rem;}
+  ul.plain li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  ol.steps{list-style:none;counter-reset:s;margin:1.1rem 0;}
+  ol.steps li{
+    counter-increment:s;padding:.65rem 0 .65rem 2.6rem;
+    position:relative;border-bottom:1px solid rgba(232,226,212,.06);
+  }
+  ol.steps li::before{
+    content:counter(s);position:absolute;left:.2rem;top:.68rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--seaglass);width:1.8rem;
+  }
+  ol.steps b{color:var(--lantern);font-weight:600;font-family:'Cormorant Garamond',serif;font-size:1.1rem;}
+
+  .page{
+    background:var(--paper);color:var(--ink);
+    border-radius:var(--radius);
+    padding:1.6rem 1.6rem 1.6rem 2.2rem;
+    margin:1.6rem 0;position:relative;
+    box-shadow:0 6px 26px rgba(0,0,0,.4);
+    font-weight:400;
+  }
+  .page::before{
+    content:"";position:absolute;top:0;bottom:0;left:1.35rem;
+    width:1px;background:rgba(161,113,47,.5);
+  }
+  .page .plabel{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--graphite);margin-bottom:.9rem;
+  }
+  .page .n{margin-bottom:.55rem;font-style:italic;font-weight:300;}
+  .page .q{
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+    color:var(--ink);margin:.55rem 0;
+  }
+  .page .q b{color:#a1712f;font-weight:500;}
+  .page .hand{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:#a1712f;letter-spacing:.14em;text-transform:uppercase;
+    margin:.7rem 0 .5rem;
+  }
+  .page .aside{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:var(--graphite);margin:.4rem 0 .8rem;
+  }
+  footer{
+    text-align:center;padding:4.5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.5rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections">
+  <a href="#lantern">The Lantern</a>
+  <a href="#duo">Duo</a>
+  <a href="#duo-example">Duo, Played</a>
+  <a href="#table">The Table</a>
+  <a href="#party">The Party</a>
+  <a href="#advice">Advice</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">A guide to duo and table play</div>
+  <h1>THE SHARED LANTERN</h1>
+  <div class="subtitle">two travelers, or a small band, and no one in charge</div>
+  <p class="strapline">How Reverie runs when authorship is passed hand to hand — with the handoff rules, the care rules, and a duo passage played out on the page.</p>
+</header>
+
+<main>
+
+<!-- ================= LANTERN ================= -->
+<section id="lantern">
+  <div class="marker">The Common Law</div>
+  <h2>The Lantern Itself</h2>
+  <p>In every shared mode, authority is an object. Pick a token at the start of the campaign — a stone, the darker die, an actual pocket lantern — and let it be the same token forever. Whoever holds it <strong>frames the world</strong>: describes places, voices Figures, drops fragments, rolls the World die and the Toll. Everyone else acts, asks, and notices.</p>
+  <div class="card">
+    <h4>Three laws, all modes</h4>
+    <ul class="plain">
+      <li><strong>The pencil travels with the lantern.</strong> The holder writes; the others speak. One hand in the notebook at a time keeps it legible across years.</li>
+      <li><strong>The holder responds but never initiates.</strong> Your own traveler stays with you while you hold the lantern — but they may only react. They can be dragged into a Crossing; they cannot start one. Self-dealing dies here.</li>
+      <li><strong>The holder never answers their own questions.</strong> What the holder doesn't know goes to the Oracle, openly, like anyone else's question.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= DUO ================= -->
+<section id="duo">
+  <div class="marker">Two</div>
+  <h2>Duo — the Traveling Pair</h2>
+  <p>Duo is Reverie's most intimate mode and its most portable: two people who are often <em>actually traveling together</em>, narrating the town they both just walked through, made strange. Four rules shape it.</p>
+
+  <h3>The lantern passes at doors</h3>
+  <p>Forget "scenes" — nobody agrees where a scene ends. The handoff trigger is fictional and unmissable: <strong>every threshold passes the lantern.</strong> Entering a building, boarding a vehicle, stepping from day into dusk, crossing a bridge — the moment the fiction passes through a doorway of any kind, the token changes hands. Doors are frequent, visible, and exactly what this game thinks the world is made of. If the fiction lingers too long in one room, either player may open a door.</p>
+  <p>One forced handoff: a <strong>Threshold Moment also passes the lantern.</strong> When the tie comes up and reality leans in, whoever looked up describes what they noticed — and then hands the token over. When the world changes the story, it changes the storyteller too.</p>
+
+  <h3>Tending</h3>
+  <div class="card sea">
+    <h4>The care rule</h4>
+    <p>In duo play, <strong>only your companion can erase your weathering</strong>. Rest still must be earned in the fiction — but the box is removed by the other traveler doing something for yours: dressing the wound, keeping watch, cooking, saying the thing that needed saying. The tender narrates the care; the tended narrates what it reaches. One box, as always.</p>
+    <p>This turns recovery from bookkeeping into the mode's best scenes — and it means a pair that stops caring for each other starts, mechanically, to fray.</p>
+  </div>
+
+  <h3>The Duet — opening a real place</h3>
+  <div class="card">
+    <h4>Ritual, for when you are somewhere</h4>
+    <ol class="steps">
+      <li><b>Alternate.</b> Each of you names three true details of your actual surroundings — the chipped cup, the man reading yesterday's paper, the smell of diesel.</li>
+      <li><b>Lie once.</b> One of your three details must be invented. Neither says which.</li>
+      <li><b>Begin.</b> All six details are the passage's threshold. The two lies are loose fragments — they may surface, be questioned, or quietly become true.</li>
+    </ol>
+    <p>The Duet smuggles strangeness in through observation itself. You will spend the whole passage half-wondering which of your companion's details was the invented one — which is precisely the Reverie state of mind.</p>
+  </div>
+</section>
+
+<!-- ================= DUO EXAMPLE ================= -->
+<section id="duo-example">
+  <div class="marker">In Practice</div>
+  <h2>A Duo Passage, Played</h2>
+  <p>Rook (Bone 3, Breath 2, Dream 1 — a Porter) and Ilse (Bone 1, Breath 2, Dream 3 — a Listener) are played by two friends in a real harbor café. The excerpt below picks up after their Duet — Rook's invented detail was <em>"the ferry timetable lists a 25th hour"</em>; Ilse's lie is still unknown.</p>
+
+  <div class="page">
+    <div class="plabel">Passage 4 · harbor café · after the Duet · echo roll: 3 → dog-eared p.9 = ✧ "the unlit lighthouse"</div>
+    <div class="hand">Lantern: Ilse's player</div>
+    <div class="n">— The café at the harbor's elbow. Rook counts coins for two coffees; the woman at the till watches the window instead of the money.</div>
+    <div class="q">R: ? Does she shortchange me &nbsp;[3 — <b>no, but</b>]</div>
+    <div class="n">— She doesn't — but she gives Rook a coin he didn't pay with. Old. A lighthouse stamped on it. <span style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:#5a646e">(echo lands: ✧, new vessel)</span></div>
+    <div class="n">— Rook, to Ilse: "It's your lighthouse. From the hill town." He puts it on the table between them.</div>
+    <div class="aside">Rook steps THROUGH THE DOOR to ask the fishermen outside — lantern passes.</div>
+    <div class="hand">Lantern: Rook's player</div>
+    <div class="n">— Outside: nets being mended in silence. The harbor water is very still. Too still for the wind.</div>
+    <div class="q">I: ? Do the fishermen recognize the coin &nbsp;[1 — <b>no, and</b> it worsens]</div>
+    <div class="n">— They don't — and one of them stands up, folds his net, and walks away from the harbor without looking back. Then a second.</div>
+    <div class="n">✕ Ilse, Breath 2d — call after them gently; if I fail, the rest leave too. rolled 5,5 vs World 5 — <b>tie. Threshold Moment.</b></div>
+    <div class="n">— Toll [3]: a promise; the world will collect. Ilse hears herself say: "We'll take it back where it belongs."</div>
+    <div class="n">«Ilse's player looked up: across the real café, someone turned the OPEN sign to CLOSED at three in the afternoon» — in the fiction: behind them, the café woman is locking her own door, mouthing something through the glass.</div>
+    <div class="aside">Threshold Moment passes the lantern.</div>
+    <div class="hand">Lantern: Ilse's player</div>
+    <div class="n">— The oldest fisherman remains. He points at the coin in Rook's fist, then at the water. The still water. Where, very faintly, a light is burning downward.</div>
+    <div class="n">— Residue: <em>an unlit lighthouse above, a lit one below, and a promise we don't understand yet.</em> Marked ✧. Rook takes one box of weathering carried from p.9 — and tonight, at the hostel, Ilse tends it: she reads the coin's edge aloud until he sleeps. One box erased.</div>
+  </div>
+
+  <p>Every mode-rule fired in a quarter hour of play: two door handoffs, one forced by a Threshold Moment; the Toll phrased as a promise <em>by</em> the acting player but binding both; the real café's closing sign entering the fiction; and Tending closing the passage as a scene rather than an eraser mark. Ilse's Duet lie, whatever it was, is still out there.</p>
+</section>
+
+<!-- ================= TABLE ================= -->
+<section id="table">
+  <div class="marker">Three or Four</div>
+  <h2>The Table — the Rotating Keeper</h2>
+  <p>At three or four players, the lantern is held for a whole passage at a time: the <strong>keeper</strong> frames, and rotation is fixed — next passage, next keeper, no skipping. The keeper prepares exactly three things and no more: an opening image, one fragment, one tension. But three additions make rotation into a braid instead of a relay.</p>
+
+  <h3>The inherited threshold</h3>
+  <div class="card">
+    <h4>The chain rule</h4>
+    <p>The incoming keeper's opening image must <strong>transform one residue image from the previous passage</strong> — same motif, different vessel, exactly like an echo. The empty chair among white birds becomes an empty pew in a flooded chapel. No keeper ever starts from nothing; the campaign braids itself, and every keeper's first act is an act of listening to the last one.</p>
+    <p>The other two prepared things — the fragment and the tension — remain the keeper's free invention. Continuity in the image, surprise in the rest.</p>
+  </div>
+
+  <h3>The quiet traveler's office</h3>
+  <p>The keeper plays their own traveler under the standing law — responds, never initiates — but the quiet traveler has one active duty: <strong>all feel-questions go to them.</strong> Whenever anyone asks "what does this place feel like?", the keeper answers <em>in character</em>, as their traveler's intuition, not as narrator's fiat. Atmosphere without protagonism; the quiet seat becomes the table's barometer, and a different traveler is the barometer every session.</p>
+
+  <h3>The thread rule</h3>
+  <div class="card sea">
+    <h4>For invented truths at a full table</h4>
+    <p>Anyone may still add small truths — rumors, customs, superstitions — but at three or four voices, whimsy compounds. So: every invented truth must <strong>attach to a thread</strong> — something already written, marked, or established at the table. "The fishermen here don't whistle" is legal if it ties to the silent nets on page nine; free-floating color is not. Invention stays load-bearing, and the notebook stays the arbiter of what exists.</p>
+  </div>
+
+  <h3>Riddles with many voices</h3>
+  <p>Unchanged in structure — the two direct answers belong to a riddle's <em>poser</em> (invented riddles only; rolled ones are Oracle-only), which at the table usually means the keeper and their prepared fragment, and the privilege survives lantern rotation — with one table habit worth enforcing: <strong>questions rotate strictly.</strong> No player asks twice before everyone has asked once. The Listener will want to interrogate everything; the rotation makes the Porter ask, and the Porter's blunt questions are usually the ones that break riddles open.</p>
+
+  <h3>The empty chair</h3>
+  <div class="card">
+    <h4>Absence, by errand</h4>
+    <p>A missing player's traveler is <strong>on an errand</strong> — declared by the absentee if reachable, by the table if not, always in one line: "gone ahead to arrange the boats." Their traveler cannot be weathered, spent, or voiced in their absence beyond that line.</p>
+    <p>And the absentee may <strong>send a postcard</strong> — written, texted to be transcribed, or genuinely mailed: one image, one question, one mark, per the standard procedure. The keeper reads it at the threshold, and the errand has fed the passage. Absence becomes content; the traveling player who misses a month of Sundays returns to find their postcards woven into canon.</p>
+  </div>
+</section>
+
+<!-- ================= PARTY ================= -->
+<section id="party">
+  <div class="marker">Composition</div>
+  <h2>The Party and Its Ones</h2>
+  <p>When the band makes travelers together, look at the <strong>1s, not the 3s</strong>. A facet spread's weak dot is where that traveler's crises will live — the Porter's crisis is always uncanny, the Busker's always physical, the Listener's always social exposure. A party holding <em>different</em> 1s means every kind of trouble belongs to someone: each traveler is the protagonist of the scenes another cannot survive.</p>
+  <p>Don't enforce it; just have the table lay the sheets side by side before play and notice. Three Listeners is a legal party — and a campaign where every crisis is physical and nobody can carry anybody. Sometimes that's the story you want.</p>
+  <div class="whisper">The Wanderer — 2·2·2 — belongs to no crisis and to all of them. One per party is a keel. Two is a becalming.</div>
+</section>
+
+<!-- ================= ADVICE ================= -->
+<section id="advice">
+  <div class="marker">Hard-Won</div>
+  <h2>Advice for Shared Play</h2>
+  <div class="card">
+    <h4>Hand the lantern away warm</h4>
+    <p>The best gift a holder can give is an open situation, not a resolved one. Pass the token mid-tension — through the door <em>before</em> the answer — and the next narrator inherits momentum instead of a blank.</p>
+  </div>
+  <div class="card">
+    <h4>Ask the quiet traveler early</h4>
+    <p>At the table, someone should ask "what does this place feel like?" within the first minutes of every location. It seats the keeper's traveler in the fiction, sets atmosphere before events, and reminds everyone what game this is.</p>
+  </div>
+  <div class="card">
+    <h4>Tolls are spoken, never assigned</h4>
+    <p>In shared play, let the traveler who tied phrase their own Toll aloud — a promise in their voice, a truth in their words. Costs land harder in the first person, and the notebook gets the exact wording for later collection.</p>
+  </div>
+  <div class="card">
+    <h4>Keep duo passages walking</h4>
+    <p>Duo's superpower is playing in motion — a passage across an actual town, doors passing the lantern at real doorways. Half an hour of walking play generates more marks than two hours seated. The town does the keeper's job.</p>
+  </div>
+  <div class="card sea">
+    <h4>Field notes — capture while moving, develop when seated</h4>
+    <p>Walking play writes nothing. The game lives in mouths and eyes; capture is allowed only in three cheap forms, ten seconds each: a <strong>pocket card</strong> for lone glyphs and one-word marks; a <strong>photo</strong> of the door where the lantern passed or the thing found; a <strong>voice memo</strong> spoken as a notebook line — "residue: the lit window above the closed shop." Eyes back up. Prefer world-oracles to dice on the move: agree the reading first, then consult the next thing you see.</p>
+    <p>Then <strong>ink at the next roof</strong>: the first café, bench, or train seat is where the passage is written properly, together, from the captures — and that develop session <em>is</em> the residue ritual. Fifteen minutes walking, ten writing. The phone is a pocket; the notebook is the truth.</p>
+  </div>
+  <div class="card">
+    <h4>Anyone may dim the lantern</h4>
+    <p>Any player may pause, redirect, or fade a scene to black at any time, no explanation owed — holder or not. The token grants narration, never immunity. Shared trust outranks immersion, every session, in every mode.</p>
+  </div>
+  <div class="card">
+    <h4>Read the margins aloud sometimes</h4>
+    <p>Once a journey, spend five minutes reading the margin glyphs back as a litany — rust, standing water, the unlit lighthouse. It is the table's shared memory performing itself, and it reliably tells you what the campaign is secretly about.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  The lantern is passed, not held.<br>
+  The story is whoever's hands are warm.
+  <div class="small">Reverie · The Shared Lantern · A Duo &amp; Table Guide</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — Traveler's Quick Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.06rem;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    padding:1.5rem 1rem 3.5rem;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  .wrap{max-width:44rem;margin:0 auto;}
+  header{text-align:center;padding:1.6rem 0 1.2rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:.7rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.9rem,7vw,2.6rem);letter-spacing:.05em;line-height:1.1;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--lantern);margin-top:.3rem;font-size:1.1rem;
+  }
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1.4rem;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .card{
+    background:var(--fog);
+    border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);
+    border-radius:var(--radius);
+    padding:1rem 1.1rem;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card.wide{grid-column:1/-1;}
+  .card h2{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:500;color:var(--lantern);margin-bottom:.55rem;
+  }
+  .card.sea h2{color:var(--seaglass);}
+  .card p{margin-bottom:.6rem;}
+  .card p:last-child{margin-bottom:0;}
+  .mech{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.82rem;line-height:1.75;
+  }
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+  }
+  td{padding:.28rem .4rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;width:2rem;}
+  ul{list-style:none;}
+  li{padding-left:1.1rem;position:relative;margin-bottom:.3rem;}
+  li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  em{font-style:italic;}
+  .foot{
+    text-align:center;margin-top:1.6rem;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.05rem;
+  }
+  @media print{
+    body{background:#fff;color:#1c2733;padding:0;font-size:9.5pt;}
+    .card{background:#fff;border-color:#bbb;border-left-color:#a1712f;}
+    .card h2{color:#a1712f;}
+    .card.sea h2, li::before{color:#4f7a6c;}
+    .mech b, td:first-child{color:#a1712f;}
+    .sub,.foot{color:#555;}
+    .eyebrow{color:#4f7a6c;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Quick Reference · Traveler</div>
+  <h1>REVERIE</h1>
+  <div class="sub">what you need at the table, nothing more</div>
+</header>
+
+<div class="grid">
+
+  <div class="card wide">
+    <h2>The loop</h2>
+    <p>Say what your traveler does, asks, and notices. You may add small truths to the world at any time — a rumor, a smell, a superstition. The rules interrupt only three ways:</p>
+    <p class="mech">
+      uncertain + costly → <b>Crossing</b> · nobody knows → <b>Oracle</b> · unexplained → <b>Riddle</b>
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>The Crossing</h2>
+    <p class="mech">
+      Name the attempt and the leading facet.<br>
+      Roll <b>Traveler d6s = facet dots</b>, keep highest,<br>
+      vs one <b>World d6</b>.<br><br>
+      <b>Higher</b> → as you intended<br>
+      <b>Tie</b> → Threshold Moment: succeed + owe<br>
+      (keeper rolls Toll) + all look up 10s —<br>
+      first real thing noticed enters the fiction<br>
+      <b>Lower</b> → world moves; danger → mark 1 box,<br>
+      or 2 if the World die won by 3+
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Facets &amp; weathering</h2>
+    <p class="mech">
+      <b>Bone</b> strength · endurance · steady hands<br>
+      <b>Breath</b> nerve · charm · quickness<br>
+      <b>Dream</b> intuition · noticing · the uncanny
+    </p>
+    <p>Three boxes each. Full facet = <em>closed</em>: it can't lead, and you show it. All three closed = Long Rest — out until a real day passes. A genuine rest, earned in the fiction, erases <em>one box, your choice</em>.</p>
+  </div>
+
+  <div class="card">
+    <h2>The Oracle</h2>
+    <table>
+      <tr><td>1</td><td>no — and it worsens</td></tr>
+      <tr><td>2</td><td>no</td></tr>
+      <tr><td>3</td><td>no — but a door opens</td></tr>
+      <tr><td>4</td><td>yes — but a price shows</td></tr>
+      <tr><td>5</td><td>yes</td></tr>
+      <tr><td>6</td><td>yes — and it deepens</td></tr>
+    </table>
+    <p style="margin-top:.5rem">Ask aloud; the player to your left reads it first. Only ask what you truly don't know — and take the first honest reading.</p>
+  </div>
+
+  <div class="card">
+    <h2>Riddles — your part</h2>
+    <ul>
+      <li>Ask yes/no questions in turns; the oracle answers.</li>
+      <li>Every clear answer is written as an established fact.</li>
+      <li><em>No, and…</em> → cross out one fact (asker's choice).</li>
+      <li>At seven facts, anyone may tell the truth — weave in five. Others may add one sentence each. Then it's canon.</li>
+      <li>Past fifteen questions, the valve opens: tell it with what stands.</li>
+    </ul>
+  </div>
+
+  <div class="card sea">
+    <h2>Satchel</h2>
+    <p>Seven slots; heavy things take two; your Burden always rides in slot 7. Full satchel? Set something down and say where — write it in the margin. Things left behind come back.</p>
+  </div>
+
+  <div class="card sea">
+    <h2>Echo-marks</h2>
+    <p>When something feels charged, draw a small symbol in the margin beside it. Reuse the same symbol each time the motif recurs. Dog-ear unresolved pages. The margins are the story's memory.</p>
+  </div>
+
+  <div class="card">
+    <h2>Vessels — found things</h2>
+    <p class="mech">
+      find it → circle it (one sentence each)<br>
+      → roll its Charge → file it in the notebook
+    </p>
+    <p>A charge is latent — it never fires for its carrier, only by the world's hand (solo: only on an oracle twist or a Threshold Moment).</p>
+  </div>
+
+  <div class="card">
+    <h2>Dreams &amp; postcards</h2>
+    <p><em>Dreaming</em> (at a rest): Dream leads all crossings, nothing weathers, Tolls still bind, one thing crosses back into waking play.</p>
+    <p><em>Postcard received:</em> its image opens your next passage; its question goes to the oracle; its symbol joins your margin. Tape it in.</p>
+  </div>
+
+  <div class="card wide sea">
+    <h2>Ways to play well</h2>
+    <p class="mech">
+      ask what places feel like · questions beat answers · running away is wise ·
+      one waymark line per passage · end on resonance, not closure
+    </p>
+  </div>
+
+</div>
+
+<div class="foot">Ask what the place feels like. Write down what answers.</div>
+
+</div>
+</body>
+</html>

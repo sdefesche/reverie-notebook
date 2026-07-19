@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — The Shelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733; --fog-deep:#161f29;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12); --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.1rem;line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  a{color:inherit;}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+  header{
+    position:relative;min-height:62vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:4.5rem 1.5rem 3.5rem;overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;pointer-events:none;
+  }
+  @keyframes breathe{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  @media (prefers-reduced-motion:reduce){.glow{animation:none;opacity:.8;}}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.5rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(3rem,11vw,5.4rem);letter-spacing:.06em;line-height:1.05;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.1rem,3.4vw,1.5rem);color:var(--lantern);margin-top:1rem;
+  }
+  .strapline{max-width:31rem;color:var(--faded);margin-top:1.7rem;font-size:1rem;}
+  main{max-width:44rem;margin:0 auto;padding:0 1.5rem 5rem;}
+  section{padding-top:3.6rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;
+    margin-bottom:1rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  ul{list-style:none;}
+  li{border-bottom:1px solid rgba(232,226,212,.07);}
+  li a{
+    display:block;text-decoration:none;padding:1rem .2rem;
+    transition:background .2s;
+  }
+  li a:hover{background:rgba(224,164,88,.05);}
+  .t{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.35rem;line-height:1.25;
+  }
+  .t em{color:var(--lantern);font-style:italic;font-weight:400;font-size:1.05rem;margin-left:.4rem;}
+  .d{color:var(--faded);font-size:.98rem;margin-top:.15rem;}
+  .arch .t{color:var(--faded);}
+  footer{
+    text-align:center;padding:3.5rem 1.5rem 3.5rem;
+    border-top:1px solid var(--hairline);color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.4rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">A collaborative travel RPG · 1–4 travelers</div>
+  <h1>REVERIE</h1>
+  <div class="subtitle">a notebook, a pencil, two dice — and the world</div>
+  <p class="strapline">A game of wandering, riddles, and found things, played anywhere. Everything below is the complete first edition.</p>
+</header>
+
+<main>
+
+<section>
+  <div class="marker">Play</div>
+  <ul>
+    <li><a href="notebook-game.html">
+      <div class="t">The Notebook Game <em>core rules</em></div>
+      <div class="d">Travelers, Crossings, the Oracle, Riddles, Vessels, Echoes, the seven roads — the whole game, with tables.</div>
+    </a></li>
+    <li><a href="journeys.html">
+      <div class="t">Journeys <em>the chapter above the passage</em></div>
+      <div class="d">Anchors, the slow riddle, the First Hour, the porous dial, the Last Passage, and the interval between.</div>
+    </a></li>
+    <li><a href="roads-between.html">
+      <div class="t">The Roads Between <em>supplement one</em></div>
+      <div class="d">Travel, Figures, Perils, play-by-post Passage Postcards, Dream Passages, and six ready Openings.</div>
+    </a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">Guides</div>
+  <ul>
+    <li><a href="alone-on-the-road.html">
+      <div class="t">Alone on the Road <em>solo</em></div>
+      <div class="d">The write–ask–roll–write loop, a full worked passage, and the discipline of keeping the pencil ahead of the editor.</div>
+    </a></li>
+    <li><a href="shared-lantern.html">
+      <div class="t">The Shared Lantern <em>duo &amp; table</em></div>
+      <div class="d">Doors pass the lantern, Tending, the Duet, the rotating keeper, the inherited threshold, and the empty chair.</div>
+    </a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">At the Table</div>
+  <ul>
+    <li><a href="ref-traveler.html">
+      <div class="t">Traveler's Quick Reference</div>
+      <div class="d">One card: the loop, the Crossing, the oracle, and every habit a player needs mid-passage. Prints on one page.</div>
+    </a></li>
+    <li><a href="ref-keeper.html">
+      <div class="t">Keeper's Quick Reference</div>
+      <div class="d">The whole keeper's kit — beats, calls, and all the tables including the d66 — for whoever holds the lantern tonight.</div>
+    </a></li>
+    <li><a href="traveler-sheet.html">
+      <div class="t">Traveler Sheet <em>interactive</em></div>
+      <div class="d">Tap-to-fill facets, weathering, satchel, waymarks, and the echo-mark margin. Prints clean.</div>
+    </a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">Companion</div>
+  <ul>
+    <li><a href="latent-concept-spec.md">
+      <div class="t">Latent <em>concept spec</em></div>
+      <div class="d">The capture app: total darkness while live, develop when seated. The working PWA lives in its own repository.</div>
+    </a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="marker">Design Room</div>
+  <ul>
+    <li><a href="sheet-visual-brief.md">
+      <div class="t">Sheet — Visual Design Brief</div>
+      <div class="d">Art direction for the printed sheet and postcards: two inks, the ticket-office register, the rules of wear.</div>
+    </a></li>
+    <li><a href="traveler-sheet-brief.md">
+      <div class="t">Sheet — Interactive Brief</div>
+      <div class="d">The implementation brief behind the interactive sheet: tokens, interactions, print spec.</div>
+    </a></li>
+  </ul>
+</section>
+
+<section class="arch">
+  <div class="marker">Design History — superseded</div>
+  <ul>
+    <li><a href="archive/wayfarers-archive.html">
+      <div class="t">The Wayfarer's Archive</div>
+      <div class="d">The first synthesis: the digital platform vision. Mechanics here predate the current rules.</div>
+    </a></li>
+    <li><a href="archive/whole-spectrum.html">
+      <div class="t">The Whole Spectrum</div>
+      <div class="d">The unification of the tabletop app and the travel platform. Kept as a record of the road here.</div>
+    </a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  Ask what the place feels like.<br>
+  Write down what answers.
+  <div class="small">Reverie · First Edition · The Shelf</div>
+</footer>
+
+</body>
+</html>

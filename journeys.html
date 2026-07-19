@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — Journeys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733; --fog-deep:#161f29;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --paper:#ece6d8; --ink:#1c2733; --graphite:#5a646e;
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.13rem;line-height:1.7;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;overflow-x:auto;padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+  header{
+    position:relative;min-height:70vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:5rem 1.5rem 4rem;overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;pointer-events:none;
+  }
+  @keyframes breathe{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  @media (prefers-reduced-motion:reduce){.glow{animation:none;opacity:.8;}html{scroll-behavior:auto;}}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.6rem,9vw,4.4rem);letter-spacing:.06em;line-height:1.08;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.1rem,3.2vw,1.45rem);color:var(--lantern);margin-top:1rem;
+  }
+  .strapline{max-width:32rem;color:var(--faded);margin-top:1.8rem;font-size:1.02rem;}
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:4.5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.8rem,6vw,2.4rem);margin:.7rem 0 1.2rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+    font-size:1.4rem;color:var(--lantern);margin:2.1rem 0 .6rem;
+  }
+  p{margin-bottom:1rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.18rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;margin:1.5rem 0;
+  }
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.2rem 1.3rem;margin:1.2rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.85rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  ul.plain{list-style:none;margin:0 0 1rem;}
+  ul.plain li{padding-left:1.3rem;position:relative;margin-bottom:.4rem;}
+  ul.plain li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+  ol.steps{list-style:none;counter-reset:s;margin:1.1rem 0;}
+  ol.steps li{
+    counter-increment:s;padding:.65rem 0 .65rem 2.6rem;
+    position:relative;border-bottom:1px solid rgba(232,226,212,.06);
+  }
+  ol.steps li::before{
+    content:counter(s);position:absolute;left:.2rem;top:.68rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--seaglass);width:1.8rem;
+  }
+  ol.steps b{color:var(--lantern);font-weight:600;font-family:'Cormorant Garamond',serif;font-size:1.1rem;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.84rem;margin:1rem 0;
+  }
+  td{padding:.45rem .55rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  .page{
+    background:var(--paper);color:var(--ink);
+    border-radius:var(--radius);
+    padding:1.5rem 1.5rem 1.5rem 2.1rem;
+    margin:1.5rem 0;position:relative;
+    box-shadow:0 6px 26px rgba(0,0,0,.4);font-weight:400;
+  }
+  .page::before{
+    content:"";position:absolute;top:0;bottom:0;left:1.3rem;
+    width:1px;background:rgba(161,113,47,.5);
+  }
+  .page .plabel{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--graphite);margin-bottom:.8rem;
+  }
+  .page .line{
+    font-style:italic;font-weight:300;
+    border-bottom:1px solid rgba(28,39,51,.25);
+    padding:.15rem 0 .25rem;margin-bottom:.55rem;
+  }
+  .page .k{
+    font-family:'IBM Plex Mono',monospace;font-size:.66rem;
+    letter-spacing:.18em;text-transform:uppercase;color:#a1712f;
+    display:block;margin-top:.6rem;
+  }
+  footer{
+    text-align:center;padding:4.5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.5rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections">
+  <a href="#what">What a Journey Is</a>
+  <a href="#firsthour">The First Hour</a>
+  <a href="#begin">Beginning</a>
+  <a href="#during">Traveling</a>
+  <a href="#end">Ending</a>
+  <a href="#interval">The Interval</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">The chapter above the passage</div>
+  <h1>JOURNEYS</h1>
+  <div class="subtitle">a journey is a riddle you walk</div>
+  <p class="strapline">Passages are the sessions; journeys are the stories. This chapter defines how they begin, what holds them together, how they end — and what a table does in its very first hour.</p>
+</header>
+
+<main>
+
+<!-- ================= WHAT ================= -->
+<section id="what">
+  <div class="marker">Definition</div>
+  <h2>What a Journey Is</h2>
+  <p>A journey is a named arc of passages, held together by three things written on its first page: a <strong>name</strong>, an <strong>anchor</strong>, and a <strong>question</strong>. Everything a traveler becomes, they become at journeys' ends — Waymarks resolve there, Burdens are replaced there, retirements happen there. The journey is the unit of change.</p>
+
+  <h3>The anchor — what shape it takes</h3>
+  <p>Choose one when the journey begins. The anchor decides how the journey ends, so choose honestly:</p>
+  <table>
+    <tr><td>The Destination</td><td>A fictional goal: reach the drowned city, return the coin, find the sender. Ends on arrival — or on turning away, which counts.</td></tr>
+    <tr><td>The Trip</td><td>Bracketed by a real journey: this holiday, this posting, this month abroad. Begins when you leave; ends when you're home. The strongest anchor for solo and duo play.</td></tr>
+    <tr><td>The Season</td><td>A fixed span of passages — six, unless agreed otherwise. Ends when the count does, arrived or not. The reliable anchor for a table that meets on Sundays.</td></tr>
+  </table>
+
+  <h3>The question — what the journey asks</h3>
+  <p>Every journey opens one question it cannot yet answer, written under the name: <em>Why does the coin want to go back? What is emptying the harbor towns? What are we to each other when the road runs out?</em> The question is a <strong>slow riddle</strong>: it keeps a fact tally like any riddle, but its facts accumulate across passages, fed by fragments, figures, and echoes. It is answered — or deliberately left standing — only at the journey's end.</p>
+  <div class="whisper">A journey with no question is a commute. The question is what the walking is for.</div>
+</section>
+
+<!-- ================= FIRST HOUR ================= -->
+<section id="firsthour">
+  <div class="marker">Session Zero</div>
+  <h2>The First Hour</h2>
+  <p>A new campaign's first hour is its own small ritual — travelers, table, and boundary, in that order. Solo travelers do a quiet version of the same four steps.</p>
+  <ol class="steps">
+    <li><b>Make travelers together.</b> The five answers and six dots, aloud, in turns — each answer heard by everyone becomes shared material. Then lay the sheets side by side and look at the <em>1s</em>: each traveler's weak facet is where their crises will live. Different 1s means every kind of trouble belongs to someone. Notice; don't enforce.</li>
+    <li><b>Bind the band.</b> One question, answered once, together: <em>"What do you share besides the road?"</em> A debt, a funeral, a rumor you all heard, a door you all saw close. One sentence, written at the top of the journey page. This is the band's founding fact — the first entry in the journey's slow riddle.</li>
+    <li><b>Set the porous dial.</b> Decide, out loud, how much of the real world this journey admits (next card). This is a comfort setting as much as an aesthetic one, and it can be re-set between journeys.</li>
+    <li><b>Agree the lantern can be dimmed.</b> Say it once, plainly: anyone may pause, redirect, or fade a scene to black, any time, no explanation owed — and a Burden is always the <em>traveler's</em> fear, written at whatever distance from the player's own feels right, rewritable between passages without ceremony.</li>
+  </ol>
+
+  <div class="card sea">
+    <h4>The porous dial</h4>
+    <table>
+      <tr><td>Sealed</td><td>The fiction stays fiction. Threshold Moments draw from imagined surroundings; no found objects required. For indoor tables and heavy nights.</td></tr>
+      <tr><td>Ajar</td><td>The default. Threshold Moments and Vessels admit the real world; the rest is invented. Reality knocks; the table answers.</td></tr>
+      <tr><td>Open</td><td>Full bleed: real weather, real walks, the Duet, world-oracles, doors passing the lantern at real doorways. For traveling pairs and brave tables.</td></tr>
+    </table>
+  </div>
+
+  <p>Then play the first passage immediately, even a short one — pick an Opening or use the real room's window. A first hour that ends with a residue image has begun a campaign; one that ends with only sheets has held a meeting.</p>
+</section>
+
+<!-- ================= BEGIN ================= -->
+<section id="begin">
+  <div class="marker">Setting Out</div>
+  <h2>Beginning a Journey</h2>
+  <p>Open a fresh notebook spread. The left page is the <strong>journey page</strong>; the right begins the <strong>map</strong> — the first dot, one word of atmosphere beside it. The journey page holds five lines and grows a tally:</p>
+
+  <div class="page">
+    <div class="plabel">Journey page — template</div>
+    <span class="k">name</span><div class="line">The Coin's Road</div>
+    <span class="k">anchor</span><div class="line">Destination — return the lighthouse coin to the hill town</div>
+    <span class="k">the question</span><div class="line">Why does it want to go back?</div>
+    <span class="k">the band</span><div class="line">We all owe the same ferryman.</div>
+    <span class="k">porous dial</span><div class="line">Ajar</div>
+    <span class="k">the tally</span><div class="line" style="border-bottom:none">— facts about the question, added as passages find them</div>
+  </div>
+
+  <p>For every journey after the first, one rule binds beginnings — the chain rule at journey scale: <strong>the new journey's question or opening image must transform something left standing by the last</strong> — an unresolved riddle, an uncollected Toll, a thing set down in a margin. Campaigns are braided, never restarted.</p>
+</section>
+
+<!-- ================= DURING ================= -->
+<section id="during">
+  <div class="marker">On the Road</div>
+  <h2>Traveling</h2>
+  <p>A journey's middle is passages, legs, and rests — all already defined. What the journey layer adds is rhythm and bookkeeping, kept deliberately thin:</p>
+  <ul class="plain">
+    <li><strong>The map grows one dot per place</strong>, one line per leg, one word of atmosphere per dot. Perils that arrive leave their mark on it. The map is the campaign's memory of <em>where</em>; the margins remember <em>what</em>.</li>
+    <li><strong>The tally grows when the fiction earns it.</strong> When a passage surfaces something true about the journey's question, write it as a fact on the journey page — same rules as any riddle, including <em>no, and…</em> crossing one out. Most passages add nothing. That's correct; slow riddles are slow.</li>
+    <li><strong>Tolls are dog-eared.</strong> Every spoken Toll — every promise the world will collect — gets its page folded. The echo roll is the collection agency: when a Toll's page comes up, the debt returns, transformed, and this passage is when the world collects.</li>
+    <li><strong>Mid-journey is dream country.</strong> Dream Passages and postcards belong to the middle third, when the question has facts but no shape. A dream may add a tally fact directly if the table agrees it was true.</li>
+  </ul>
+</section>
+
+<!-- ================= END ================= -->
+<section id="end">
+  <div class="marker">Arrival</div>
+  <h2>Ending a Journey — the Last Passage</h2>
+  <p>When the anchor closes — the destination reached or refused, the trip's return ticket used, the season's count spent — the next passage is played as the <strong>Last Passage</strong>. It follows the six beats with three rites folded in:</p>
+  <ol class="steps">
+    <li><b>The litany.</b> At the threshold, before the opening image, read the journey's margins aloud — every glyph, in order, as a litany. Five minutes of the campaign performing its own memory. The opening image must then transform one thing from the litany.</li>
+    <li><b>The telling, or the standing.</b> In place of the fragment beat, the journey's question comes due. If seven facts stand on the journey page, the truth may be told — the full riddle rite, five facts woven in, one sentence each from the others. If fewer stand, the table chooses: force a telling with what stands (the valve), or <em>let it stand</em> — written across the journey page, unanswered, and eligible to seed a future journey. Standing is not failure. Some questions are load-bearing.</li>
+    <li><b>Waymark resolution.</b> After the residue, each traveler resolves the journey — exactly one: <b>move one facet dot</b> (the archetype shifts; say what changed on the road to change them) · <b>replace the Burden</b> with a fear earned on this journey · or <b>retire</b> — the traveler enters the world's cast as a Figure, and the player makes someone new before the next journey begins.</li>
+  </ol>
+  <div class="card">
+    <h4>Endings the anchor didn't choose</h4>
+    <p>Journeys also end by <strong>abandonment</strong> — the table walks away from the question — and that is played, not skipped: a Last Passage still happens, the litany still read, the question marked <em>abandoned</em> rather than standing. Abandoned questions echo hardest. The one ending Reverie doesn't have is the unmarked stop: if the campaign is truly over, give it a Last Passage anyway, even a fifteen-minute one. The notebook deserves a spine, not a fade.</p>
+  </div>
+</section>
+
+<!-- ================= INTERVAL ================= -->
+<section id="interval">
+  <div class="marker">Between</div>
+  <h2>The Interval</h2>
+  <p>Between journeys, real time passes — days or months, and the game is better for not pretending otherwise. Three things happen in the interval, none requiring a session:</p>
+  <ul class="plain">
+    <li><strong>Everything unresolved survives.</strong> Standing questions, dog-eared Tolls, half-tallied riddles, Figures with unmet wants — nothing closes by default. The next journey's chain rule will reach back into this pile.</li>
+    <li><strong>Travelers weather nothing and heal everything.</strong> All boxes clear in an interval. The road is hard; between roads is life.</li>
+    <li><strong>Postcards travel.</strong> The interval is postcard season — solo passages played on real trips feed the next journey's opening, and a band scattered across a summer reconvenes to find its mail already in the notebook.</li>
+  </ul>
+  <div class="whisper">A campaign, in the end, is a shelf of journeys in one thickening notebook — each opened by transforming what the last one left standing. The first journey begins from nothing. No other journey ever does.</div>
+</section>
+
+</main>
+
+<footer>
+  Name it. Anchor it. Ask it something<br>
+  it cannot answer yet. Then walk.
+  <div class="small">Reverie · Journeys · The Chapter Above the Passage</div>
+</footer>
+
+</body>
+</html>

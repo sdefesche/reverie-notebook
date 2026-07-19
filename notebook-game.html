@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — The Notebook Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22;
+    --fog:#1c2733;
+    --fog-deep:#161f29;
+    --lantern:#e0a458;
+    --lantern-dim:#a67a3e;
+    --bone:#e8e2d4;
+    --seaglass:#7fa99b;
+    --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12);
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--night);
+    color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:300;
+    font-size:1.14rem;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,26,34,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;gap:1.4rem;
+    overflow-x:auto;
+    padding:.85rem 1.4rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{color:var(--faded);text-decoration:none;white-space:nowrap;transition:color .25s;}
+  nav a:hover,nav a:focus-visible{color:var(--lantern);}
+  a:focus-visible{outline:2px solid var(--lantern);outline-offset:3px;}
+
+  header{
+    position:relative;
+    min-height:78vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:5rem 1.5rem 4rem;
+    overflow:hidden;
+  }
+  .glow{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 60% 45% at 50% 42%, rgba(224,164,88,.16), transparent 70%);
+    animation:breathe 7s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes breathe{
+    0%,100%{opacity:.55;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.06);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .glow{animation:none;opacity:.8;}
+    html{scroll-behavior:auto;}
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(3rem,10vw,5.2rem);
+    letter-spacing:.06em;
+    line-height:1.05;
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;font-weight:400;
+    font-size:clamp(1.15rem,3.4vw,1.5rem);
+    color:var(--lantern);
+    margin-top:1.1rem;
+  }
+  .strapline{
+    max-width:32rem;color:var(--faded);
+    margin-top:2rem;font-size:1.05rem;
+  }
+  .strapline em{color:var(--bone);font-style:italic;}
+
+  main{max-width:46rem;margin:0 auto;padding:0 1.5rem 6rem;}
+  section{padding-top:4.5rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--lantern);
+    display:flex;align-items:center;gap:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-size:clamp(1.9rem,6vw,2.5rem);
+    margin:.7rem 0 1.3rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-style:italic;
+    font-size:1.42rem;color:var(--lantern);
+    margin:2.2rem 0 .7rem;
+  }
+  p{margin-bottom:1.05rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.2rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1.1rem;
+    margin:1.6rem 0;
+  }
+
+  .card{
+    background:var(--fog);
+    border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);
+    border-radius:var(--radius);
+    padding:1.25rem 1.35rem;
+    margin:1.3rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.6rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child, .card ol:last-child, .card ul:last-child{margin-bottom:0;}
+  .mech{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.86rem;line-height:1.8;
+  }
+  .mech b{color:var(--lantern);font-weight:500;}
+
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.84rem;
+    margin:1.1rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;
+    font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--seaglass);
+    padding:.5rem .6rem;border-bottom:1px solid var(--hairline);
+  }
+  td{
+    padding:.5rem .6rem;
+    border-bottom:1px solid rgba(232,226,212,.06);
+    vertical-align:top;
+  }
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+
+  .facets{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:1.3rem 0;}
+  @media(max-width:600px){.facets{grid-template-columns:1fr;}}
+  .facet{
+    background:var(--fog-deep);
+    border:1px solid var(--hairline);
+    border-radius:var(--radius);
+    padding:1.05rem 1rem;text-align:center;
+  }
+  .facet .name{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.45rem;letter-spacing:.08em;
+  }
+  .facet .gloss{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faded);margin-top:.35rem;line-height:1.6;
+  }
+
+  ol.steps{list-style:none;counter-reset:s;margin:1.2rem 0;}
+  ol.steps li{
+    counter-increment:s;
+    padding:.7rem 0 .7rem 2.6rem;
+    position:relative;
+    border-bottom:1px solid rgba(232,226,212,.06);
+  }
+  ol.steps li::before{
+    content:counter(s);
+    position:absolute;left:.2rem;top:.72rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.78rem;color:var(--seaglass);
+    width:1.8rem;
+  }
+  ol.steps b{color:var(--lantern);font-weight:600;font-family:'Cormorant Garamond',serif;font-size:1.12rem;}
+  ul.plain{list-style:none;margin:0 0 1.05rem;}
+  ul.plain li{padding-left:1.3rem;position:relative;margin-bottom:.4rem;}
+  ul.plain li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+
+  .d66{columns:2;column-gap:2rem;}
+  @media(max-width:600px){.d66{columns:1;}}
+  .d66 table{margin:.2rem 0 1rem;}
+
+  footer{
+    text-align:center;
+    padding:4.5rem 1.5rem 4rem;
+    border-top:1px solid var(--hairline);
+    color:var(--faded);
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.2rem;
+  }
+  footer .small{
+    font-family:'IBM Plex Mono',monospace;font-style:normal;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;
+    margin-top:1.5rem;color:var(--lantern-dim);
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections">
+  <a href="#kit">Kit</a>
+  <a href="#traveler">Traveler</a>
+  <a href="#loop">Playing</a>
+  <a href="#crossing">Crossing</a>
+  <a href="#oracle">Oracle</a>
+  <a href="#riddle">Riddles</a>
+  <a href="#vessels">Vessels</a>
+  <a href="#echoes">Echoes</a>
+  <a href="#passage">Passage</a>
+  <a href="#modes">Modes</a>
+  <a href="#tables">Tables</a>
+</nav>
+
+<header>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="eyebrow">A notebook · a pencil · two dice · the world</div>
+  <h1>REVERIE</h1>
+  <div class="subtitle">The Notebook Game</div>
+  <p class="strapline">A collaborative game of wandering, riddles, and found things, for 1–4 players. <em>Everything you need fits in a coat pocket. Everything else, the world provides.</em></p>
+</header>
+
+<main>
+
+<!-- ================= KIT ================= -->
+<section id="kit">
+  <div class="marker">Setup</div>
+  <h2>The Kit</h2>
+  <ul class="plain">
+    <li><strong>One notebook.</strong> This is the Archive — shared journal, character sheets, map, and rulebook margin all at once. One notebook per table, passed around; solo travelers keep their own.</li>
+    <li><strong>A pencil.</strong> Pencil, not pen — the world revises.</li>
+    <li><strong>Two six-sided dice</strong> in different colors. The lighter one is the <strong>Traveler die</strong>; the darker one is the <strong>World die</strong>. A third d6 helps for Crossings but isn't required.</li>
+    <li><strong>Anything the world offers.</strong> Receipts, shells, tickets, weather, overheard phrases. All of it is legal game material — see Vessels and the Threshold Moment.</li>
+  </ul>
+  <p>One rule of tone before play: describe what places <em>feel</em> like, not just what's in them. That's the whole philosophy chapter. Now the game.</p>
+</section>
+
+<!-- ================= TRAVELER ================= -->
+<section id="traveler">
+  <div class="marker">Ten Minutes</div>
+  <h2>Make a Traveler</h2>
+  <p>Give your traveler one notebook page. Write five answers, one line each:</p>
+  <ol class="steps">
+    <li><b>Road-name.</b> What are you called out here?</li>
+    <li><b>Reason.</b> Why did you begin wandering? Phrase it so it could be a mystery: <em>"to find the person who sent the last letter."</em></li>
+    <li><b>Keepsake.</b> One object you always carry. Sketch it small.</li>
+    <li><b>Burden.</b> What do you fear becoming? Write it in your satchel's last slot — it travels with you.</li>
+    <li><b>Dream-place.</b> A place that still appears in your dreams. Put a small symbol next to it — this is your first echo-mark (see Echoes).</li>
+  </ol>
+
+  <div class="card sea">
+    <h4>The Burden, and the lantern's dimmer</h4>
+    <p>The Burden is always the <em>traveler's</em> fear, never the player's — written at whatever distance from your own feels right, and rewritable between passages without ceremony. And in every mode, including alone: anyone may pause, redirect, or fade a scene to black at any time, no explanation owed. Reverie plays in real places among real feelings; shared trust outranks immersion, every session.</p>
+  </div>
+
+  <h3>Facets</h3>
+  <p>Divide <strong>6 dots</strong> across three facets. Maximum 3, minimum 1. Under each, draw three small empty boxes — these are Weathering boxes.</p>
+  <div class="facets">
+    <div class="facet">
+      <div class="name">Bone</div>
+      <div class="gloss">strength · endurance · steady hands</div>
+    </div>
+    <div class="facet">
+      <div class="name">Breath</div>
+      <div class="gloss">nerve · charm · quickness · presence</div>
+    </div>
+    <div class="facet">
+      <div class="name">Dream</div>
+      <div class="gloss">intuition · noticing · the uncanny</div>
+    </div>
+  </div>
+
+  <h3>The seven roads — archetypes</h3>
+  <p>Six dots, minimum one, maximum three: exactly seven spreads exist, and each is a way of traveling. Read the columns as Bone · Breath · Dream. Choose freely — or roll a d6 among the six unequal spreads. <strong>The Wanderer can only be chosen, never rolled.</strong> Balance is a decision, not a fate.</p>
+  <table>
+    <tr><td>3·2·1</td><td><strong>The Porter</strong> — endures anything, gets along with anyone, refuses to see omens; carries other people's burdens so as not to look at their own.</td></tr>
+    <tr><td>3·1·2</td><td><strong>The Pilgrim</strong> — strong legs, uncanny compass, hopeless with strangers; walks alone because company drowns out the signal.</td></tr>
+    <tr><td>2·3·1</td><td><strong>The Courier</strong> — charm and stamina in equal measure; delivers everything except bad news, and never dreams on the road.</td></tr>
+    <tr><td>1·3·2</td><td><strong>The Busker</strong> — fragile, magnetic, half-listening to something else; earns passage with talk and pays in noticing.</td></tr>
+    <tr><td>2·1·3</td><td><strong>The Dowser</strong> — follows intuitions physically, awkward in every doorway; the body obeys the dream directly, skipping conversation.</td></tr>
+    <tr><td>1·2·3</td><td><strong>The Listener</strong> — frail and quiet and terribly perceptive; the one places confide in.</td></tr>
+    <tr><td>2·2·2</td><td><strong>The Wanderer</strong> — no edge, no blind spot; the road decides what they become.</td></tr>
+  </table>
+  <p>An archetype is defined by its <strong>1</strong>, not its 3 — the weak facet is where your weathering will concentrate and your crises will live. The Porter's crisis is always uncanny; the Busker's, always physical. In a band, hold <em>different</em> 1s if you can: each traveler is the protagonist of the scenes another cannot survive. And when a Waymark moves a dot at journey's end, the archetype transmutes — say what happened on the road to change it. The Porter who finally looks at an omen is becoming a Pilgrim.</p>
+
+  <h3>Satchel</h3>
+  <p>Draw <strong>seven slots</strong>. Your keepsake takes one; your Burden always takes the seventh. Big or heavy things take two slots. If the satchel is full and you want something new, you must set something down — write in the margin <em>where you left it</em>. Things left behind are prime echo material.</p>
+</section>
+
+<!-- ================= LOOP ================= -->
+<section id="loop">
+  <div class="marker">The Game</div>
+  <h2>How Playing Works</h2>
+  <p>Reverie is a conversation with three interruptions. You talk — describing where you are, what you do, what you ask. The rules only interrupt when:</p>
+  <ul class="plain">
+    <li><strong>The outcome is uncertain and failure would cost something</strong> → make a <strong>Crossing</strong>.</li>
+    <li><strong>Nobody at the table knows the answer</strong> → ask the <strong>Oracle</strong>.</li>
+    <li><strong>Something unexplained appears</strong> → open a <strong>Riddle</strong>.</li>
+  </ul>
+  <p>Everything else simply happens because someone said it. Anyone may add small truths to the world at any time — a rumor, a custom, a smell, a superstition. Write the good ones down.</p>
+</section>
+
+<!-- ================= CROSSING ================= -->
+<section id="crossing">
+  <div class="marker">Resolution</div>
+  <h2>The Crossing</h2>
+  <div class="card">
+    <h4>Procedure</h4>
+    <p class="mech">
+      1. Say what you're attempting and which facet leads.<br>
+      2. Roll <b>Traveler d6s equal to that facet</b> — keep the highest.<br>
+      3. Someone else rolls <b>one World d6</b>.<br><br>
+      <b>Traveler higher</b> → it goes as you intended.<br>
+      <b>Tie</b> → the Threshold Moment (see below).<br>
+      <b>World higher</b> → the world moves instead. If there was danger, mark one Weathering box on the leading facet — <b>two</b> if the World die beat your kept die by 3 or more. Bad losses cut deeper.
+    </p>
+  </div>
+  <div class="card sea">
+    <h4>The tie — the Threshold Moment</h4>
+    <p>A tie is the game's signature result, and three things happen at once: <strong>you succeed</strong>; <strong>you owe</strong> — roll on the Toll table; and <strong>the world leans in</strong> — everyone looks up from the table for ten seconds, and the first real thing anyone notices (a sound, a passerby, a change of light, an overheard word) enters the fiction now. Decide together how. One roll in six lands here, for novices and masters alike. Spoken Tolls are <strong>dog-eared</strong>: the echo roll is the collection agency, and when a Toll's page comes up, the debt returns, transformed — that passage is when the world collects.</p>
+  </div>
+
+  <h3>Weathering &amp; rest</h3>
+  <p>A facet with all three boxes marked is <strong>closed</strong>: it cannot lead a Crossing, and you must show it in the fiction — a limp, a silence, a distance. When all three facets close, your traveler takes the <strong>Long Rest</strong>: they drop out of the story until a real day has passed. No dying — but the story moves on without them, and the table decides what they missed.</p>
+  <p>Rest must be earned in the fiction — real shelter, a shared meal, a safe night — never assumed between sessions. A genuine rest erases <strong>one box, traveler's choice</strong>. Weathering should heal slower than it accumulates on a hard road; that is what makes the road hard.</p>
+
+  <h3>How it shows</h3>
+  <p>Every marked box must show in the fiction — pick or roll a d6 when you mark it, and write the line on your sheet beside the box. Weathering is never just arithmetic; it is the road writing on the traveler.</p>
+  <div class="card">
+    <h4>Weathered Bone (d6)</h4>
+    <p class="mech">
+      <b>1</b> a limp that shortens each day's road · <b>2</b> hands that won't stop trembling ·
+      <b>3</b> an old wound reopened · <b>4</b> sleep that doesn't rest ·
+      <b>5</b> the satchel heavier than its slots · <b>6</b> a cough that answers the cold
+    </p>
+  </div>
+  <div class="card">
+    <h4>Weathered Breath (d6)</h4>
+    <p class="mech">
+      <b>1</b> words arriving wrong, or late · <b>2</b> unable to hold a stranger's eye ·
+      <b>3</b> the laugh stops coming · <b>4</b> flinching at doors and knocks ·
+      <b>5</b> speaking only when spoken to · <b>6</b> your road-name sounding like someone else's
+    </p>
+  </div>
+  <div class="card">
+    <h4>Weathered Dream (d6)</h4>
+    <p class="mech">
+      <b>1</b> sleep without dreams · <b>2</b> missing the obvious omen ·
+      <b>3</b> distrusting your own noticing · <b>4</b> every place feeling like nowhere ·
+      <b>5</b> the margins reading as scribbles · <b>6</b> constant déjà vu that means nothing
+    </p>
+  </div>
+  <p>A <strong>closed</strong> facet is these lines total: closed Bone, the body refuses the road; closed Breath, the traveler goes silent and unreachable; closed Dream, the world goes flat — no omens land, no places feel like anything. The table should be able to see which facet is closed without asking.</p>
+</section>
+
+<!-- ================= ORACLE ================= -->
+<section id="oracle">
+  <div class="marker">When Nobody Knows</div>
+  <h2>The Oracle</h2>
+  <div class="card">
+    <h4>Procedure</h4>
+    <p class="mech">
+      1. Ask a yes/no question aloud.<br>
+      2. Roll the World d6.<br>
+      3. The player to the asker's <b>left</b> offers the first interpretation. The table refines it. Solo: write the question, roll, write the answer before you think too hard.
+    </p>
+    <table>
+      <tr><th>Roll</th><th>Answer</th></tr>
+      <tr><td>1</td><td>No — and it worsens</td></tr>
+      <tr><td>2</td><td>No</td></tr>
+      <tr><td>3</td><td>No — but a door opens</td></tr>
+      <tr><td>4</td><td>Yes — but a price shows</td></tr>
+      <tr><td>5</td><td>Yes</td></tr>
+      <tr><td>6</td><td>Yes — and it deepens</td></tr>
+    </table>
+  </div>
+  <p>Two habits keep the oracle alive: ask questions you actually don't know the answer to, and accept the first honest interpretation instead of fishing for the one you wanted. The oracle needn't be dice — a coin, the next song that plays, the color of the next car. Agree on the reading <em>before</em> you consult it.</p>
+</section>
+
+<!-- ================= RIDDLE ================= -->
+<section id="riddle">
+  <div class="marker">Mystery</div>
+  <h2>Riddles</h2>
+  <p>A Riddle is a strange situation with no author — nobody at the table knows the truth, not even whoever introduced it. You solve it the way you'd solve a black story: by asking questions. But here the answer doesn't exist yet. It is <em>assembled</em>.</p>
+  <div class="card">
+    <h4>Procedure</h4>
+    <ol class="steps">
+      <li><b>Pose it.</b> Roll d66 on the Fragment table, or use something prepared, or something genuinely odd from the real day. Write it at the top of a fresh page.</li>
+      <li><b>Question it.</b> In turns, ask yes/no questions about it. The Oracle answers. If the riddle was <em>invented</em> — not rolled — its poser may answer up to two questions directly across the riddle's whole life, whoever holds the lantern by then. That is their only secret. Rolled riddles have no poser: every answer comes from the Oracle. Solo, all riddles are Oracle-only.</li>
+      <li><b>Keep the tally.</b> Every clear answer is written as an established fact, one line each. A <em>No, and…</em> contradicts: cross out one existing fact of the asker's choice.</li>
+      <li><b>Tell the truth.</b> When <b>seven facts</b> stand uncrossed, any player may attempt the telling: a short account of what is really going on, weaving in at least five of the facts. Each other player may add or bend one sentence. Then it is canon — write it down.</li>
+    </ol>
+  </div>
+  <p>Riddles don't have to resolve in one sitting. An unfinished tally is a live mystery; leave the page open and let echoes feed it. Some riddles deserve to stay at six facts forever. And if a riddle stretches past <strong>fifteen questions</strong>, the valve opens: the truth may be told with whatever facts stand.</p>
+</section>
+
+<!-- ================= VESSELS ================= -->
+<section id="vessels">
+  <div class="marker">Found Things</div>
+  <h2>Vessels</h2>
+  <p>Any real object may be admitted into the fiction.</p>
+  <div class="card">
+    <h4>Procedure</h4>
+    <ol class="steps">
+      <li><b>Find</b> it in the actual world and place it on the table (or sketch it, if it must stay where it is).</li>
+      <li><b>Circle it.</b> Going around, each player adds exactly one sentence: who held it, what it wants, what it cost, where it has been. Solo: write three sentences yourself, quickly.</li>
+      <li><b>Charge it.</b> Roll d6 on the Charge table. The charge is latent — it is never triggered by its carrier, only by the world's hand: the lantern-holder's whim, or, solo, only on an Oracle twist (<em>and…</em>/<em>but…</em>) or a Threshold Moment while the vessel is in the scene.</li>
+      <li><b>File it.</b> Tape it, sketch it, or press it into the notebook. It occupies a satchel slot if carried.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= ECHOES ================= -->
+<section id="echoes">
+  <div class="marker">The Notebook Remembers</div>
+  <h2>Echo-marks</h2>
+  <p>The notebook is the memory engine. Two habits run it:</p>
+  <div class="card sea">
+    <h4>Marking</h4>
+    <p>Whenever something feels charged — an image, a phrase, a smell, a name — draw a small symbol in the margin beside it. Invent the symbol; reuse the same one whenever that motif recurs. Over time the margins become an index of the story's obsessions. Also: dog-ear any page holding an unresolved riddle or something left behind.</p>
+  </div>
+  <div class="card sea">
+    <h4>Echoing — start of every session</h4>
+    <p class="mech">
+      Roll the World d6:<br>
+      <b>1–2</b> → open the previous session's pages.<br>
+      <b>3–4</b> → open any dog-eared page, eyes closed.<br>
+      <b>5–6</b> → open the oldest page that still has an unresolved mark.<br><br>
+      Pick one marked thing from that page. It must return in this
+      session — <b>transformed</b>: same motif, different vessel.
+      The inn's rosemary smell returns at a ruined shrine. The
+      stranger's phrase returns as graffiti.
+    </p>
+  </div>
+  <p>How it returns is decided in play, by whoever holds the lantern or by the table together. Don't force it early; let it find its moment.</p>
+</section>
+
+<!-- ================= PASSAGE ================= -->
+<section id="passage">
+  <div class="marker">A Session</div>
+  <h2>The Passage</h2>
+  <p>A session is a Passage — twenty minutes on a delayed train or three hours at a kitchen table, same shape:</p>
+  <ol class="steps">
+    <li><b>Threshold.</b> One breath of actual silence. Then one vivid opening image — from the Threshold table, from the lantern-holder, or simply what's outside the window, made strange.</li>
+    <li><b>Wander.</b> Travel, talk, notice. Add small truths. Ask what places feel like.</li>
+    <li><b>Fragment.</b> When energy dips or a scene closes, roll d66 on the Fragment table. Open a Riddle if it bites.</li>
+    <li><b>Crossing.</b> Ensure at least one moment where someone risks something that matters.</li>
+    <li><b>Echo.</b> The session's echo (rolled at the start) must have landed by now — if it hasn't, land it.</li>
+    <li><b>Residue.</b> To close: each player names one image they'll remember. Write them as the page's last lines and mark them. They are next session's echo fuel. End there — resonance, not closure.</li>
+  </ol>
+</section>
+
+<!-- ================= MODES ================= -->
+<section id="modes">
+  <div class="marker">1 to 4 Players</div>
+  <h2>Modes of Play</h2>
+
+  <h3>Solo — you and the book</h3>
+  <p>The loop is write → ask → roll → write. Narrate in short written lines; consult the Oracle whenever the world must answer; roll Crossings against the World die yourself. Keep the pace brisk: if you've written three lines without a question, ask one. A solo passage fits in fifteen minutes on a bench.</p>
+
+  <h3>Duo — trading the lantern</h3>
+  <p>Whoever holds the lantern (any token — a stone, the darker die) frames the world and voices its people; the other plays their traveler. <strong>The lantern passes at doors</strong> — any threshold in the fiction: a building entered, a vehicle boarded, day into dusk — and a Threshold Moment always passes it too. While holding it, your own traveler responds but never initiates, and your questions go to the Oracle like anyone's. One more duo law: only your companion can erase your weathering — rest is a scene of care, not bookkeeping. Perfect for two people who just walked through the same real town: the holder narrates the town you both saw, made strange.</p>
+
+  <h3>Table — three or four, rotating keeper</h3>
+  <p>No permanent GM. Each passage, the lantern passes to the next keeper, who prepares exactly three things and no more: <strong>an opening image, one Fragment, one tension.</strong> Everyone plays a traveler, including the keeper, whose traveler simply stands quieter this passage. All riddles are assembled, never authored — the keeper's two direct answers per riddle are their only secret.</p>
+
+  <h3>Waymarks — how travelers change</h3>
+  <p>No experience points. At the end of each passage, write one line: something your traveler now knows, carries, or can no longer un-see. At the end of a full journey (a story arc, or a real trip), you may do one of: move one facet dot; replace your Burden with a new fear earned on the road; or retire the traveler into the world — they become a Figure others may meet.</p>
+</section>
+
+<!-- ================= TABLES ================= -->
+<section id="tables">
+  <div class="marker">Appendix</div>
+  <h2>The Tables</h2>
+
+  <h3>Toll — on a tied Crossing (d6)</h3>
+  <table>
+    <tr><td>1</td><td>Something small from the satchel stays behind.</td></tr>
+    <tr><td>2</td><td>A truth you'd rather keep is spoken aloud.</td></tr>
+    <tr><td>3</td><td>A promise is made; the world will collect.</td></tr>
+    <tr><td>4</td><td>It takes far longer than it should. Dusk comes.</td></tr>
+    <tr><td>5</td><td>Someone learns your road-name.</td></tr>
+    <tr><td>6</td><td>The place remembers you passed. Mark it.</td></tr>
+  </table>
+
+  <h3>Charge — for a new Vessel (d6)</h3>
+  <table>
+    <tr><td>1</td><td>It grows cold near untruth.</td></tr>
+    <tr><td>2</td><td>It hums where the dead are restless.</td></tr>
+    <tr><td>3</td><td>It is heavier at night.</td></tr>
+    <tr><td>4</td><td>It points, faintly, toward something lost.</td></tr>
+    <tr><td>5</td><td>Animals will not touch it.</td></tr>
+    <tr><td>6</td><td>In dreams it speaks — one word, so far.</td></tr>
+  </table>
+
+  <h3>Threshold — opening images (d6)</h3>
+  <table>
+    <tr><td>1</td><td>A field of white birds around an empty chair.</td></tr>
+    <tr><td>2</td><td>A lit window in a building everyone calls empty.</td></tr>
+    <tr><td>3</td><td>Fog parting to show only the road behind you.</td></tr>
+    <tr><td>4</td><td>A stranger waving — at you, or past you.</td></tr>
+    <tr><td>5</td><td>Laundry strung across a street where no one lives.</td></tr>
+    <tr><td>6</td><td>What you actually see right now, made strange.</td></tr>
+  </table>
+
+  <h3>The feel of a place (d6)</h3>
+  <table>
+    <tr><td>1</td><td>Watchful</td></tr>
+    <tr><td>2</td><td>Grieving</td></tr>
+    <tr><td>3</td><td>Expectant</td></tr>
+    <tr><td>4</td><td>Forgetful</td></tr>
+    <tr><td>5</td><td>Welcoming — a little too much</td></tr>
+    <tr><td>6</td><td>Holding its breath</td></tr>
+  </table>
+
+  <h3>Fragments (d66 — roll two d6, read as tens and units)</h3>
+  <p><strong>The living table:</strong> once a rolled entry has been used in play, you may write its replacement into that cell — a new fragment earned from the fiction or found on the real road. Cross out the old in pencil, write the new beside it. Entry by entry, over journeys, the table becomes yours: a campaign a few journeys old rolls on a table no one else owns.</p>
+  <div class="d66">
+    <table>
+      <tr><td>11</td><td>Every clock here shows a different hour.</td></tr>
+      <tr><td>12</td><td>Warm tea steams in a place long abandoned.</td></tr>
+      <tr><td>13</td><td>A child's drawing of a place you haven't reached yet.</td></tr>
+      <tr><td>14</td><td>Hoofprints where no animal could stand.</td></tr>
+      <tr><td>15</td><td>Someone mended the broken thing overnight.</td></tr>
+      <tr><td>16</td><td>A door with seven locks; six stand open.</td></tr>
+      <tr><td>21</td><td>The same face in two crowds, days apart.</td></tr>
+      <tr><td>22</td><td>Fresh flowers on an unmarked grave.</td></tr>
+      <tr><td>23</td><td>A song everyone knows but no one remembers learning.</td></tr>
+      <tr><td>24</td><td>The water is flowing the wrong way.</td></tr>
+      <tr><td>25</td><td>All the birds face the same direction.</td></tr>
+      <tr><td>26</td><td>A letter addressed to your road-name.</td></tr>
+      <tr><td>31</td><td>The map shows a street that isn't there.</td></tr>
+      <tr><td>32</td><td>Every mirror in the house faces the wall.</td></tr>
+      <tr><td>33</td><td>A stranger apologizes for something that hasn't happened yet.</td></tr>
+      <tr><td>34</td><td>The smell of the sea, far from any coast.</td></tr>
+      <tr><td>35</td><td>Chalk marks on the doors, counting down.</td></tr>
+      <tr><td>36</td><td>A statue no one agrees was there yesterday.</td></tr>
+    </table>
+    <table>
+      <tr><td>41</td><td>An animal follows at exactly the same distance.</td></tr>
+      <tr><td>42</td><td>Lights in the empty tower go out one floor at a time.</td></tr>
+      <tr><td>43</td><td>A meal set for four; three plates used.</td></tr>
+      <tr><td>44</td><td>Your own handwriting, somewhere you've never been.</td></tr>
+      <tr><td>45</td><td>Bells at the wrong hour; nobody reacts.</td></tr>
+      <tr><td>46</td><td>The photograph shows one person more than were present.</td></tr>
+      <tr><td>51</td><td>A market stall selling things you dreamed about.</td></tr>
+      <tr><td>52</td><td>The ferryman refuses payment from one of you only.</td></tr>
+      <tr><td>53</td><td>Ivy grown in the shape of letters.</td></tr>
+      <tr><td>54</td><td>Every dog in town is silent tonight.</td></tr>
+      <tr><td>55</td><td>A key nailed above every doorway except one.</td></tr>
+      <tr><td>56</td><td>Rain falling everywhere but the square.</td></tr>
+      <tr><td>61</td><td>A funeral procession no one will explain.</td></tr>
+      <tr><td>62</td><td>The innkeeper knows your order before you speak.</td></tr>
+      <tr><td>63</td><td>Footprints leading in; none leading out.</td></tr>
+      <tr><td>64</td><td>A tune whistled back to you from underground.</td></tr>
+      <tr><td>65</td><td>The old bridge is new; the new bridge is old.</td></tr>
+      <tr><td>66</td><td>Someone has been crossing your name out of records.</td></tr>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Ask what the place feels like.<br>
+  Write down what answers.
+  <div class="small">Reverie · The Notebook Game · Pocket Reference</div>
+</footer>
+
+</body>
+</html>

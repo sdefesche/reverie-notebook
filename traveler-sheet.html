@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — Traveler Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ece6d8;
+    --paper-deep:#e2dbc9;
+    --ink:#1c2733;
+    --ink-soft:#43505c;
+    --graphite:#5a646e;
+    --lantern:#a1712f;
+    --seaglass:#4f7a6c;
+    --rule:rgba(28,39,51,.18);
+    --rule-soft:rgba(28,39,51,.10);
+    --radius:4px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--ink);
+    color:var(--ink);
+    font-family:'Crimson Pro',Georgia,serif;
+    font-weight:400;
+    font-size:1.05rem;
+    line-height:1.55;
+    padding:2rem 1rem 4rem;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern);color:var(--paper);}
+  button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+  :focus-visible{outline:2px solid var(--lantern);outline-offset:2px;}
+
+  .sheet{
+    max-width:50rem;margin:0 auto;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:0 8px 40px rgba(0,0,0,.45);
+    display:grid;
+    grid-template-columns:3.4rem 1fr;
+    overflow:hidden;
+  }
+  /* ---- margin rail ---- */
+  .rail{
+    border-right:1px solid rgba(161,113,47,.4);
+    background:var(--paper);
+    padding:1.4rem .5rem;
+    display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  }
+  .rail .lbl{
+    writing-mode:vertical-rl;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--graphite);
+    margin-bottom:.8rem;
+  }
+  .glyph{
+    width:1.9rem;height:1.9rem;
+    border:1px dashed var(--rule);
+    border-radius:50%;
+    font-family:'Crimson Pro',serif;
+    font-size:1rem;text-align:center;
+    color:var(--seaglass);
+    background:transparent;
+  }
+  .glyph:empty::before{content:"";}
+
+  .page{padding:1.8rem 2rem 2.2rem;}
+  @media(max-width:560px){
+    .sheet{grid-template-columns:1fr;}
+    .rail{flex-direction:row;border-right:0;border-bottom:1px solid rgba(161,113,47,.4);padding:.7rem 1rem;}
+    .rail .lbl{writing-mode:horizontal-tb;margin:0 .6rem 0 0;}
+    .page{padding:1.4rem 1.2rem 1.8rem;}
+  }
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--lantern);
+    display:flex;align-items:center;gap:.8rem;
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--rule);}
+  .roadname{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;font-size:clamp(1.9rem,6vw,2.7rem);
+    line-height:1.1;
+    border-bottom:1px solid var(--rule);
+    padding:.35rem 0 .3rem;
+    min-height:1.4em;
+  }
+  [contenteditable]{outline-offset:3px;}
+  [contenteditable]:empty::before{
+    content:attr(data-hint);
+    color:var(--graphite);opacity:.55;font-style:italic;font-weight:400;
+  }
+  [contenteditable]:focus{background:rgba(161,113,47,.06);}
+
+  /* ---- sections ---- */
+  .sec{margin-top:1.9rem;}
+  .sec > h2{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+    font-weight:500;color:var(--ink-soft);
+    display:flex;align-items:center;gap:.8rem;
+    margin-bottom:.9rem;
+  }
+  .sec > h2::after{content:"";flex:1;height:1px;background:var(--rule-soft);}
+  .q{margin-bottom:1rem;}
+  .q .prompt{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.08rem;color:var(--ink-soft);
+  }
+  .q .line{
+    font-style:italic;font-weight:300;
+    border-bottom:1px solid var(--rule);
+    padding:.15rem 0 .2rem;min-height:1.5em;
+  }
+  .answers{display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;}
+  .answers .q.wide{grid-column:1/-1;}
+  @media(max-width:560px){.answers{grid-template-columns:1fr;}}
+
+  /* ---- facets ---- */
+  .budget{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;color:var(--graphite);letter-spacing:.1em;
+  }
+  .budget b{color:var(--lantern);font-weight:500;}
+  .facets{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:.6rem;}
+  @media(max-width:560px){.facets{grid-template-columns:1fr;}}
+  .facet{
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    padding:.9rem .8rem .95rem;
+    text-align:center;
+    background:rgba(255,255,255,.25);
+  }
+  .facet .name{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:1.4rem;letter-spacing:.06em;
+  }
+  .facet .gloss{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--graphite);margin:.15rem 0 .7rem;
+  }
+  .dots{display:flex;justify-content:center;gap:.55rem;margin-bottom:.75rem;}
+  .dot{
+    width:1.15rem;height:1.15rem;border-radius:50%;
+    border:1.5px solid var(--ink-soft);
+    background:transparent;
+    transition:background .15s;
+    padding:0;
+  }
+  .dot[aria-pressed="true"]{
+    background:radial-gradient(circle at 38% 35%, var(--graphite), var(--ink) 75%);
+    border-color:var(--ink);
+  }
+  .wlbl{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--graphite);margin-bottom:.3rem;
+  }
+  .weather{display:flex;justify-content:center;gap:.5rem;}
+  .wbox{
+    width:1.15rem;height:1.15rem;
+    border:1.5px solid var(--ink-soft);
+    border-radius:2px;background:transparent;position:relative;padding:0;
+  }
+  .wbox[aria-pressed="true"]::before,
+  .wbox[aria-pressed="true"]::after{
+    content:"";position:absolute;left:10%;right:10%;top:48%;
+    height:1.6px;background:var(--lantern);
+  }
+  .wbox[aria-pressed="true"]::before{transform:rotate(40deg);}
+  .wbox[aria-pressed="true"]::after{transform:rotate(-42deg);}
+  .facet.closed{border-color:var(--lantern);background:rgba(161,113,47,.08);}
+  .facet.closed .name::after{
+    content:" · closed";
+    font-size:.85rem;font-style:italic;font-weight:400;color:var(--lantern);
+  }
+
+  /* ---- satchel ---- */
+  .satchel{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;}
+  @media(max-width:560px){.satchel{grid-template-columns:repeat(4,1fr);}}
+  .slot{
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    min-height:4.6rem;
+    padding:.35rem .45rem;
+    font-size:.86rem;font-style:italic;font-weight:300;
+    background:rgba(255,255,255,.25);
+    position:relative;
+  }
+  .slot::before{
+    content:attr(data-n);
+    position:absolute;top:.2rem;right:.35rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.55rem;color:var(--graphite);font-style:normal;
+  }
+  .slot.burden{
+    border-style:dashed;border-color:var(--lantern);
+    background:rgba(161,113,47,.07);
+  }
+  .slot.burden::before{content:"burden";color:var(--lantern);letter-spacing:.08em;}
+
+  /* ---- waymarks ---- */
+  .waymarks .line{
+    display:flex;gap:.6rem;align-items:baseline;
+    border-bottom:1px solid var(--rule-soft);
+    padding:.3rem 0;
+  }
+  .waymarks .line::before{content:"◆";font-size:.55rem;color:var(--seaglass);}
+  .waymarks .entry{flex:1;font-style:italic;font-weight:300;min-height:1.4em;}
+  .add{
+    margin-top:.6rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--lantern);
+    border:1px solid rgba(161,113,47,.5);
+    border-radius:var(--radius);
+    padding:.35rem .8rem;
+    transition:background .15s;
+  }
+  .add:hover{background:rgba(161,113,47,.1);}
+
+  /* ---- footer strip ---- */
+  .oracle-strip{
+    margin-top:2rem;
+    border-top:1px solid var(--rule);
+    padding-top:.7rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.62rem;letter-spacing:.06em;
+    color:var(--ink-soft);
+    display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;
+  }
+  .oracle-strip b{color:var(--lantern);font-weight:500;}
+  .oracle-strip .t{color:var(--graphite);letter-spacing:.2em;text-transform:uppercase;margin-right:.4rem;}
+
+  /* ---- print ---- */
+  @media print{
+    body{background:#fff;padding:0;}
+    .sheet{box-shadow:none;max-width:none;border-radius:0;}
+    .add{display:none;}
+    .dot,.wbox,.glyph{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <!-- margin rail: echo-marks -->
+  <aside class="rail" aria-label="Echo-marks margin">
+    <div class="lbl">Echo-marks</div>
+    <div class="glyph" contenteditable="true" role="textbox" aria-label="Echo-mark symbol 1"></div>
+    <div class="glyph" contenteditable="true" role="textbox" aria-label="Echo-mark symbol 2"></div>
+    <div class="glyph" contenteditable="true" role="textbox" aria-label="Echo-mark symbol 3"></div>
+    <div class="glyph" contenteditable="true" role="textbox" aria-label="Echo-mark symbol 4"></div>
+    <div class="glyph" contenteditable="true" role="textbox" aria-label="Echo-mark symbol 5"></div>
+  </aside>
+
+  <div class="page">
+
+    <div class="eyebrow">Reverie · Traveler</div>
+    <div class="roadname" contenteditable="true" role="textbox" aria-label="Road-name" data-hint="What are you called out here?"></div>
+
+    <!-- five answers -->
+    <div class="sec">
+      <h2>Five Answers</h2>
+      <div class="answers">
+        <div class="q wide">
+          <div class="prompt">Why did you begin wandering?</div>
+          <div class="line" contenteditable="true" role="textbox" aria-label="Reason for wandering" data-hint="phrase it like a mystery…"></div>
+        </div>
+        <div class="q">
+          <div class="prompt">What do you always carry?</div>
+          <div class="line" contenteditable="true" role="textbox" aria-label="Keepsake" data-hint="your keepsake — sketch it in slot 1"></div>
+        </div>
+        <div class="q">
+          <div class="prompt">What do you fear becoming?</div>
+          <div class="line" contenteditable="true" role="textbox" aria-label="Burden" data-hint="your Burden — it rides in slot 7"></div>
+        </div>
+        <div class="q wide">
+          <div class="prompt">What place still appears in your dreams?</div>
+          <div class="line" contenteditable="true" role="textbox" aria-label="Dream-place" data-hint="give it an echo-mark in the margin"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- facets -->
+    <div class="sec">
+      <h2>Facets <span class="budget" id="budget">dots left: <b>6</b></span></h2>
+      <div class="facets" id="facets">
+        <div class="facet" data-facet="bone">
+          <div class="name">Bone</div>
+          <div class="gloss">strength · endurance · steady hands</div>
+          <div class="dots" role="group" aria-label="Bone dots">
+            <button class="dot" aria-pressed="false" aria-label="Bone dot 1"></button>
+            <button class="dot" aria-pressed="false" aria-label="Bone dot 2"></button>
+            <button class="dot" aria-pressed="false" aria-label="Bone dot 3"></button>
+          </div>
+          <div class="wlbl">weathering</div>
+          <div class="weather" role="group" aria-label="Bone weathering">
+            <button class="wbox" aria-pressed="false" aria-label="Bone weathering 1"></button>
+            <button class="wbox" aria-pressed="false" aria-label="Bone weathering 2"></button>
+            <button class="wbox" aria-pressed="false" aria-label="Bone weathering 3"></button>
+          </div>
+        </div>
+        <div class="facet" data-facet="breath">
+          <div class="name">Breath</div>
+          <div class="gloss">nerve · charm · quickness</div>
+          <div class="dots" role="group" aria-label="Breath dots">
+            <button class="dot" aria-pressed="false" aria-label="Breath dot 1"></button>
+            <button class="dot" aria-pressed="false" aria-label="Breath dot 2"></button>
+            <button class="dot" aria-pressed="false" aria-label="Breath dot 3"></button>
+          </div>
+          <div class="wlbl">weathering</div>
+          <div class="weather" role="group" aria-label="Breath weathering">
+            <button class="wbox" aria-pressed="false" aria-label="Breath weathering 1"></button>
+            <button class="wbox" aria-pressed="false" aria-label="Breath weathering 2"></button>
+            <button class="wbox" aria-pressed="false" aria-label="Breath weathering 3"></button>
+          </div>
+        </div>
+        <div class="facet" data-facet="dream">
+          <div class="name">Dream</div>
+          <div class="gloss">intuition · noticing · the uncanny</div>
+          <div class="dots" role="group" aria-label="Dream dots">
+            <button class="dot" aria-pressed="false" aria-label="Dream dot 1"></button>
+            <button class="dot" aria-pressed="false" aria-label="Dream dot 2"></button>
+            <button class="dot" aria-pressed="false" aria-label="Dream dot 3"></button>
+          </div>
+          <div class="wlbl">weathering</div>
+          <div class="weather" role="group" aria-label="Dream weathering">
+            <button class="wbox" aria-pressed="false" aria-label="Dream weathering 1"></button>
+            <button class="wbox" aria-pressed="false" aria-label="Dream weathering 2"></button>
+            <button class="wbox" aria-pressed="false" aria-label="Dream weathering 3"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- satchel -->
+    <div class="sec">
+      <h2>Satchel — seven slots</h2>
+      <div class="satchel">
+        <div class="slot" data-n="1" contenteditable="true" role="textbox" aria-label="Satchel slot 1 — keepsake"></div>
+        <div class="slot" data-n="2" contenteditable="true" role="textbox" aria-label="Satchel slot 2"></div>
+        <div class="slot" data-n="3" contenteditable="true" role="textbox" aria-label="Satchel slot 3"></div>
+        <div class="slot" data-n="4" contenteditable="true" role="textbox" aria-label="Satchel slot 4"></div>
+        <div class="slot" data-n="5" contenteditable="true" role="textbox" aria-label="Satchel slot 5"></div>
+        <div class="slot" data-n="6" contenteditable="true" role="textbox" aria-label="Satchel slot 6"></div>
+        <div class="slot burden" contenteditable="true" role="textbox" aria-label="Satchel slot 7 — your Burden"></div>
+      </div>
+    </div>
+
+    <!-- waymarks -->
+    <div class="sec waymarks">
+      <h2>Waymarks — one line per passage</h2>
+      <div id="wm">
+        <div class="line"><div class="entry" contenteditable="true" role="textbox" aria-label="Waymark 1" data-hint="something you now know, carry, or can't un-see"></div></div>
+        <div class="line"><div class="entry" contenteditable="true" role="textbox" aria-label="Waymark 2"></div></div>
+        <div class="line"><div class="entry" contenteditable="true" role="textbox" aria-label="Waymark 3"></div></div>
+      </div>
+      <button class="add" id="addwm">+ add a waymark</button>
+    </div>
+
+    <!-- oracle strip -->
+    <div class="oracle-strip" aria-label="Oracle quick reference">
+      <span class="t">Oracle d6</span>
+      <span><b>1</b> no, and</span>
+      <span><b>2</b> no</span>
+      <span><b>3</b> no, but</span>
+      <span><b>4</b> yes, but</span>
+      <span><b>5</b> yes</span>
+      <span><b>6</b> yes, and</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const MAX_TOTAL = 6;
+
+  function facetDots(facet){
+    return [...facet.querySelectorAll('.dot')].filter(d=>d.getAttribute('aria-pressed')==='true').length;
+  }
+  function totalDots(){
+    return [...document.querySelectorAll('.facet')].reduce((n,f)=>n+facetDots(f),0);
+  }
+  function updateBudget(){
+    const left = MAX_TOTAL - totalDots();
+    document.getElementById('budget').innerHTML = 'dots left: <b>'+left+'</b>';
+  }
+
+  // Dots: clicking dot N sets the facet to N dots; clicking the current top dot removes it.
+  document.querySelectorAll('.facet').forEach(facet=>{
+    const dots=[...facet.querySelectorAll('.dot')];
+    dots.forEach((dot,i)=>{
+      dot.addEventListener('click',()=>{
+        const current=facetDots(facet);
+        let target=i+1;
+        if(target===current) target=i;           // clicking top dot lowers by one
+        const others=totalDots()-current;
+        if(others+target>MAX_TOTAL) target=MAX_TOTAL-others; // clamp to budget
+        dots.forEach((d,j)=>d.setAttribute('aria-pressed', j<target ? 'true':'false'));
+        updateBudget();
+      });
+    });
+
+    // Weathering boxes toggle; three marked closes the facet.
+    const boxes=[...facet.querySelectorAll('.wbox')];
+    boxes.forEach(b=>{
+      b.addEventListener('click',()=>{
+        b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true' ? 'false':'true');
+        const closed=boxes.every(x=>x.getAttribute('aria-pressed')==='true');
+        facet.classList.toggle('closed', closed);
+      });
+    });
+  });
+
+  // Waymarks
+  let wmCount=3;
+  document.getElementById('addwm').addEventListener('click',()=>{
+    wmCount++;
+    const row=document.createElement('div');
+    row.className='line';
+    row.innerHTML='<div class="entry" contenteditable="true" role="textbox" aria-label="Waymark '+wmCount+'"></div>';
+    document.getElementById('wm').appendChild(row);
+    row.querySelector('.entry').focus();
+  });
+
+  updateBudget();
+})();
+</script>
+
+</body>
+</html>
