@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie — Colophon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12); --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.1rem;line-height:1.68;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  a{color:var(--lantern);}
+  .wrap{max-width:40rem;margin:0 auto;padding:0 1.4rem 4rem;}
+  header{text-align:center;padding:3.6rem 1rem 1rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.2rem,8vw,3.2rem);letter-spacing:.05em;
+  }
+  section{padding-top:2.6rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;margin-bottom:.9rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  p{margin-bottom:1rem;}
+  .whisper{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--faded);font-size:1.15rem;
+    border-left:2px solid var(--lantern-dim);
+    padding:.2rem 0 .2rem 1rem;margin:1.4rem 0;
+  }
+  footer{
+    text-align:center;padding:3.5rem 1rem 2rem;color:var(--faded);
+    font-family:'IBM Plex Mono',monospace;font-size:.66rem;
+    letter-spacing:.22em;text-transform:uppercase;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reverie · First Edition</div>
+  <h1>COLOPHON</h1>
+</header>
+<div class="wrap">
+
+<section>
+  <div class="marker">License</div>
+  <p><strong>Reverie</strong> — its rules, guides, adventures, and tables — is released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution–ShareAlike 4.0</a> license (CC BY-SA 4.0).</p>
+  <p>That means: play it, print it, translate it, hack it, publish your own hunts, supplements, and full games built on it — commercially or not — so long as you credit <em>Reverie</em> and release your derivative under the same license. The chain of sharing that this game grew from continues through it.</p>
+  <p>Created by Sacha, in the Netherlands, on trains, benches, and one long conversation, 2026.</p>
+</section>
+
+<section>
+  <div class="marker">Lineage</div>
+  <p>No game begins from nothing, and this one is glad of its ancestors. Reverie is built <strong>in the posture of Cairn</strong> (Yochai Gal, itself CC BY-SA) and its parent <strong>Into the Odd</strong> (Chris McDowall): the slot inventory, the fast questionnaire of a character, fiction-first rulings, advancement by living rather than leveling, and the conviction that danger is best avoided. Its transplanted heart comes from elsewhere: the graded oracle stands in the <strong>solo journaling tradition</strong> that runs from Mythic GM Emulator through Ironsworn's descendants; the Riddle is <strong>Black Stories</strong> with the answer removed, so the table builds the truth it deduces; Perils owe a debt to the progress clocks of <strong>Blades in the Dark</strong> (John Harper).</p>
+  <p>The organs with no ancestor we know of — the Threshold Moment, weathering written as biography, Tolls collected by the echo of a dog-eared page, and the notebook as the game's memory engine — are offered onward under the same terms, for whoever needs them next.</p>
+  <div class="whisper">No text was taken from any of these works; what was learned from them is gratefully acknowledged.</div>
+</section>
+
+<section>
+  <div class="marker">Tools of the Trade</div>
+  <p>Set in Cormorant Garamond, Crimson Pro, and IBM Plex Mono. Written with, argued with, and simulated by Claude (Anthropic), whose dice never once physically existed. Playtested first by two travelers who mostly wanted to fight the monster immediately — and were right to.</p>
+</section>
+
+</div>
+<footer>Reverie · CC BY-SA 4.0 · The Shelf</footer>
+</body>
+</html>

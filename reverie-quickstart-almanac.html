@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverie Quickstart — The Hunter's Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#131a22; --fog:#1c2733; --fog-deep:#161f29;
+    --lantern:#e0a458; --lantern-dim:#a67a3e;
+    --bone:#e8e2d4; --seaglass:#7fa99b; --faded:#8a97a3;
+    --hairline:rgba(232,226,212,.12); --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--night);color:var(--bone);
+    font-family:'Crimson Pro',Georgia,serif;font-weight:300;
+    font-size:1.1rem;line-height:1.62;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--lantern-dim);color:var(--night);}
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.4rem 4rem;}
+  header{text-align:center;padding:3.4rem 1rem 1rem;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--seaglass);margin-bottom:1rem;
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.2rem,8vw,3.4rem);letter-spacing:.05em;line-height:1.08;
+  }
+  .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--lantern);margin-top:.5rem;font-size:1.2rem;
+  }
+  section{padding-top:2.6rem;}
+  .marker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--lantern);display:flex;align-items:center;gap:.9rem;margin-bottom:.8rem;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.6rem,5.5vw,2.1rem);margin-bottom:.9rem;line-height:1.15;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-style:italic;
+    font-size:1.3rem;color:var(--lantern);margin:1.6rem 0 .5rem;
+  }
+  p{margin-bottom:.95rem;}
+  .card{
+    background:var(--fog);border:1px solid var(--hairline);
+    border-left:3px solid var(--lantern-dim);border-radius:var(--radius);
+    padding:1.1rem 1.2rem;margin:1.1rem 0;
+  }
+  .card.sea{border-left-color:var(--seaglass);}
+  .card h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--lantern);margin-bottom:.5rem;
+  }
+  .card.sea h4{color:var(--seaglass);}
+  .card p:last-child{margin-bottom:0;}
+  .mech{font-family:'IBM Plex Mono',monospace;font-size:.84rem;line-height:1.8;}
+  .mech b{color:var(--lantern);font-weight:500;}
+  table{
+    width:100%;border-collapse:collapse;
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;margin:.9rem 0;
+  }
+  th{
+    text-align:left;font-weight:500;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--seaglass);
+    padding:.4rem .5rem;border-bottom:1px solid var(--hairline);
+  }
+  td{padding:.4rem .5rem;border-bottom:1px solid rgba(232,226,212,.06);vertical-align:top;}
+  td:first-child{color:var(--lantern);white-space:nowrap;}
+  .d66{columns:2;column-gap:1.6rem;}
+  @media(max-width:640px){.d66{columns:1;}}
+  .d66 table{margin:.2rem 0 .8rem;}
+  ul{list-style:none;margin-bottom:.95rem;}
+  li{padding-left:1.2rem;position:relative;margin-bottom:.35rem;}
+  li::before{content:"◦";position:absolute;left:0;color:var(--seaglass);}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Reverie Quickstart · Supplement</div>
+  <h1>THE HUNTER'S ALMANAC</h1>
+  <div class="sub">gear, weapons, and a world rolled in five minutes</div>
+</header>
+<div class="wrap">
+
+<!-- RIGHT TOOL -->
+<section>
+  <div class="marker">The One New Rule</div>
+  <h2>The Right Tool</h2>
+  <div class="card">
+    <h4>Rule</h4>
+    <p class="mech">
+      If your gear plainly fits the attempt — rope for the climb,
+      iron filings for the ghost — roll <b>one extra Traveler die</b>.<br>
+      Maximum four dice, still keep highest. One item per roll.
+    </p>
+  </div>
+  <p>That's the entire equipment system. No bonuses, no stats — an item either fits or it doesn't, and the table judges "plainly" out loud. Since the satchel holds seven slots and the Burden takes one, <strong>what you packed is your build.</strong> The player who brought chalk to a haunted mill made a character choice; honor it.</p>
+  <p><em>Variant for a slower table:</em> the extra die only comes from gear bought, found, or bargained for <em>in play</em> — making the outfitter's shop a real scene. For a first hunt, skip the variant: let packing be free and clever.</p>
+</section>
+
+<!-- OUTFITTER -->
+<section>
+  <div class="marker">Packing</div>
+  <h2>The Outfitter's Shelf</h2>
+  <p>Twenty things worth their slots. No prices for a first hunt — each hunter picks freely until the satchel says stop. Every item earns its extra die in more ways than one; that's why it's on the shelf.</p>
+  <table>
+    <tr><th>Item</th><th>Slots</th><th>Known to be good for</th></tr>
+    <tr><td>Fifty feet of rope</td><td>2</td><td>everything, always, forever</td></tr>
+    <tr><td>Storm lantern &amp; oil</td><td>1</td><td>seeing; being seen; not being snuck up on</td></tr>
+    <tr><td>Chalk, one stick</td><td>—*</td><td>marking doors, circles, trails, tallies</td></tr>
+    <tr><td>Sack of salt</td><td>1</td><td>lines things won't cross; ruining soup</td></tr>
+    <tr><td>Small mirror</td><td>—*</td><td>corners; things that mustn't be looked at</td></tr>
+    <tr><td>Iron filings, a pouch</td><td>—*</td><td>the restless dead notice iron</td></tr>
+    <tr><td>Fishing line &amp; hooks</td><td>—*</td><td>tripwires, retrieval, actual fish</td></tr>
+    <tr><td>Crowbar</td><td>1</td><td>what's shut; what's nailed; leverage</td></tr>
+    <tr><td>A loud bell</td><td>1</td><td>alarms; announcements; some things flee sound</td></tr>
+    <tr><td>Grease, a tin</td><td>1</td><td>hinges, escapes, undignified victories</td></tr>
+    <tr><td>Sack of marbles</td><td>1</td><td>stairs, floors, pursuit problems</td></tr>
+    <tr><td>Smoke candle</td><td>1</td><td>exits; signals; seeing air move</td></tr>
+    <tr><td>Dried sausage</td><td>1</td><td>dogs, hunters, and bribery of both</td></tr>
+    <tr><td>Heavy net</td><td>2</td><td>things that must be held, not hurt</td></tr>
+    <tr><td>Spade</td><td>2</td><td>what's buried; what should be</td></tr>
+    <tr><td>Tin whistle</td><td>—*</td><td>signals; tunes; some things answer music</td></tr>
+    <tr><td>Horseshoe magnet</td><td>1</td><td>lost keys, hidden nails, odd compasses</td></tr>
+    <tr><td>Candle stubs &amp; matches</td><td>—*</td><td>quiet light; sealing; drafts betray doors</td></tr>
+    <tr><td>Waxed sack, large</td><td>1</td><td>carrying what must not get wet, or out</td></tr>
+    <tr><td>Bundle of stakes &amp; mallet</td><td>2</td><td>tents, warnings, and the obvious</td></tr>
+  </table>
+  <p style="font-size:.9rem;color:var(--faded)">* Pocket things: three pocket items together fill one slot.</p>
+</section>
+
+<!-- WEAPONS -->
+<section>
+  <div class="marker">Arms</div>
+  <h2>Weapons — traits, not damage</h2>
+  <div class="card">
+    <h4>Rule</h4>
+    <p class="mech">
+      A weapon is slots + permission to do harm + <b>one trait</b>.<br>
+      The trait is always true, for better and worse.<br>
+      Against a Peril, weapons only bite <b>after the Telling</b> —
+      before it, they buy escape at best.
+    </p>
+  </div>
+  <p>No damage dice: a Crossing with a weapon does what the fiction says — drives off, wounds, pins, finishes — shaped by the facts you've established. The trait is the interesting part, and it cuts both ways: <em>loud</em> wins fights and wakes things; <em>borrowed</em> must go back, and its owner will ask what it did.</p>
+  <table>
+    <tr><th>Weapon</th><th>Slots</th><th>Trait</th></tr>
+    <tr><td>Grandfather's axe</td><td>2</td><td><strong>remembers</strong> — it has done this before, and sometimes shows you</td></tr>
+    <tr><td>Boar spear</td><td>2</td><td><strong>keeps things at length</strong> — nothing closes on you first</td></tr>
+    <tr><td>Sling &amp; smooth stones</td><td>1</td><td><strong>quiet</strong> — the second stone surprises too</td></tr>
+    <tr><td>Rusty saber</td><td>1</td><td><strong>loud &amp; proud</strong> — announces you in every sense</td></tr>
+    <tr><td>Hunting bow</td><td>2</td><td><strong>needs both hands</strong> — and open ground, and time</td></tr>
+    <tr><td>Iron fire-poker</td><td>1</td><td><strong>cold iron</strong> — the restless dead respect it; doors don't</td></tr>
+    <tr><td>Three throwing knives</td><td>1</td><td><strong>never enough of them</strong> — count your throws</td></tr>
+    <tr><td>Quarterstaff</td><td>1</td><td><strong>innocent</strong> — no one disarms a walking stick</td></tr>
+  </table>
+  <div class="card sea">
+    <h4>Sturdy things — the only armor rule</h4>
+    <p>A heavy coat, a stout shield, a thick door held right: once per passage, a sturdy thing you carry or grab may <strong>absorb one weathering mark — and break</strong>. Mended at a real rest with a scene or a Crossing. Things save you by being ruined; that's what things are for.</p>
+  </div>
+</section>
+
+<!-- VILLAGE -->
+<section>
+  <div class="marker">Five-Minute Worlds</div>
+  <h2>The Village</h2>
+  <p>Roll five d6s in a row, read the columns, and a village exists. Then ask the table one question — "what does it feel like?" — and it's alive.</p>
+  <table>
+    <tr><th>d6</th><th>Name (roll twice)</th><th>Known for</th><th>What's wrong here</th><th>Who runs it</th></tr>
+    <tr><td>1</td><td>Marrow- / -ford</td><td>its bells</td><td>something stopped last week</td><td>a council that won't meet</td></tr>
+    <tr><td>2</td><td>Ash- / -mere</td><td>the eel catch</td><td>the animals know something</td><td>the miller, reluctantly</td></tr>
+    <tr><td>3</td><td>Copper- / -stile</td><td>a famous grave</td><td>doors are locked by day now</td><td>whoever holds the key</td></tr>
+    <tr><td>4</td><td>Bramble- / -hollow</td><td>weaving &amp; dye</td><td>the children play a new game</td><td>an innkeeper who hears all</td></tr>
+    <tr><td>5</td><td>Wester- / -bridge</td><td>the autumn fair</td><td>nobody mentions the old road</td><td>the priest of a small god</td></tr>
+    <tr><td>6</td><td>Nine- / -wells</td><td>keeping to itself</td><td>the count of houses changed</td><td>no one — and it shows</td></tr>
+  </table>
+  <div class="card sea">
+    <h4>Rumors — always roll two</h4>
+    <p class="mech">
+      <b>1</b> it comes when the fog does · <b>2</b> the last hunter is still here, changed ·
+      <b>3</b> it can't cross running water · <b>4</b> someone in town feeds it ·
+      <b>5</b> it was here before the village · <b>6</b> a child has seen it and told no one<br><br>
+      Roll twice. <b>The second rumor is false or twisted</b> — decide which
+      at the Telling, not before.
+    </p>
+  </div>
+</section>
+
+<!-- MONSTER -->
+<section>
+  <div class="marker">Five-Minute Monsters</div>
+  <h2>The Monster Mill</h2>
+  <p>Four d6s produce a ready Peril in the Hollow Hound pattern. Name it aloud, draw its three boxes, and it exists. The weakness column is a <strong>seed, not an answer</strong> — the fact tally and the Telling still build the truth; the seed just guarantees a truth is findable.</p>
+  <table>
+    <tr><th>d6</th><th>Its form</th><th>It takes</th><th>The sign it leaves</th><th>Weakness seed</th></tr>
+    <tr><td>1</td><td>a hound-shaped absence</td><td>sounds</td><td>silence where noise should be</td><td>it can't take what's freely given</td></tr>
+    <tr><td>2</td><td>a tall neighbor nobody remembers moving in</td><td>names</td><td>letters missing from signs</td><td>its own name, spoken to its face</td></tr>
+    <tr><td>3</td><td>a flooded reflection that got out</td><td>warmth</td><td>frost on one side of things</td><td>it must finish what its original started</td></tr>
+    <tr><td>4</td><td>a scarecrow with the wrong number of joints</td><td>sleep</td><td>lights burning at 4 a.m.</td><td>it obeys the rules of its making</td></tr>
+    <tr><td>5</td><td>a swarm that mimics one large shape</td><td>memories of a person</td><td>photographs going crowded</td><td>it scatters when its center is named</td></tr>
+    <tr><td>6</td><td>an old debt walking</td><td>luck</td><td>every coin lands tails</td><td>it can be paid — the price is on the tally</td></tr>
+  </table>
+  <div class="card">
+    <h4>Assembling the hunt</h4>
+    <p class="mech">
+      1. Roll village (5d6) + monster (4d6) + two rumors.<br>
+      2. Pick three locations where its <b>sign</b> shows strongest.<br>
+      3. Give one Figure a reason to lie about it.<br>
+      4. Write the default truth in two sentences from the seed.<br>
+      5. Draw both tracks where everyone can see. Hunt.
+    </p>
+  </div>
+</section>
+
+<!-- CHARGES -->
+<section>
+  <div class="marker">Loot</div>
+  <h2>Charges — d66 for stranger Vessels</h2>
+  <p>When the found thing deserves better than the core d6. Same law: latent, fired only by the world's hand.</p>
+  <div class="d66">
+    <table>
+      <tr><td>11</td><td>rings, softly, near a lie</td></tr>
+      <tr><td>12</td><td>warm exactly when you're lost</td></tr>
+      <tr><td>13</td><td>casts a shadow of its old owner</td></tr>
+      <tr><td>14</td><td>rattles before rain — and before worse</td></tr>
+      <tr><td>15</td><td>doors unlock slower around it</td></tr>
+      <tr><td>16</td><td>dogs bring it back if thrown</td></tr>
+      <tr><td>21</td><td>smells of a place you'll visit later</td></tr>
+      <tr><td>22</td><td>weighs nothing when carried for someone else</td></tr>
+      <tr><td>23</td><td>hums along to one particular song</td></tr>
+      <tr><td>24</td><td>collects dust in the shape of letters</td></tr>
+      <tr><td>25</td><td>birds land nearer when it's out</td></tr>
+      <tr><td>26</td><td>points home — someone's, not yours</td></tr>
+      <tr><td>31</td><td>goes cold passing a hidden door</td></tr>
+      <tr><td>32</td><td>reflects rooms as they were</td></tr>
+      <tr><td>33</td><td>keeps one footprint of whoever holds it</td></tr>
+      <tr><td>34</td><td>can't be photographed in focus</td></tr>
+      <tr><td>35</td><td>ticks once when its owner is mentioned</td></tr>
+      <tr><td>36</td><td>tastes of salt in fresh water country</td></tr>
+    </table>
+    <table>
+      <tr><td>41</td><td>children can see what it's for</td></tr>
+      <tr><td>42</td><td>attracts lost buttons, keys, and coins</td></tr>
+      <tr><td>43</td><td>silences one footstep in seven</td></tr>
+      <tr><td>44</td><td>dreams leak into whoever sleeps on it</td></tr>
+      <tr><td>45</td><td>fits every lock a little, none fully</td></tr>
+      <tr><td>46</td><td>grows lighter as a promise nears due</td></tr>
+      <tr><td>51</td><td>candles lean toward it</td></tr>
+      <tr><td>52</td><td>remembers the last thing said over it</td></tr>
+      <tr><td>53</td><td>rusts only in the presence of guilt</td></tr>
+      <tr><td>54</td><td>the restless dead mistake it for theirs</td></tr>
+      <tr><td>55</td><td>maps drawn near it are slightly truer</td></tr>
+      <tr><td>56</td><td>won't stay sold, gifted, or thrown away</td></tr>
+      <tr><td>61</td><td>bleeds one drop at the naming of its maker</td></tr>
+      <tr><td>62</td><td>keeps time — to a day that hasn't come</td></tr>
+      <tr><td>63</td><td>whistles back, a note late</td></tr>
+      <tr><td>64</td><td>casts warmth like a small fire, once</td></tr>
+      <tr><td>65</td><td>knows its way back to the millpond, gently</td></tr>
+      <tr><td>66</td><td>speaks in dreams — a second word, now</td></tr>
+    </table>
+  </div>
+  <p style="color:var(--faded);font-size:.95rem">The living-table rule applies here too: replace used entries with charges earned from your own hunts.</p>
+</section>
+
+</div>
+</body>
+</html>
